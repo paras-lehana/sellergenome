@@ -1,0 +1,22 @@
+/* Passwords are submitted once to the same-origin session endpoint; never stored in browser storage. */
+const {api,state,setAuth,e,date,heading,badge,busy,toast,invalid}=await import('./core.js?v='+encodeURIComponent(document.querySelector('meta[name="app-version"]')?.content||'dev'));
+export async function checkAccess(){if(navigator.onLine===false){setAuth({authenticated:false,operator:false});return;}try{setAuth(await api('/auth/session',{timeout:5000}));}catch{setAuth({authenticated:false,operator:false});}}
+export function renderAccess(){
+ const auth=state.auth;
+ return heading('WORKSPACE ACCESS','A private session. A shared workshop.','Sign in to run real scenarios, save suggestions and inspect authorized project data.')+`<div class="access-layout"><section class="panel"><div class="panel-heading"><h2>${auth.authenticated?'Session verified':'Sign in to VANI'}</h2>${badge(auth.authenticated?'Authenticated':'Demo access')}</div><div class="panel-body">${auth.authenticated?`<p>Your browser session is verified by the server. ${auth.operator?'Administration is available.':'Workshop actions are available.'}</p>${auth.expires_at?`<p class="small muted">Expires ${date(auth.expires_at)}</p>`:''}<button class="button divider" data-action="logout">Sign out of this browser</button><form id="password-form" class="stack divider"><h3>Change workspace password</h3><div class="field"><label for="current-password">Current password</label><input type="password" name="current_password" id="current-password" autocomplete="current-password" required></div><div class="field"><label for="new-password">New password</label><input type="password" name="new_password" id="new-password" autocomplete="new-password" minlength="12" maxlength="256" required><small>Use at least 12 characters. The server validates the password policy.</small></div><button type="submit" class="button button-primary">Change password</button><p role="status" class="small"></p></form>`:`<form id="login-form" class="stack"><p>Use the project access password. Provider API keys belong only in Administration.</p><div class="field"><label for="login-password">Workspace password</label><input id="login-password" name="password" type="password" autocomplete="current-password" required maxlength="256"></div><button class="button button-primary" type="submit">Sign in</button><p role="status" class="small"></p></form>`}</div></section><aside class="access-story"><span class="eyebrow">YOUR NEXT STEP</span><h2>See the idea.<br>Then test the proof.</h2><p>The workshop has a synthetic example beside every Live action. Browse the examples even when an integration is unavailable.</p><a class="button button-dark" href="#workshop">Open the PM Workshop →</a><p class="small muted">Only the server’s session cookie grants access. Passwords and provider keys are never kept in local or session storage.</p></aside></div>`;
+}
+export async function handleAccessSubmit(form,values,button){
+ if(!['login-form','password-form'].includes(form.id))return false;
+ const slot=form.querySelector('[role=status]');
+ try{
+  if(form.id==='login-form'){
+   const result=await busy(button,'Verifying access…',()=>api('/auth/login',{method:'POST',body:JSON.stringify({password:values.get('password')})}));
+   form.reset();setAuth(result);toast('Session verified. Live workshop actions and feedback are available.');location.hash='workshop';
+  }else{
+   if(values.get('new_password')===values.get('current_password')){invalid(form.querySelector('#new-password'),'Choose a password different from the current password.');return true;}
+   const result=await busy(button,'Changing password…',()=>api('/auth/password',{method:'POST',body:JSON.stringify({current_password:values.get('current_password'),new_password:values.get('new_password')})}));form.reset();if(result.authenticated!==undefined)setAuth(result);slot.textContent='Password changed. Sign in again with the new password.';toast('Workspace password changed. Sign in again.');document.querySelector('#main').innerHTML=renderAccess();
+  }
+ }catch(error){slot.textContent=error.message;slot.setAttribute('role','alert');}
+ return true;
+}
+export async function logout(){await api('/auth/logout',{method:'POST'});setAuth({authenticated:false,operator:false});state.seller=null;state.persona=null;state.session=null;state.result=null;state.dataset='demo';try{sessionStorage.removeItem('persona-last-session');}catch{}toast('Signed out. Microphone and private activity stopped.');}

@@ -1,0 +1,26 @@
+{
+  "skill_name": "sellergenome-voice-engines",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "The owner asked to use 'bulbul:v4' — the API rejects it. What's the right model id and how do I add it as an option?",
+      "expected_output": "v4-flash and additive option.",
+      "files": [],
+      "expectations": [
+        "Says there is no bulbul:v4 id; use bulbul:v4-flash",
+        "Says changes are additive options with an Admin default/picker",
+        "Mentions engines.py catalogue / SETTING_CHOICES"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "On the buyer desk the transcript shows 'TrustSEAL' although the buyer never said it. Why?",
+      "expected_output": "Keyterms per place.",
+      "files": [],
+      "expectations": [
+        "Explains seller keyterms biased recognition",
+        "Says engines.buyer_keyterms stays empty (D32)"
+      ]
+    }
+  ]
+}

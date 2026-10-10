@@ -1,0 +1,28 @@
+{
+  "skill_name": "sellergenome-release-deploy",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I committed a fix on v5. Get it live and pushed.",
+      "expected_output": "Release checklist.",
+      "files": [],
+      "expectations": [
+        "Bumps version in config/settings.yaml and config/genome/settings.yaml + CHANGELOG",
+        "Runs tests and staged scan",
+        "ff-only merge into production worktree then restart sellergenome-v4",
+        "Waits for healthy (V3 404 window) and verifies /health on both mirrors",
+        "Pushes origin both branches and sellergenome main"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Can I use /srv/sellergenome-v4/docker-compose.preview.yml to preview my branch?",
+      "expected_output": "Warns against it.",
+      "files": [],
+      "expectations": [
+        "Says it reuses the production container name/IP and would replace production",
+        "Points to assets/compose.v5-preview.yml on port 18090"
+      ]
+    }
+  ]
+}

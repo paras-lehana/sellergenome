@@ -1,0 +1,17 @@
+{
+  "skill_name": "sellergenome-kibana",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "The PM wants a Kibana chart of persona eval scores over prompt versions. How?",
+      "expected_output": "Saved-object import pattern.",
+      "files": [],
+      "expectations": [
+        "Follows install_v4_dashboards.py pattern / saved-objects import",
+        "Data view sellergenome-v5-persona-evals with time field at",
+        "Unique sg-v5-* ids in Space sellergenome",
+        "Never write .kibana directly"
+      ]
+    }
+  ]
+}

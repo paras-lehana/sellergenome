@@ -1,0 +1,3620 @@
+{
+  "version": "call-diagnostics-1.3",
+  "study_id": "36507067c61eac9b5e8a5a3bb50239a0e341a63a7b7e24e9ab70c8c68877852f",
+  "generated_at": "2026-10-09T13:31:50.784241+00:00",
+  "method": "Hash-verified complete scan of canonical General (talked) calls and the recording sample; deterministic summary/turn rules.",
+  "source_manifest": [
+    {
+      "name": "ps07_bot_calls_2026-04_to_06.csv",
+      "sha256": "e5f05bc8600e121ab1abae7c44a9ef6205696839e7e67d2dcad0230a851c1bc3",
+      "rows": 67934,
+      "family": "bot_calls"
+    },
+    {
+      "name": "ps07_bot_calls_2026-07.csv",
+      "sha256": "a3edca7d1e29b3c66e7f727540f20b3f7fc1c3b84211e6c3bc1c3f5feeb29b9b",
+      "rows": 58124,
+      "family": "bot_calls"
+    },
+    {
+      "name": "ps07_bot_calls_2026-08.csv",
+      "sha256": "c71c038c200d29286339f18fe9316e12e8b8c1b8b278f9921888df39bd8f3a3d",
+      "rows": 73950,
+      "family": "bot_calls"
+    },
+    {
+      "name": "ps07_bot_calls_2026-09.csv",
+      "sha256": "9bc89252493d357aa9746d24cb5ea9b89afcccdb9199ee6a019740189f677186",
+      "rows": 69447,
+      "family": "bot_calls"
+    },
+    {
+      "name": "ps07_call_turns.csv",
+      "sha256": "fb403bde3e5f3176f61ab13140b023c96ac1a45c8c51408258e501431fbe147f",
+      "rows": 139555,
+      "family": "call_turns"
+    },
+    {
+      "name": "ps07_recording_sample_5000.csv",
+      "sha256": "21d8395fdc650221e946639d7b5b906bf4edc9dcab900de50ab5e76cce25ff5f",
+      "rows": 5000,
+      "family": "recording_sample"
+    }
+  ],
+  "summary_definitions": [
+    {
+      "trait": "callback_requested",
+      "label": "Callback request",
+      "meaning": "The summary mentions busy/unavailable, calling again or rescheduling.",
+      "synthetic_example": "The seller asks to call tomorrow.",
+      "caution": "A bot offering to call again also matches; no time has necessarily been agreed.",
+      "pattern": "\\b(call back|callback|call later|reschedul\\w*|busy|unavailable)\\b"
+    },
+    {
+      "trait": "contact_suppression",
+      "label": "Contact suppression",
+      "meaning": "The text contains a stop-calling or number-removal phrase.",
+      "synthetic_example": "The seller says: please do not call.",
+      "caution": "A bot quoting a policy can match. Confirm the actor, and honor actual stop requests immediately.",
+      "pattern": "\\b(do not call|don't call|stop calling|remove (?:my|the) number)\\b"
+    },
+    {
+      "trait": "executive_continuity",
+      "label": "Executive continuity",
+      "meaning": "The text mentions an existing executive or previous contact/meeting.",
+      "synthetic_example": "The seller says they already spoke with an executive.",
+      "caution": "The phrase alone does not verify which executive, when, or whether a meeting happened.",
+      "pattern": "\\b(already (?:in (?:touch|contact)|met|spoke)|existing executive)\\b"
+    },
+    {
+      "trait": "explanation_depth",
+      "label": "Explanation depth",
+      "meaning": "The summary includes explain, clarify, confusion or did-not-understand wording.",
+      "synthetic_example": "The seller asks the agent to explain the package.",
+      "caution": "An agent saying they explained something also matches; this is not a learning-style score.",
+      "pattern": "\\b(explain|clarif\\w*|did not understand|confus\\w*)\\b"
+    },
+    {
+      "trait": "language_preference",
+      "label": "Language preference",
+      "meaning": "The narrow legacy rule looks for prefer/speak/switch/continue followed by Hindi, English or Tamil.",
+      "synthetic_example": "The seller asks to continue in Hindi.",
+      "caution": "Other languages and phrasings are missed. A bot's language proposal is not a seller preference.",
+      "pattern": "\\b(?:prefer(?:s|red)?|speak|continue in|switch to)\\s+(?:in\\s+)?(?:Hindi|English|Tamil)\\b"
+    },
+    {
+      "trait": "price_concern",
+      "label": "Price concern",
+      "meaning": "The summary contains price/pricing, cost, budget or payment.",
+      "synthetic_example": "The seller asks what the package costs.",
+      "caution": "Even 'price was not an issue' matches the legacy chart. This is a price mention, not proven resistance.",
+      "pattern": "\\b(pric(?:e|ing)|cost|budget|payment)\\b"
+    },
+    {
+      "trait": "unresolved_service_issue",
+      "label": "Service issue",
+      "meaning": "The text contains refund, complaint, unresolved or service issue.",
+      "synthetic_example": "The seller mentions an unresolved complaint.",
+      "caution": "A resolved complaint or agent reassurance can match; review the full context.",
+      "pattern": "\\b(refund|complaint|unresolved|service issue)\\b"
+    }
+  ],
+  "rules": [
+    {
+      "id": "contact_stop",
+      "label": "Stop/contact refusal",
+      "pattern": "\\b(do not call|don't call|stop calling|remove (?:my|the) number|dobara (?:phone|call) mat|call mat)\\b",
+      "action": "Confirm and honor contact restrictions; do not rebut a stop request."
+    },
+    {
+      "id": "language",
+      "label": "Language/understanding barrier",
+      "pattern": "\\b(language barrier|(?:could not|couldn't|did not|didn't|unable to) understand|(?:spoke|speaking|responded) (?:only )?in (?:Gujarati|Telugu|Tamil|Kannada|Bengali|Marathi)|hindi mein|english mein|samajh nahi|samajh nahin)\\b",
+      "action": "Confirm the preferred language and use a supported speaker; ask one short confirmation."
+    },
+    {
+      "id": "identity",
+      "label": "Identity/authority unresolved",
+      "pattern": "\\b(wrong (?:number|person)|not the (?:owner|right person)|unable to confirm|not able to confirm|could not confirm|owner (?:was |is )?(?:not available|unavailable)|galat number|malik nahi)\\b",
+      "action": "Confirm business and decision-maker identity before a package pitch; do not assume the recipient is the seller."
+    },
+    {
+      "id": "service",
+      "label": "Existing service problem",
+      "pattern": "\\b(refund|complaint|unresolved|service issue|poor (?:service|quality)|no (?:leads|enquiries)|leads nahi|service kharab)\\b",
+      "action": "Acknowledge the issue, capture a concrete example and route an accountable follow-up before selling."
+    },
+    {
+      "id": "timing",
+      "label": "Busy/callback timing",
+      "pattern": "\\b(busy|unavailable|call (?:back|later)|callback|reschedul\\w*|asked (?:the agent )?to wait|baad me|baad mein|abhi time nahi|time nahi hai)\\b",
+      "action": "Ask permission for a short call or agree a specific callback window; preserve the seller's answer."
+    },
+    {
+      "id": "price",
+      "label": "Price/value question",
+      "pattern": "\\b(pric(?:e|ing)|cost|budget|payment|expensive|charges|mehenga|mahanga|paisa|paise|free chahiye)\\b",
+      "action": "Ask which outcome matters and explain only catalog-backed benefits and prices; do not invent ROI."
+    },
+    {
+      "id": "continuity",
+      "label": "Existing executive/meeting",
+      "pattern": "\\b(already (?:in (?:touch|contact)|met|spoke|scheduled)|existing executive|executive (?:had |has )?(?:called|visited)|pehle baat|meeting ho gayi)\\b",
+      "action": "Confirm the prior executive and agreed next action; avoid duplicate meeting requests."
+    },
+    {
+      "id": "declined",
+      "label": "Interest or need declined",
+      "pattern": "\\b(not interested|no interest|not required|no (?:need|requirement)|refused|declined|not looking|nahi chahiye|nahin chahiye|zarurat nahi|interest nahi)\\b",
+      "action": "Clarify once if welcome, then respect the refusal; do not reinterpret silence as interest."
+    },
+    {
+      "id": "clarity",
+      "label": "Explanation or information needed",
+      "pattern": "\\b(explain|clarif\\w*|confus\\w*|more (?:details|information)|asked (?:about|for)\\s+(?:more\\s+)?(?:details|information|explanations?|clarification|features|benefits|packages?|plans?|pricing|prices?|costs?|charges)|samjha|bataiye|kya fayda)\\b",
+      "action": "Answer one specific question in plain language, then check understanding before asking for a meeting."
+    },
+    {
+      "id": "no_response",
+      "label": "No usable seller response",
+      "pattern": "\\b(no response|without (?:any |a )?(?:further )?response|did not respond|didn't respond|no (?:further )?(?:conversation|discussion)|before (?:the )?(?:lead|seller) could respond|immediately after (?:the )?(?:greeting|introduction))\\b",
+      "action": "Review audio and connection evidence; there may be no actual sales conversation to rebut."
+    },
+    {
+      "id": "early_end",
+      "label": "Conversation ended early",
+      "pattern": "\\b(disconnect\\w*|ended (?:abruptly|immediately)|cut (?:short|off)|hung up|hang up|transcript ends|call (?:ended|dropped))\\b",
+      "action": "Inspect the ending and turn coverage before attributing rejection; offer a consented retry only when appropriate."
+    },
+    {
+      "id": "unconfirmed",
+      "label": "No clear next step recorded",
+      "pattern": "\\b(no (?:clear |definitive )?outcome|without (?:a )?(?:clear )?(?:outcome|confirmation)|not confirmed|no meeting|meeting (?:was )?not (?:fixed|confirmed|scheduled))\\b",
+      "action": "Ask one explicit next-step question; distinguish willingness, booked time and completed meeting."
+    }
+  ],
+  "groups": {
+    "all_general": {
+      "calls": 78365,
+      "unique_sellers": 44936,
+      "coverage": {
+        "summary_present": 68206,
+        "recording_sample_member": 1540,
+        "has_usable_turns": 2457,
+        "seller_and_bot_turns": 2304,
+        "summary_only": 65928,
+        "neither_summary_nor_usable_turns": 9980
+      },
+      "outcomes": {
+        "General (talked)": 78365
+      },
+      "reasons": [
+        {
+          "id": "contact_stop",
+          "label": "Stop/contact refusal",
+          "count": 75,
+          "denominator": 78365,
+          "percent": 0.1,
+          "next_step": "Confirm and honor contact restrictions; do not rebut a stop request."
+        },
+        {
+          "id": "language",
+          "label": "Language/understanding barrier",
+          "count": 171,
+          "denominator": 78365,
+          "percent": 0.22,
+          "next_step": "Confirm the preferred language and use a supported speaker; ask one short confirmation."
+        },
+        {
+          "id": "identity",
+          "label": "Identity/authority unresolved",
+          "count": 308,
+          "denominator": 78365,
+          "percent": 0.39,
+          "next_step": "Confirm business and decision-maker identity before a package pitch; do not assume the recipient is the seller."
+        },
+        {
+          "id": "service",
+          "label": "Existing service problem",
+          "count": 90,
+          "denominator": 78365,
+          "percent": 0.11,
+          "next_step": "Acknowledge the issue, capture a concrete example and route an accountable follow-up before selling."
+        },
+        {
+          "id": "timing",
+          "label": "Busy/callback timing",
+          "count": 5376,
+          "denominator": 78365,
+          "percent": 6.86,
+          "next_step": "Ask permission for a short call or agree a specific callback window; preserve the seller's answer."
+        },
+        {
+          "id": "price",
+          "label": "Price/value question",
+          "count": 815,
+          "denominator": 78365,
+          "percent": 1.04,
+          "next_step": "Ask which outcome matters and explain only catalog-backed benefits and prices; do not invent ROI."
+        },
+        {
+          "id": "continuity",
+          "label": "Existing executive/meeting",
+          "count": 990,
+          "denominator": 78365,
+          "percent": 1.26,
+          "next_step": "Confirm the prior executive and agreed next action; avoid duplicate meeting requests."
+        },
+        {
+          "id": "declined",
+          "label": "Interest or need declined",
+          "count": 12625,
+          "denominator": 78365,
+          "percent": 16.11,
+          "next_step": "Clarify once if welcome, then respect the refusal; do not reinterpret silence as interest."
+        },
+        {
+          "id": "clarity",
+          "label": "Explanation or information needed",
+          "count": 3223,
+          "denominator": 78365,
+          "percent": 4.11,
+          "next_step": "Answer one specific question in plain language, then check understanding before asking for a meeting."
+        },
+        {
+          "id": "no_response",
+          "label": "No usable seller response",
+          "count": 8352,
+          "denominator": 78365,
+          "percent": 10.66,
+          "next_step": "Review audio and connection evidence; there may be no actual sales conversation to rebut."
+        },
+        {
+          "id": "early_end",
+          "label": "Conversation ended early",
+          "count": 30129,
+          "denominator": 78365,
+          "percent": 38.45,
+          "next_step": "Inspect the ending and turn coverage before attributing rejection; offer a consented retry only when appropriate."
+        },
+        {
+          "id": "unconfirmed",
+          "label": "No clear next step recorded",
+          "count": 2540,
+          "denominator": 78365,
+          "percent": 3.24,
+          "next_step": "Ask one explicit next-step question; distinguish willingness, booked time and completed meeting."
+        }
+      ],
+      "primary_reasons": [
+        {
+          "id": "clarity",
+          "count": 1889,
+          "denominator": 78365,
+          "percent": 2.41
+        },
+        {
+          "id": "contact_stop",
+          "count": 53,
+          "denominator": 78365,
+          "percent": 0.07
+        },
+        {
+          "id": "continuity",
+          "count": 855,
+          "denominator": 78365,
+          "percent": 1.09
+        },
+        {
+          "id": "declined",
+          "count": 10275,
+          "denominator": 78365,
+          "percent": 13.11
+        },
+        {
+          "id": "early_end",
+          "count": 21728,
+          "denominator": 78365,
+          "percent": 27.73
+        },
+        {
+          "id": "identity",
+          "count": 305,
+          "denominator": 78365,
+          "percent": 0.39
+        },
+        {
+          "id": "language",
+          "count": 158,
+          "denominator": 78365,
+          "percent": 0.2
+        },
+        {
+          "id": "no_response",
+          "count": 7619,
+          "denominator": 78365,
+          "percent": 9.72
+        },
+        {
+          "id": "price",
+          "count": 669,
+          "denominator": 78365,
+          "percent": 0.85
+        },
+        {
+          "id": "service",
+          "count": 83,
+          "denominator": 78365,
+          "percent": 0.11
+        },
+        {
+          "id": "timing",
+          "count": 5242,
+          "denominator": 78365,
+          "percent": 6.69
+        },
+        {
+          "id": "unconfirmed",
+          "count": 1011,
+          "denominator": 78365,
+          "percent": 1.29
+        },
+        {
+          "id": "unknown",
+          "count": 28478,
+          "denominator": 78365,
+          "percent": 36.34
+        }
+      ],
+      "no_detected_reason": {
+        "count": 28478,
+        "denominator": 78365,
+        "percent": 36.34
+      },
+      "response_calls": {
+        "count": 596,
+        "denominator": 677,
+        "percent": 88.04
+      },
+      "response_opportunity_calls": 677,
+      "responses": [
+        {
+          "reason": "clarity",
+          "label": "Explanation or information needed",
+          "opportunities": 177,
+          "observed": {
+            "count": 163,
+            "denominator": 177,
+            "percent": 92.09
+          },
+          "strategies": [
+            {
+              "id": "respect_stop",
+              "label": "Stop acknowledgement wording",
+              "count": 0,
+              "denominator": 177,
+              "percent": 0.0
+            },
+            {
+              "id": "callback",
+              "label": "Callback/time offered",
+              "count": 41,
+              "denominator": 177,
+              "percent": 23.16
+            },
+            {
+              "id": "clarification",
+              "label": "Clarification/question",
+              "count": 69,
+              "denominator": 177,
+              "percent": 38.98
+            },
+            {
+              "id": "value",
+              "label": "Value/benefit explanation",
+              "count": 6,
+              "denominator": 177,
+              "percent": 3.39
+            },
+            {
+              "id": "handoff",
+              "label": "Executive/support follow-up",
+              "count": 5,
+              "denominator": 177,
+              "percent": 2.82
+            },
+            {
+              "id": "meeting",
+              "label": "Meeting proposed",
+              "count": 1,
+              "denominator": 177,
+              "percent": 0.56
+            },
+            {
+              "id": "acknowledgement",
+              "label": "Acknowledgement only",
+              "count": 29,
+              "denominator": 177,
+              "percent": 16.38
+            },
+            {
+              "id": "other_response",
+              "label": "Other bot response",
+              "count": 12,
+              "denominator": 177,
+              "percent": 6.78
+            },
+            {
+              "id": "not_observed",
+              "label": "No eligible adjacent response",
+              "count": 14,
+              "denominator": 177,
+              "percent": 7.91
+            }
+          ]
+        },
+        {
+          "reason": "contact_stop",
+          "label": "Stop/contact refusal",
+          "opportunities": 22,
+          "observed": {
+            "count": 19,
+            "denominator": 22,
+            "percent": 86.36
+          },
+          "strategies": [
+            {
+              "id": "respect_stop",
+              "label": "Stop acknowledgement wording",
+              "count": 0,
+              "denominator": 22,
+              "percent": 0.0
+            },
+            {
+              "id": "callback",
+              "label": "Callback/time offered",
+              "count": 6,
+              "denominator": 22,
+              "percent": 27.27
+            },
+            {
+              "id": "clarification",
+              "label": "Clarification/question",
+              "count": 4,
+              "denominator": 22,
+              "percent": 18.18
+            },
+            {
+              "id": "value",
+              "label": "Value/benefit explanation",
+              "count": 1,
+              "denominator": 22,
+              "percent": 4.55
+            },
+            {
+              "id": "handoff",
+              "label": "Executive/support follow-up",
+              "count": 0,
+              "denominator": 22,
+              "percent": 0.0
+            },
+            {
+              "id": "meeting",
+              "label": "Meeting proposed",
+              "count": 0,
+              "denominator": 22,
+              "percent": 0.0
+            },
+            {
+              "id": "acknowledgement",
+              "label": "Acknowledgement only",
+              "count": 7,
+              "denominator": 22,
+              "percent": 31.82
+            },
+            {
+              "id": "other_response",
+              "label": "Other bot response",
+              "count": 1,
+              "denominator": 22,
+              "percent": 4.55
+            },
+            {
+              "id": "not_observed",
+              "label": "No eligible adjacent response",
+              "count": 3,
+              "denominator": 22,
+              "percent": 13.64
+            }
+          ]
+        },
+        {
+          "reason": "continuity",
+          "label": "Existing executive/meeting",
+          "opportunities": 40,
+          "observed": {
+            "count": 34,
+            "denominator": 40,
+            "percent": 85.0
+          },
+          "strategies": [
+            {
+              "id": "respect_stop",
+              "label": "Stop acknowledgement wording",
+              "count": 0,
+              "denominator": 40,
+              "percent": 0.0
+            },
+            {
+              "id": "callback",
+              "label": "Callback/time offered",
+              "count": 6,
+              "denominator": 40,
+              "percent": 15.0
+            },
+            {
+              "id": "clarification",
+              "label": "Clarification/question",
+              "count": 25,
+              "denominator": 40,
+              "percent": 62.5
+            },
+            {
+              "id": "value",
+              "label": "Value/benefit explanation",
+              "count": 0,
+              "denominator": 40,
+              "percent": 0.0
+            },
+            {
+              "id": "handoff",
+              "label": "Executive/support follow-up",
+              "count": 0,
+              "denominator": 40,
+              "percent": 0.0
+            },
+            {
+              "id": "meeting",
+              "label": "Meeting proposed",
+              "count": 1,
+              "denominator": 40,
+              "percent": 2.5
+            },
+            {
+              "id": "acknowledgement",
+              "label": "Acknowledgement only",
+              "count": 1,
+              "denominator": 40,
+              "percent": 2.5
+            },
+            {
+              "id": "other_response",
+              "label": "Other bot response",
+              "count": 1,
+              "denominator": 40,
+              "percent": 2.5
+            },
+            {
+              "id": "not_observed",
+              "label": "No eligible adjacent response",
+              "count": 6,
+              "denominator": 40,
+              "percent": 15.0
+            }
+          ]
+        },
+        {
+          "reason": "declined",
+          "label": "Interest or need declined",
+          "opportunities": 222,
+          "observed": {
+            "count": 184,
+            "denominator": 222,
+            "percent": 82.88
+          },
+          "strategies": [
+            {
+              "id": "respect_stop",
+              "label": "Stop acknowledgement wording",
+              "count": 0,
+              "denominator": 222,
+              "percent": 0.0
+            },
+            {
+              "id": "callback",
+              "label": "Callback/time offered",
+              "count": 67,
+              "denominator": 222,
+              "percent": 30.18
+            },
+            {
+              "id": "clarification",
+              "label": "Clarification/question",
+              "count": 48,
+              "denominator": 222,
+              "percent": 21.62
+            },
+            {
+              "id": "value",
+              "label": "Value/benefit explanation",
+              "count": 16,
+              "denominator": 222,
+              "percent": 7.21
+            },
+            {
+              "id": "handoff",
+              "label": "Executive/support follow-up",
+              "count": 1,
+              "denominator": 222,
+              "percent": 0.45
+            },
+            {
+              "id": "meeting",
+              "label": "Meeting proposed",
+              "count": 7,
+              "denominator": 222,
+              "percent": 3.15
+            },
+            {
+              "id": "acknowledgement",
+              "label": "Acknowledgement only",
+              "count": 23,
+              "denominator": 222,
+              "percent": 10.36
+            },
+            {
+              "id": "other_response",
+              "label": "Other bot response",
+              "count": 22,
+              "denominator": 222,
+              "percent": 9.91
+            },
+            {
+              "id": "not_observed",
+              "label": "No eligible adjacent response",
+              "count": 38,
+              "denominator": 222,
+              "percent": 17.12
+            }
+          ]
+        },
+        {
+          "reason": "identity",
+          "label": "Identity/authority unresolved",
+          "opportunities": 13,
+          "observed": {
+            "count": 10,
+            "denominator": 13,
+            "percent": 76.92
+          },
+          "strategies": [
+            {
+              "id": "respect_stop",
+              "label": "Stop acknowledgement wording",
+              "count": 0,
+              "denominator": 13,
+              "percent": 0.0
+            },
+            {
+              "id": "callback",
+              "label": "Callback/time offered",
+              "count": 6,
+              "denominator": 13,
+              "percent": 46.15
+            },
+            {
+              "id": "clarification",
+              "label": "Clarification/question",
+              "count": 0,
+              "denominator": 13,
+              "percent": 0.0
+            },
+            {
+              "id": "value",
+              "label": "Value/benefit explanation",
+              "count": 0,
+              "denominator": 13,
+              "percent": 0.0
+            },
+            {
+              "id": "handoff",
+              "label": "Executive/support follow-up",
+              "count": 0,
+              "denominator": 13,
+              "percent": 0.0
+            },
+            {
+              "id": "meeting",
+              "label": "Meeting proposed",
+              "count": 1,
+              "denominator": 13,
+              "percent": 7.69
+            },
+            {
+              "id": "acknowledgement",
+              "label": "Acknowledgement only",
+              "count": 2,
+              "denominator": 13,
+              "percent": 15.38
+            },
+            {
+              "id": "other_response",
+              "label": "Other bot response",
+              "count": 1,
+              "denominator": 13,
+              "percent": 7.69
+            },
+            {
+              "id": "not_observed",
+              "label": "No eligible adjacent response",
+              "count": 3,
+              "denominator": 13,
+              "percent": 23.08
+            }
+          ]
+        },
+        {
+          "reason": "language",
+          "label": "Language/understanding barrier",
+          "opportunities": 15,
+          "observed": {
+            "count": 13,
+            "denominator": 15,
+            "percent": 86.67
+          },
+          "strategies": [
+            {
+              "id": "respect_stop",
+              "label": "Stop acknowledgement wording",
+              "count": 0,
+              "denominator": 15,
+              "percent": 0.0
+            },
+            {
+              "id": "callback",
+              "label": "Callback/time offered",
+              "count": 2,
+              "denominator": 15,
+              "percent": 13.33
+            },
+            {
+              "id": "clarification",
+              "label": "Clarification/question",
+              "count": 5,
+              "denominator": 15,
+              "percent": 33.33
+            },
+            {
+              "id": "value",
+              "label": "Value/benefit explanation",
+              "count": 0,
+              "denominator": 15,
+              "percent": 0.0
+            },
+            {
+              "id": "handoff",
+              "label": "Executive/support follow-up",
+              "count": 1,
+              "denominator": 15,
+              "percent": 6.67
+            },
+            {
+              "id": "meeting",
+              "label": "Meeting proposed",
+              "count": 0,
+              "denominator": 15,
+              "percent": 0.0
+            },
+            {
+              "id": "acknowledgement",
+              "label": "Acknowledgement only",
+              "count": 2,
+              "denominator": 15,
+              "percent": 13.33
+            },
+            {
+              "id": "other_response",
+              "label": "Other bot response",
+              "count": 3,
+              "denominator": 15,
+              "percent": 20.0
+            },
+            {
+              "id": "not_observed",
+              "label": "No eligible adjacent response",
+              "count": 2,
+              "denominator": 15,
+              "percent": 13.33
+            }
+          ]
+        },
+        {
+          "reason": "price",
+          "label": "Price/value question",
+          "opportunities": 103,
+          "observed": {
+            "count": 96,
+            "denominator": 103,
+            "percent": 93.2
+          },
+          "strategies": [
+            {
+              "id": "respect_stop",
+              "label": "Stop acknowledgement wording",
+              "count": 0,
+              "denominator": 103,
+              "percent": 0.0
+            },
+            {
+              "id": "callback",
+              "label": "Callback/time offered",
+              "count": 24,
+              "denominator": 103,
+              "percent": 23.3
+            },
+            {
+              "id": "clarification",
+              "label": "Clarification/question",
+              "count": 32,
+              "denominator": 103,
+              "percent": 31.07
+            },
+            {
+              "id": "value",
+              "label": "Value/benefit explanation",
+              "count": 6,
+              "denominator": 103,
+              "percent": 5.83
+            },
+            {
+              "id": "handoff",
+              "label": "Executive/support follow-up",
+              "count": 5,
+              "denominator": 103,
+              "percent": 4.85
+            },
+            {
+              "id": "meeting",
+              "label": "Meeting proposed",
+              "count": 7,
+              "denominator": 103,
+              "percent": 6.8
+            },
+            {
+              "id": "acknowledgement",
+              "label": "Acknowledgement only",
+              "count": 9,
+              "denominator": 103,
+              "percent": 8.74
+            },
+            {
+              "id": "other_response",
+              "label": "Other bot response",
+              "count": 13,
+              "denominator": 103,
+              "percent": 12.62
+            },
+            {
+              "id": "not_observed",
+              "label": "No eligible adjacent response",
+              "count": 7,
+              "denominator": 103,
+              "percent": 6.8
+            }
+          ]
+        },
+        {
+          "reason": "service",
+          "label": "Existing service problem",
+          "opportunities": 10,
+          "observed": {
+            "count": 10,
+            "denominator": 10,
+            "percent": 100.0
+          },
+          "strategies": [
+            {
+              "id": "respect_stop",
+              "label": "Stop acknowledgement wording",
+              "count": 0,
+              "denominator": 10,
+              "percent": 0.0
+            },
+            {
+              "id": "callback",
+              "label": "Callback/time offered",
+              "count": 1,
+              "denominator": 10,
+              "percent": 10.0
+            },
+            {
+              "id": "clarification",
+              "label": "Clarification/question",
+              "count": 5,
+              "denominator": 10,
+              "percent": 50.0
+            },
+            {
+              "id": "value",
+              "label": "Value/benefit explanation",
+              "count": 2,
+              "denominator": 10,
+              "percent": 20.0
+            },
+            {
+              "id": "handoff",
+              "label": "Executive/support follow-up",
+              "count": 0,
+              "denominator": 10,
+              "percent": 0.0
+            },
+            {
+              "id": "meeting",
+              "label": "Meeting proposed",
+              "count": 0,
+              "denominator": 10,
+              "percent": 0.0
+            },
+            {
+              "id": "acknowledgement",
+              "label": "Acknowledgement only",
+              "count": 2,
+              "denominator": 10,
+              "percent": 20.0
+            },
+            {
+              "id": "other_response",
+              "label": "Other bot response",
+              "count": 0,
+              "denominator": 10,
+              "percent": 0.0
+            },
+            {
+              "id": "not_observed",
+              "label": "No eligible adjacent response",
+              "count": 0,
+              "denominator": 10,
+              "percent": 0.0
+            }
+          ]
+        },
+        {
+          "reason": "timing",
+          "label": "Busy/callback timing",
+          "opportunities": 252,
+          "observed": {
+            "count": 223,
+            "denominator": 252,
+            "percent": 88.49
+          },
+          "strategies": [
+            {
+              "id": "respect_stop",
+              "label": "Stop acknowledgement wording",
+              "count": 0,
+              "denominator": 252,
+              "percent": 0.0
+            },
+            {
+              "id": "callback",
+              "label": "Callback/time offered",
+              "count": 95,
+              "denominator": 252,
+              "percent": 37.7
+            },
+            {
+              "id": "clarification",
+              "label": "Clarification/question",
+              "count": 57,
+              "denominator": 252,
+              "percent": 22.62
+            },
+            {
+              "id": "value",
+              "label": "Value/benefit explanation",
+              "count": 20,
+              "denominator": 252,
+              "percent": 7.94
+            },
+            {
+              "id": "handoff",
+              "label": "Executive/support follow-up",
+              "count": 4,
+              "denominator": 252,
+              "percent": 1.59
+            },
+            {
+              "id": "meeting",
+              "label": "Meeting proposed",
+              "count": 6,
+              "denominator": 252,
+              "percent": 2.38
+            },
+            {
+              "id": "acknowledgement",
+              "label": "Acknowledgement only",
+              "count": 32,
+              "denominator": 252,
+              "percent": 12.7
+            },
+            {
+              "id": "other_response",
+              "label": "Other bot response",
+              "count": 9,
+              "denominator": 252,
+              "percent": 3.57
+            },
+            {
+              "id": "not_observed",
+              "label": "No eligible adjacent response",
+              "count": 29,
+              "denominator": 252,
+              "percent": 11.51
+            }
+          ]
+        }
+      ]
+    },
+    "sample_general": {
+      "calls": 1540,
+      "unique_sellers": 1315,
+      "coverage": {
+        "summary_present": 1534,
+        "recording_sample_member": 1540,
+        "has_usable_turns": 544,
+        "seller_and_bot_turns": 498,
+        "summary_only": 990,
+        "neither_summary_nor_usable_turns": 6
+      },
+      "outcomes": {
+        "General (talked)": 1540
+      },
+      "reasons": [
+        {
+          "id": "contact_stop",
+          "label": "Stop/contact refusal",
+          "count": 9,
+          "denominator": 1540,
+          "percent": 0.58,
+          "next_step": "Confirm and honor contact restrictions; do not rebut a stop request."
+        },
+        {
+          "id": "language",
+          "label": "Language/understanding barrier",
+          "count": 6,
+          "denominator": 1540,
+          "percent": 0.39,
+          "next_step": "Confirm the preferred language and use a supported speaker; ask one short confirmation."
+        },
+        {
+          "id": "identity",
+          "label": "Identity/authority unresolved",
+          "count": 2,
+          "denominator": 1540,
+          "percent": 0.13,
+          "next_step": "Confirm business and decision-maker identity before a package pitch; do not assume the recipient is the seller."
+        },
+        {
+          "id": "service",
+          "label": "Existing service problem",
+          "count": 1,
+          "denominator": 1540,
+          "percent": 0.06,
+          "next_step": "Acknowledge the issue, capture a concrete example and route an accountable follow-up before selling."
+        },
+        {
+          "id": "timing",
+          "label": "Busy/callback timing",
+          "count": 149,
+          "denominator": 1540,
+          "percent": 9.68,
+          "next_step": "Ask permission for a short call or agree a specific callback window; preserve the seller's answer."
+        },
+        {
+          "id": "price",
+          "label": "Price/value question",
+          "count": 45,
+          "denominator": 1540,
+          "percent": 2.92,
+          "next_step": "Ask which outcome matters and explain only catalog-backed benefits and prices; do not invent ROI."
+        },
+        {
+          "id": "continuity",
+          "label": "Existing executive/meeting",
+          "count": 56,
+          "denominator": 1540,
+          "percent": 3.64,
+          "next_step": "Confirm the prior executive and agreed next action; avoid duplicate meeting requests."
+        },
+        {
+          "id": "declined",
+          "label": "Interest or need declined",
+          "count": 394,
+          "denominator": 1540,
+          "percent": 25.58,
+          "next_step": "Clarify once if welcome, then respect the refusal; do not reinterpret silence as interest."
+        },
+        {
+          "id": "clarity",
+          "label": "Explanation or information needed",
+          "count": 121,
+          "denominator": 1540,
+          "percent": 7.86,
+          "next_step": "Answer one specific question in plain language, then check understanding before asking for a meeting."
+        },
+        {
+          "id": "no_response",
+          "label": "No usable seller response",
+          "count": 240,
+          "denominator": 1540,
+          "percent": 15.58,
+          "next_step": "Review audio and connection evidence; there may be no actual sales conversation to rebut."
+        },
+        {
+          "id": "early_end",
+          "label": "Conversation ended early",
+          "count": 773,
+          "denominator": 1540,
+          "percent": 50.19,
+          "next_step": "Inspect the ending and turn coverage before attributing rejection; offer a consented retry only when appropriate."
+        },
+        {
+          "id": "unconfirmed",
+          "label": "No clear next step recorded",
+          "count": 16,
+          "denominator": 1540,
+          "percent": 1.04,
+          "next_step": "Ask one explicit next-step question; distinguish willingness, booked time and completed meeting."
+        }
+      ],
+      "primary_reasons": [
+        {
+          "id": "clarity",
+          "count": 57,
+          "denominator": 1540,
+          "percent": 3.7
+        },
+        {
+          "id": "contact_stop",
+          "count": 5,
+          "denominator": 1540,
+          "percent": 0.32
+        },
+        {
+          "id": "continuity",
+          "count": 42,
+          "denominator": 1540,
+          "percent": 2.73
+        },
+        {
+          "id": "declined",
+          "count": 314,
+          "denominator": 1540,
+          "percent": 20.39
+        },
+        {
+          "id": "early_end",
+          "count": 483,
+          "denominator": 1540,
+          "percent": 31.36
+        },
+        {
+          "id": "identity",
+          "count": 2,
+          "denominator": 1540,
+          "percent": 0.13
+        },
+        {
+          "id": "language",
+          "count": 2,
+          "denominator": 1540,
+          "percent": 0.13
+        },
+        {
+          "id": "no_response",
+          "count": 223,
+          "denominator": 1540,
+          "percent": 14.48
+        },
+        {
+          "id": "price",
+          "count": 29,
+          "denominator": 1540,
+          "percent": 1.88
+        },
+        {
+          "id": "service",
+          "count": 1,
+          "denominator": 1540,
+          "percent": 0.06
+        },
+        {
+          "id": "timing",
+          "count": 126,
+          "denominator": 1540,
+          "percent": 8.18
+        },
+        {
+          "id": "unconfirmed",
+          "count": 1,
+          "denominator": 1540,
+          "percent": 0.06
+        },
+        {
+          "id": "unknown",
+          "count": 255,
+          "denominator": 1540,
+          "percent": 16.56
+        }
+      ],
+      "no_detected_reason": {
+        "count": 255,
+        "denominator": 1540,
+        "percent": 16.56
+      },
+      "response_calls": {
+        "count": 136,
+        "denominator": 156,
+        "percent": 87.18
+      },
+      "response_opportunity_calls": 156,
+      "responses": [
+        {
+          "reason": "clarity",
+          "label": "Explanation or information needed",
+          "opportunities": 37,
+          "observed": {
+            "count": 34,
+            "denominator": 37,
+            "percent": 91.89
+          },
+          "strategies": [
+            {
+              "id": "respect_stop",
+              "label": "Stop acknowledgement wording",
+              "count": 0,
+              "denominator": 37,
+              "percent": 0.0
+            },
+            {
+              "id": "callback",
+              "label": "Callback/time offered",
+              "count": 12,
+              "denominator": 37,
+              "percent": 32.43
+            },
+            {
+              "id": "clarification",
+              "label": "Clarification/question",
+              "count": 12,
+              "denominator": 37,
+              "percent": 32.43
+            },
+            {
+              "id": "value",
+              "label": "Value/benefit explanation",
+              "count": 2,
+              "denominator": 37,
+              "percent": 5.41
+            },
+            {
+              "id": "handoff",
+              "label": "Executive/support follow-up",
+              "count": 1,
+              "denominator": 37,
+              "percent": 2.7
+            },
+            {
+              "id": "meeting",
+              "label": "Meeting proposed",
+              "count": 1,
+              "denominator": 37,
+              "percent": 2.7
+            },
+            {
+              "id": "acknowledgement",
+              "label": "Acknowledgement only",
+              "count": 2,
+              "denominator": 37,
+              "percent": 5.41
+            },
+            {
+              "id": "other_response",
+              "label": "Other bot response",
+              "count": 4,
+              "denominator": 37,
+              "percent": 10.81
+            },
+            {
+              "id": "not_observed",
+              "label": "No eligible adjacent response",
+              "count": 3,
+              "denominator": 37,
+              "percent": 8.11
+            }
+          ]
+        },
+        {
+          "reason": "contact_stop",
+          "label": "Stop/contact refusal",
+          "opportunities": 4,
+          "observed": {
+            "count": 4,
+            "denominator": 4,
+            "percent": 100.0
+          },
+          "strategies": [
+            {
+              "id": "respect_stop",
+              "label": "Stop acknowledgement wording",
+              "count": 0,
+              "denominator": 4,
+              "percent": 0.0
+            },
+            {
+              "id": "callback",
+              "label": "Callback/time offered",
+              "count": 2,
+              "denominator": 4,
+              "percent": 50.0
+            },
+            {
+              "id": "clarification",
+              "label": "Clarification/question",
+              "count": 0,
+              "denominator": 4,
+              "percent": 0.0
+            },
+            {
+              "id": "value",
+              "label": "Value/benefit explanation",
+              "count": 0,
+              "denominator": 4,
+              "percent": 0.0
+            },
+            {
+              "id": "handoff",
+              "label": "Executive/support follow-up",
+              "count": 0,
+              "denominator": 4,
+              "percent": 0.0
+            },
+            {
+              "id": "meeting",
+              "label": "Meeting proposed",
+              "count": 0,
+              "denominator": 4,
+              "percent": 0.0
+            },
+            {
+              "id": "acknowledgement",
+              "label": "Acknowledgement only",
+              "count": 1,
+              "denominator": 4,
+              "percent": 25.0
+            },
+            {
+              "id": "other_response",
+              "label": "Other bot response",
+              "count": 1,
+              "denominator": 4,
+              "percent": 25.0
+            },
+            {
+              "id": "not_observed",
+              "label": "No eligible adjacent response",
+              "count": 0,
+              "denominator": 4,
+              "percent": 0.0
+            }
+          ]
+        },
+        {
+          "reason": "continuity",
+          "label": "Existing executive/meeting",
+          "opportunities": 12,
+          "observed": {
+            "count": 11,
+            "denominator": 12,
+            "percent": 91.67
+          },
+          "strategies": [
+            {
+              "id": "respect_stop",
+              "label": "Stop acknowledgement wording",
+              "count": 0,
+              "denominator": 12,
+              "percent": 0.0
+            },
+            {
+              "id": "callback",
+              "label": "Callback/time offered",
+              "count": 3,
+              "denominator": 12,
+              "percent": 25.0
+            },
+            {
+              "id": "clarification",
+              "label": "Clarification/question",
+              "count": 8,
+              "denominator": 12,
+              "percent": 66.67
+            },
+            {
+              "id": "value",
+              "label": "Value/benefit explanation",
+              "count": 0,
+              "denominator": 12,
+              "percent": 0.0
+            },
+            {
+              "id": "handoff",
+              "label": "Executive/support follow-up",
+              "count": 0,
+              "denominator": 12,
+              "percent": 0.0
+            },
+            {
+              "id": "meeting",
+              "label": "Meeting proposed",
+              "count": 0,
+              "denominator": 12,
+              "percent": 0.0
+            },
+            {
+              "id": "acknowledgement",
+              "label": "Acknowledgement only",
+              "count": 0,
+              "denominator": 12,
+              "percent": 0.0
+            },
+            {
+              "id": "other_response",
+              "label": "Other bot response",
+              "count": 0,
+              "denominator": 12,
+              "percent": 0.0
+            },
+            {
+              "id": "not_observed",
+              "label": "No eligible adjacent response",
+              "count": 1,
+              "denominator": 12,
+              "percent": 8.33
+            }
+          ]
+        },
+        {
+          "reason": "declined",
+          "label": "Interest or need declined",
+          "opportunities": 62,
+          "observed": {
+            "count": 52,
+            "denominator": 62,
+            "percent": 83.87
+          },
+          "strategies": [
+            {
+              "id": "respect_stop",
+              "label": "Stop acknowledgement wording",
+              "count": 0,
+              "denominator": 62,
+              "percent": 0.0
+            },
+            {
+              "id": "callback",
+              "label": "Callback/time offered",
+              "count": 27,
+              "denominator": 62,
+              "percent": 43.55
+            },
+            {
+              "id": "clarification",
+              "label": "Clarification/question",
+              "count": 9,
+              "denominator": 62,
+              "percent": 14.52
+            },
+            {
+              "id": "value",
+              "label": "Value/benefit explanation",
+              "count": 6,
+              "denominator": 62,
+              "percent": 9.68
+            },
+            {
+              "id": "handoff",
+              "label": "Executive/support follow-up",
+              "count": 0,
+              "denominator": 62,
+              "percent": 0.0
+            },
+            {
+              "id": "meeting",
+              "label": "Meeting proposed",
+              "count": 1,
+              "denominator": 62,
+              "percent": 1.61
+            },
+            {
+              "id": "acknowledgement",
+              "label": "Acknowledgement only",
+              "count": 2,
+              "denominator": 62,
+              "percent": 3.23
+            },
+            {
+              "id": "other_response",
+              "label": "Other bot response",
+              "count": 7,
+              "denominator": 62,
+              "percent": 11.29
+            },
+            {
+              "id": "not_observed",
+              "label": "No eligible adjacent response",
+              "count": 10,
+              "denominator": 62,
+              "percent": 16.13
+            }
+          ]
+        },
+        {
+          "reason": "language",
+          "label": "Language/understanding barrier",
+          "opportunities": 4,
+          "observed": {
+            "count": 4,
+            "denominator": 4,
+            "percent": 100.0
+          },
+          "strategies": [
+            {
+              "id": "respect_stop",
+              "label": "Stop acknowledgement wording",
+              "count": 0,
+              "denominator": 4,
+              "percent": 0.0
+            },
+            {
+              "id": "callback",
+              "label": "Callback/time offered",
+              "count": 2,
+              "denominator": 4,
+              "percent": 50.0
+            },
+            {
+              "id": "clarification",
+              "label": "Clarification/question",
+              "count": 0,
+              "denominator": 4,
+              "percent": 0.0
+            },
+            {
+              "id": "value",
+              "label": "Value/benefit explanation",
+              "count": 0,
+              "denominator": 4,
+              "percent": 0.0
+            },
+            {
+              "id": "handoff",
+              "label": "Executive/support follow-up",
+              "count": 1,
+              "denominator": 4,
+              "percent": 25.0
+            },
+            {
+              "id": "meeting",
+              "label": "Meeting proposed",
+              "count": 0,
+              "denominator": 4,
+              "percent": 0.0
+            },
+            {
+              "id": "acknowledgement",
+              "label": "Acknowledgement only",
+              "count": 0,
+              "denominator": 4,
+              "percent": 0.0
+            },
+            {
+              "id": "other_response",
+              "label": "Other bot response",
+              "count": 1,
+              "denominator": 4,
+              "percent": 25.0
+            },
+            {
+              "id": "not_observed",
+              "label": "No eligible adjacent response",
+              "count": 0,
+              "denominator": 4,
+              "percent": 0.0
+            }
+          ]
+        },
+        {
+          "reason": "price",
+          "label": "Price/value question",
+          "opportunities": 24,
+          "observed": {
+            "count": 22,
+            "denominator": 24,
+            "percent": 91.67
+          },
+          "strategies": [
+            {
+              "id": "respect_stop",
+              "label": "Stop acknowledgement wording",
+              "count": 0,
+              "denominator": 24,
+              "percent": 0.0
+            },
+            {
+              "id": "callback",
+              "label": "Callback/time offered",
+              "count": 6,
+              "denominator": 24,
+              "percent": 25.0
+            },
+            {
+              "id": "clarification",
+              "label": "Clarification/question",
+              "count": 6,
+              "denominator": 24,
+              "percent": 25.0
+            },
+            {
+              "id": "value",
+              "label": "Value/benefit explanation",
+              "count": 2,
+              "denominator": 24,
+              "percent": 8.33
+            },
+            {
+              "id": "handoff",
+              "label": "Executive/support follow-up",
+              "count": 0,
+              "denominator": 24,
+              "percent": 0.0
+            },
+            {
+              "id": "meeting",
+              "label": "Meeting proposed",
+              "count": 1,
+              "denominator": 24,
+              "percent": 4.17
+            },
+            {
+              "id": "acknowledgement",
+              "label": "Acknowledgement only",
+              "count": 4,
+              "denominator": 24,
+              "percent": 16.67
+            },
+            {
+              "id": "other_response",
+              "label": "Other bot response",
+              "count": 3,
+              "denominator": 24,
+              "percent": 12.5
+            },
+            {
+              "id": "not_observed",
+              "label": "No eligible adjacent response",
+              "count": 2,
+              "denominator": 24,
+              "percent": 8.33
+            }
+          ]
+        },
+        {
+          "reason": "service",
+          "label": "Existing service problem",
+          "opportunities": 1,
+          "observed": {
+            "count": 1,
+            "denominator": 1,
+            "percent": 100.0
+          },
+          "strategies": [
+            {
+              "id": "respect_stop",
+              "label": "Stop acknowledgement wording",
+              "count": 0,
+              "denominator": 1,
+              "percent": 0.0
+            },
+            {
+              "id": "callback",
+              "label": "Callback/time offered",
+              "count": 0,
+              "denominator": 1,
+              "percent": 0.0
+            },
+            {
+              "id": "clarification",
+              "label": "Clarification/question",
+              "count": 0,
+              "denominator": 1,
+              "percent": 0.0
+            },
+            {
+              "id": "value",
+              "label": "Value/benefit explanation",
+              "count": 1,
+              "denominator": 1,
+              "percent": 100.0
+            },
+            {
+              "id": "handoff",
+              "label": "Executive/support follow-up",
+              "count": 0,
+              "denominator": 1,
+              "percent": 0.0
+            },
+            {
+              "id": "meeting",
+              "label": "Meeting proposed",
+              "count": 0,
+              "denominator": 1,
+              "percent": 0.0
+            },
+            {
+              "id": "acknowledgement",
+              "label": "Acknowledgement only",
+              "count": 0,
+              "denominator": 1,
+              "percent": 0.0
+            },
+            {
+              "id": "other_response",
+              "label": "Other bot response",
+              "count": 0,
+              "denominator": 1,
+              "percent": 0.0
+            },
+            {
+              "id": "not_observed",
+              "label": "No eligible adjacent response",
+              "count": 0,
+              "denominator": 1,
+              "percent": 0.0
+            }
+          ]
+        },
+        {
+          "reason": "timing",
+          "label": "Busy/callback timing",
+          "opportunities": 41,
+          "observed": {
+            "count": 33,
+            "denominator": 41,
+            "percent": 80.49
+          },
+          "strategies": [
+            {
+              "id": "respect_stop",
+              "label": "Stop acknowledgement wording",
+              "count": 0,
+              "denominator": 41,
+              "percent": 0.0
+            },
+            {
+              "id": "callback",
+              "label": "Callback/time offered",
+              "count": 16,
+              "denominator": 41,
+              "percent": 39.02
+            },
+            {
+              "id": "clarification",
+              "label": "Clarification/question",
+              "count": 7,
+              "denominator": 41,
+              "percent": 17.07
+            },
+            {
+              "id": "value",
+              "label": "Value/benefit explanation",
+              "count": 5,
+              "denominator": 41,
+              "percent": 12.2
+            },
+            {
+              "id": "handoff",
+              "label": "Executive/support follow-up",
+              "count": 0,
+              "denominator": 41,
+              "percent": 0.0
+            },
+            {
+              "id": "meeting",
+              "label": "Meeting proposed",
+              "count": 2,
+              "denominator": 41,
+              "percent": 4.88
+            },
+            {
+              "id": "acknowledgement",
+              "label": "Acknowledgement only",
+              "count": 2,
+              "denominator": 41,
+              "percent": 4.88
+            },
+            {
+              "id": "other_response",
+              "label": "Other bot response",
+              "count": 1,
+              "denominator": 41,
+              "percent": 2.44
+            },
+            {
+              "id": "not_observed",
+              "label": "No eligible adjacent response",
+              "count": 8,
+              "denominator": 41,
+              "percent": 19.51
+            }
+          ]
+        }
+      ]
+    },
+    "sample_all": {
+      "calls": 5000,
+      "unique_sellers": 4511,
+      "coverage": {
+        "summary_present": 4994,
+        "recording_sample_member": 5000,
+        "has_usable_turns": 2207,
+        "seller_and_bot_turns": 2035,
+        "summary_only": 2787,
+        "neither_summary_nor_usable_turns": 6
+      },
+      "outcomes": {
+        "General (talked)": 1540,
+        "Call Later / Busy": 1185,
+        "Meeting Fixed": 1162,
+        "Not Interested": 1113
+      },
+      "reasons": [
+        {
+          "id": "contact_stop",
+          "label": "Stop/contact refusal",
+          "count": 18,
+          "denominator": 5000,
+          "percent": 0.36,
+          "next_step": "Confirm and honor contact restrictions; do not rebut a stop request."
+        },
+        {
+          "id": "language",
+          "label": "Language/understanding barrier",
+          "count": 20,
+          "denominator": 5000,
+          "percent": 0.4,
+          "next_step": "Confirm the preferred language and use a supported speaker; ask one short confirmation."
+        },
+        {
+          "id": "identity",
+          "label": "Identity/authority unresolved",
+          "count": 85,
+          "denominator": 5000,
+          "percent": 1.7,
+          "next_step": "Confirm business and decision-maker identity before a package pitch; do not assume the recipient is the seller."
+        },
+        {
+          "id": "service",
+          "label": "Existing service problem",
+          "count": 6,
+          "denominator": 5000,
+          "percent": 0.12,
+          "next_step": "Acknowledge the issue, capture a concrete example and route an accountable follow-up before selling."
+        },
+        {
+          "id": "timing",
+          "label": "Busy/callback timing",
+          "count": 1081,
+          "denominator": 5000,
+          "percent": 21.62,
+          "next_step": "Ask permission for a short call or agree a specific callback window; preserve the seller's answer."
+        },
+        {
+          "id": "price",
+          "label": "Price/value question",
+          "count": 124,
+          "denominator": 5000,
+          "percent": 2.48,
+          "next_step": "Ask which outcome matters and explain only catalog-backed benefits and prices; do not invent ROI."
+        },
+        {
+          "id": "continuity",
+          "label": "Existing executive/meeting",
+          "count": 73,
+          "denominator": 5000,
+          "percent": 1.46,
+          "next_step": "Confirm the prior executive and agreed next action; avoid duplicate meeting requests."
+        },
+        {
+          "id": "declined",
+          "label": "Interest or need declined",
+          "count": 758,
+          "denominator": 5000,
+          "percent": 15.16,
+          "next_step": "Clarify once if welcome, then respect the refusal; do not reinterpret silence as interest."
+        },
+        {
+          "id": "clarity",
+          "label": "Explanation or information needed",
+          "count": 490,
+          "denominator": 5000,
+          "percent": 9.8,
+          "next_step": "Answer one specific question in plain language, then check understanding before asking for a meeting."
+        },
+        {
+          "id": "no_response",
+          "label": "No usable seller response",
+          "count": 438,
+          "denominator": 5000,
+          "percent": 8.76,
+          "next_step": "Review audio and connection evidence; there may be no actual sales conversation to rebut."
+        },
+        {
+          "id": "early_end",
+          "label": "Conversation ended early",
+          "count": 1489,
+          "denominator": 5000,
+          "percent": 29.78,
+          "next_step": "Inspect the ending and turn coverage before attributing rejection; offer a consented retry only when appropriate."
+        },
+        {
+          "id": "unconfirmed",
+          "label": "No clear next step recorded",
+          "count": 55,
+          "denominator": 5000,
+          "percent": 1.1,
+          "next_step": "Ask one explicit next-step question; distinguish willingness, booked time and completed meeting."
+        }
+      ],
+      "primary_reasons": [
+        {
+          "id": "clarity",
+          "count": 291,
+          "denominator": 5000,
+          "percent": 5.82
+        },
+        {
+          "id": "contact_stop",
+          "count": 10,
+          "denominator": 5000,
+          "percent": 0.2
+        },
+        {
+          "id": "continuity",
+          "count": 51,
+          "denominator": 5000,
+          "percent": 1.02
+        },
+        {
+          "id": "declined",
+          "count": 538,
+          "denominator": 5000,
+          "percent": 10.76
+        },
+        {
+          "id": "early_end",
+          "count": 946,
+          "denominator": 5000,
+          "percent": 18.92
+        },
+        {
+          "id": "identity",
+          "count": 85,
+          "denominator": 5000,
+          "percent": 1.7
+        },
+        {
+          "id": "language",
+          "count": 11,
+          "denominator": 5000,
+          "percent": 0.22
+        },
+        {
+          "id": "no_response",
+          "count": 410,
+          "denominator": 5000,
+          "percent": 8.2
+        },
+        {
+          "id": "price",
+          "count": 79,
+          "denominator": 5000,
+          "percent": 1.58
+        },
+        {
+          "id": "service",
+          "count": 5,
+          "denominator": 5000,
+          "percent": 0.1
+        },
+        {
+          "id": "timing",
+          "count": 1016,
+          "denominator": 5000,
+          "percent": 20.32
+        },
+        {
+          "id": "unconfirmed",
+          "count": 3,
+          "denominator": 5000,
+          "percent": 0.06
+        },
+        {
+          "id": "unknown",
+          "count": 1555,
+          "denominator": 5000,
+          "percent": 31.1
+        }
+      ],
+      "no_detected_reason": {
+        "count": 1555,
+        "denominator": 5000,
+        "percent": 31.1
+      },
+      "response_calls": {
+        "count": 512,
+        "denominator": 574,
+        "percent": 89.2
+      },
+      "response_opportunity_calls": 574,
+      "responses": [
+        {
+          "reason": "clarity",
+          "label": "Explanation or information needed",
+          "opportunities": 140,
+          "observed": {
+            "count": 129,
+            "denominator": 140,
+            "percent": 92.14
+          },
+          "strategies": [
+            {
+              "id": "respect_stop",
+              "label": "Stop acknowledgement wording",
+              "count": 0,
+              "denominator": 140,
+              "percent": 0.0
+            },
+            {
+              "id": "callback",
+              "label": "Callback/time offered",
+              "count": 69,
+              "denominator": 140,
+              "percent": 49.29
+            },
+            {
+              "id": "clarification",
+              "label": "Clarification/question",
+              "count": 37,
+              "denominator": 140,
+              "percent": 26.43
+            },
+            {
+              "id": "value",
+              "label": "Value/benefit explanation",
+              "count": 9,
+              "denominator": 140,
+              "percent": 6.43
+            },
+            {
+              "id": "handoff",
+              "label": "Executive/support follow-up",
+              "count": 4,
+              "denominator": 140,
+              "percent": 2.86
+            },
+            {
+              "id": "meeting",
+              "label": "Meeting proposed",
+              "count": 1,
+              "denominator": 140,
+              "percent": 0.71
+            },
+            {
+              "id": "acknowledgement",
+              "label": "Acknowledgement only",
+              "count": 3,
+              "denominator": 140,
+              "percent": 2.14
+            },
+            {
+              "id": "other_response",
+              "label": "Other bot response",
+              "count": 6,
+              "denominator": 140,
+              "percent": 4.29
+            },
+            {
+              "id": "not_observed",
+              "label": "No eligible adjacent response",
+              "count": 11,
+              "denominator": 140,
+              "percent": 7.86
+            }
+          ]
+        },
+        {
+          "reason": "contact_stop",
+          "label": "Stop/contact refusal",
+          "opportunities": 11,
+          "observed": {
+            "count": 8,
+            "denominator": 11,
+            "percent": 72.73
+          },
+          "strategies": [
+            {
+              "id": "respect_stop",
+              "label": "Stop acknowledgement wording",
+              "count": 0,
+              "denominator": 11,
+              "percent": 0.0
+            },
+            {
+              "id": "callback",
+              "label": "Callback/time offered",
+              "count": 6,
+              "denominator": 11,
+              "percent": 54.55
+            },
+            {
+              "id": "clarification",
+              "label": "Clarification/question",
+              "count": 0,
+              "denominator": 11,
+              "percent": 0.0
+            },
+            {
+              "id": "value",
+              "label": "Value/benefit explanation",
+              "count": 0,
+              "denominator": 11,
+              "percent": 0.0
+            },
+            {
+              "id": "handoff",
+              "label": "Executive/support follow-up",
+              "count": 0,
+              "denominator": 11,
+              "percent": 0.0
+            },
+            {
+              "id": "meeting",
+              "label": "Meeting proposed",
+              "count": 0,
+              "denominator": 11,
+              "percent": 0.0
+            },
+            {
+              "id": "acknowledgement",
+              "label": "Acknowledgement only",
+              "count": 1,
+              "denominator": 11,
+              "percent": 9.09
+            },
+            {
+              "id": "other_response",
+              "label": "Other bot response",
+              "count": 1,
+              "denominator": 11,
+              "percent": 9.09
+            },
+            {
+              "id": "not_observed",
+              "label": "No eligible adjacent response",
+              "count": 3,
+              "denominator": 11,
+              "percent": 27.27
+            }
+          ]
+        },
+        {
+          "reason": "continuity",
+          "label": "Existing executive/meeting",
+          "opportunities": 17,
+          "observed": {
+            "count": 16,
+            "denominator": 17,
+            "percent": 94.12
+          },
+          "strategies": [
+            {
+              "id": "respect_stop",
+              "label": "Stop acknowledgement wording",
+              "count": 0,
+              "denominator": 17,
+              "percent": 0.0
+            },
+            {
+              "id": "callback",
+              "label": "Callback/time offered",
+              "count": 5,
+              "denominator": 17,
+              "percent": 29.41
+            },
+            {
+              "id": "clarification",
+              "label": "Clarification/question",
+              "count": 10,
+              "denominator": 17,
+              "percent": 58.82
+            },
+            {
+              "id": "value",
+              "label": "Value/benefit explanation",
+              "count": 1,
+              "denominator": 17,
+              "percent": 5.88
+            },
+            {
+              "id": "handoff",
+              "label": "Executive/support follow-up",
+              "count": 0,
+              "denominator": 17,
+              "percent": 0.0
+            },
+            {
+              "id": "meeting",
+              "label": "Meeting proposed",
+              "count": 0,
+              "denominator": 17,
+              "percent": 0.0
+            },
+            {
+              "id": "acknowledgement",
+              "label": "Acknowledgement only",
+              "count": 0,
+              "denominator": 17,
+              "percent": 0.0
+            },
+            {
+              "id": "other_response",
+              "label": "Other bot response",
+              "count": 0,
+              "denominator": 17,
+              "percent": 0.0
+            },
+            {
+              "id": "not_observed",
+              "label": "No eligible adjacent response",
+              "count": 1,
+              "denominator": 17,
+              "percent": 5.88
+            }
+          ]
+        },
+        {
+          "reason": "declined",
+          "label": "Interest or need declined",
+          "opportunities": 109,
+          "observed": {
+            "count": 94,
+            "denominator": 109,
+            "percent": 86.24
+          },
+          "strategies": [
+            {
+              "id": "respect_stop",
+              "label": "Stop acknowledgement wording",
+              "count": 0,
+              "denominator": 109,
+              "percent": 0.0
+            },
+            {
+              "id": "callback",
+              "label": "Callback/time offered",
+              "count": 37,
+              "denominator": 109,
+              "percent": 33.94
+            },
+            {
+              "id": "clarification",
+              "label": "Clarification/question",
+              "count": 23,
+              "denominator": 109,
+              "percent": 21.1
+            },
+            {
+              "id": "value",
+              "label": "Value/benefit explanation",
+              "count": 11,
+              "denominator": 109,
+              "percent": 10.09
+            },
+            {
+              "id": "handoff",
+              "label": "Executive/support follow-up",
+              "count": 2,
+              "denominator": 109,
+              "percent": 1.83
+            },
+            {
+              "id": "meeting",
+              "label": "Meeting proposed",
+              "count": 2,
+              "denominator": 109,
+              "percent": 1.83
+            },
+            {
+              "id": "acknowledgement",
+              "label": "Acknowledgement only",
+              "count": 10,
+              "denominator": 109,
+              "percent": 9.17
+            },
+            {
+              "id": "other_response",
+              "label": "Other bot response",
+              "count": 9,
+              "denominator": 109,
+              "percent": 8.26
+            },
+            {
+              "id": "not_observed",
+              "label": "No eligible adjacent response",
+              "count": 15,
+              "denominator": 109,
+              "percent": 13.76
+            }
+          ]
+        },
+        {
+          "reason": "identity",
+          "label": "Identity/authority unresolved",
+          "opportunities": 6,
+          "observed": {
+            "count": 5,
+            "denominator": 6,
+            "percent": 83.33
+          },
+          "strategies": [
+            {
+              "id": "respect_stop",
+              "label": "Stop acknowledgement wording",
+              "count": 0,
+              "denominator": 6,
+              "percent": 0.0
+            },
+            {
+              "id": "callback",
+              "label": "Callback/time offered",
+              "count": 1,
+              "denominator": 6,
+              "percent": 16.67
+            },
+            {
+              "id": "clarification",
+              "label": "Clarification/question",
+              "count": 1,
+              "denominator": 6,
+              "percent": 16.67
+            },
+            {
+              "id": "value",
+              "label": "Value/benefit explanation",
+              "count": 0,
+              "denominator": 6,
+              "percent": 0.0
+            },
+            {
+              "id": "handoff",
+              "label": "Executive/support follow-up",
+              "count": 0,
+              "denominator": 6,
+              "percent": 0.0
+            },
+            {
+              "id": "meeting",
+              "label": "Meeting proposed",
+              "count": 0,
+              "denominator": 6,
+              "percent": 0.0
+            },
+            {
+              "id": "acknowledgement",
+              "label": "Acknowledgement only",
+              "count": 0,
+              "denominator": 6,
+              "percent": 0.0
+            },
+            {
+              "id": "other_response",
+              "label": "Other bot response",
+              "count": 3,
+              "denominator": 6,
+              "percent": 50.0
+            },
+            {
+              "id": "not_observed",
+              "label": "No eligible adjacent response",
+              "count": 1,
+              "denominator": 6,
+              "percent": 16.67
+            }
+          ]
+        },
+        {
+          "reason": "language",
+          "label": "Language/understanding barrier",
+          "opportunities": 12,
+          "observed": {
+            "count": 12,
+            "denominator": 12,
+            "percent": 100.0
+          },
+          "strategies": [
+            {
+              "id": "respect_stop",
+              "label": "Stop acknowledgement wording",
+              "count": 0,
+              "denominator": 12,
+              "percent": 0.0
+            },
+            {
+              "id": "callback",
+              "label": "Callback/time offered",
+              "count": 5,
+              "denominator": 12,
+              "percent": 41.67
+            },
+            {
+              "id": "clarification",
+              "label": "Clarification/question",
+              "count": 3,
+              "denominator": 12,
+              "percent": 25.0
+            },
+            {
+              "id": "value",
+              "label": "Value/benefit explanation",
+              "count": 0,
+              "denominator": 12,
+              "percent": 0.0
+            },
+            {
+              "id": "handoff",
+              "label": "Executive/support follow-up",
+              "count": 1,
+              "denominator": 12,
+              "percent": 8.33
+            },
+            {
+              "id": "meeting",
+              "label": "Meeting proposed",
+              "count": 0,
+              "denominator": 12,
+              "percent": 0.0
+            },
+            {
+              "id": "acknowledgement",
+              "label": "Acknowledgement only",
+              "count": 0,
+              "denominator": 12,
+              "percent": 0.0
+            },
+            {
+              "id": "other_response",
+              "label": "Other bot response",
+              "count": 3,
+              "denominator": 12,
+              "percent": 25.0
+            },
+            {
+              "id": "not_observed",
+              "label": "No eligible adjacent response",
+              "count": 0,
+              "denominator": 12,
+              "percent": 0.0
+            }
+          ]
+        },
+        {
+          "reason": "price",
+          "label": "Price/value question",
+          "opportunities": 73,
+          "observed": {
+            "count": 68,
+            "denominator": 73,
+            "percent": 93.15
+          },
+          "strategies": [
+            {
+              "id": "respect_stop",
+              "label": "Stop acknowledgement wording",
+              "count": 0,
+              "denominator": 73,
+              "percent": 0.0
+            },
+            {
+              "id": "callback",
+              "label": "Callback/time offered",
+              "count": 17,
+              "denominator": 73,
+              "percent": 23.29
+            },
+            {
+              "id": "clarification",
+              "label": "Clarification/question",
+              "count": 30,
+              "denominator": 73,
+              "percent": 41.1
+            },
+            {
+              "id": "value",
+              "label": "Value/benefit explanation",
+              "count": 3,
+              "denominator": 73,
+              "percent": 4.11
+            },
+            {
+              "id": "handoff",
+              "label": "Executive/support follow-up",
+              "count": 3,
+              "denominator": 73,
+              "percent": 4.11
+            },
+            {
+              "id": "meeting",
+              "label": "Meeting proposed",
+              "count": 2,
+              "denominator": 73,
+              "percent": 2.74
+            },
+            {
+              "id": "acknowledgement",
+              "label": "Acknowledgement only",
+              "count": 9,
+              "denominator": 73,
+              "percent": 12.33
+            },
+            {
+              "id": "other_response",
+              "label": "Other bot response",
+              "count": 4,
+              "denominator": 73,
+              "percent": 5.48
+            },
+            {
+              "id": "not_observed",
+              "label": "No eligible adjacent response",
+              "count": 5,
+              "denominator": 73,
+              "percent": 6.85
+            }
+          ]
+        },
+        {
+          "reason": "service",
+          "label": "Existing service problem",
+          "opportunities": 4,
+          "observed": {
+            "count": 4,
+            "denominator": 4,
+            "percent": 100.0
+          },
+          "strategies": [
+            {
+              "id": "respect_stop",
+              "label": "Stop acknowledgement wording",
+              "count": 0,
+              "denominator": 4,
+              "percent": 0.0
+            },
+            {
+              "id": "callback",
+              "label": "Callback/time offered",
+              "count": 0,
+              "denominator": 4,
+              "percent": 0.0
+            },
+            {
+              "id": "clarification",
+              "label": "Clarification/question",
+              "count": 2,
+              "denominator": 4,
+              "percent": 50.0
+            },
+            {
+              "id": "value",
+              "label": "Value/benefit explanation",
+              "count": 2,
+              "denominator": 4,
+              "percent": 50.0
+            },
+            {
+              "id": "handoff",
+              "label": "Executive/support follow-up",
+              "count": 0,
+              "denominator": 4,
+              "percent": 0.0
+            },
+            {
+              "id": "meeting",
+              "label": "Meeting proposed",
+              "count": 0,
+              "denominator": 4,
+              "percent": 0.0
+            },
+            {
+              "id": "acknowledgement",
+              "label": "Acknowledgement only",
+              "count": 0,
+              "denominator": 4,
+              "percent": 0.0
+            },
+            {
+              "id": "other_response",
+              "label": "Other bot response",
+              "count": 0,
+              "denominator": 4,
+              "percent": 0.0
+            },
+            {
+              "id": "not_observed",
+              "label": "No eligible adjacent response",
+              "count": 0,
+              "denominator": 4,
+              "percent": 0.0
+            }
+          ]
+        },
+        {
+          "reason": "timing",
+          "label": "Busy/callback timing",
+          "opportunities": 294,
+          "observed": {
+            "count": 258,
+            "denominator": 294,
+            "percent": 87.76
+          },
+          "strategies": [
+            {
+              "id": "respect_stop",
+              "label": "Stop acknowledgement wording",
+              "count": 0,
+              "denominator": 294,
+              "percent": 0.0
+            },
+            {
+              "id": "callback",
+              "label": "Callback/time offered",
+              "count": 139,
+              "denominator": 294,
+              "percent": 47.28
+            },
+            {
+              "id": "clarification",
+              "label": "Clarification/question",
+              "count": 69,
+              "denominator": 294,
+              "percent": 23.47
+            },
+            {
+              "id": "value",
+              "label": "Value/benefit explanation",
+              "count": 14,
+              "denominator": 294,
+              "percent": 4.76
+            },
+            {
+              "id": "handoff",
+              "label": "Executive/support follow-up",
+              "count": 2,
+              "denominator": 294,
+              "percent": 0.68
+            },
+            {
+              "id": "meeting",
+              "label": "Meeting proposed",
+              "count": 5,
+              "denominator": 294,
+              "percent": 1.7
+            },
+            {
+              "id": "acknowledgement",
+              "label": "Acknowledgement only",
+              "count": 22,
+              "denominator": 294,
+              "percent": 7.48
+            },
+            {
+              "id": "other_response",
+              "label": "Other bot response",
+              "count": 7,
+              "denominator": 294,
+              "percent": 2.38
+            },
+            {
+              "id": "not_observed",
+              "label": "No eligible adjacent response",
+              "count": 36,
+              "denominator": 294,
+              "percent": 12.24
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "personas": [
+    {
+      "id": "timing",
+      "label": "Time-constrained / callback first",
+      "calls": 846,
+      "unique_sellers": 814,
+      "outcomes": {
+        "no_meeting_claim": 762,
+        "meeting_claim": 84
+      },
+      "meeting_share": {
+        "count": 84,
+        "denominator": 846,
+        "percent": 9.93
+      },
+      "descriptive_interval": [
+        8.1,
+        12.1
+      ],
+      "mixed_outcome_sellers": 2,
+      "with_usable_turns": 535,
+      "response_comparison": [
+        {
+          "response": "callback",
+          "label": "Callback/time offered",
+          "meeting_claim": 16,
+          "no_meeting_claim": 123,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 16,
+            "denominator": 139,
+            "percent": 11.51
+          }
+        },
+        {
+          "response": "clarification",
+          "label": "Clarification/question",
+          "meeting_claim": 9,
+          "no_meeting_claim": 60,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 9,
+            "denominator": 69,
+            "percent": 13.04
+          }
+        },
+        {
+          "response": "value",
+          "label": "Value/benefit explanation",
+          "meeting_claim": 1,
+          "no_meeting_claim": 13,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 1,
+            "denominator": 14,
+            "percent": 7.14
+          }
+        },
+        {
+          "response": "handoff",
+          "label": "Executive/support follow-up",
+          "meeting_claim": 0,
+          "no_meeting_claim": 2,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 0,
+            "denominator": 2,
+            "percent": 0.0
+          }
+        },
+        {
+          "response": "meeting",
+          "label": "Meeting proposed",
+          "meeting_claim": 1,
+          "no_meeting_claim": 4,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 1,
+            "denominator": 5,
+            "percent": 20.0
+          }
+        },
+        {
+          "response": "acknowledgement",
+          "label": "Acknowledgement only",
+          "meeting_claim": 3,
+          "no_meeting_claim": 19,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 3,
+            "denominator": 22,
+            "percent": 13.64
+          }
+        },
+        {
+          "response": "other_response",
+          "label": "Other bot response",
+          "meeting_claim": 0,
+          "no_meeting_claim": 7,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 0,
+            "denominator": 7,
+            "percent": 0.0
+          }
+        },
+        {
+          "response": "not_observed",
+          "label": "No eligible adjacent response",
+          "meeting_claim": 1,
+          "no_meeting_claim": 35,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 1,
+            "denominator": 36,
+            "percent": 2.78
+          }
+        }
+      ],
+      "strategy": "Ask permission for a short call or agree a specific callback window; preserve the seller's answer.",
+      "assignment": "Current-call cue; overlapping, weak, unreviewed. Not a permanent seller label."
+    },
+    {
+      "id": "clarity",
+      "label": "Needs a concrete explanation",
+      "calls": 237,
+      "unique_sellers": 237,
+      "outcomes": {
+        "no_meeting_claim": 174,
+        "meeting_claim": 63
+      },
+      "meeting_share": {
+        "count": 63,
+        "denominator": 237,
+        "percent": 26.58
+      },
+      "descriptive_interval": [
+        21.4,
+        32.5
+      ],
+      "mixed_outcome_sellers": 0,
+      "with_usable_turns": 193,
+      "response_comparison": [
+        {
+          "response": "callback",
+          "label": "Callback/time offered",
+          "meeting_claim": 21,
+          "no_meeting_claim": 48,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 21,
+            "denominator": 69,
+            "percent": 30.43
+          }
+        },
+        {
+          "response": "clarification",
+          "label": "Clarification/question",
+          "meeting_claim": 11,
+          "no_meeting_claim": 26,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 11,
+            "denominator": 37,
+            "percent": 29.73
+          }
+        },
+        {
+          "response": "value",
+          "label": "Value/benefit explanation",
+          "meeting_claim": 2,
+          "no_meeting_claim": 7,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 2,
+            "denominator": 9,
+            "percent": 22.22
+          }
+        },
+        {
+          "response": "handoff",
+          "label": "Executive/support follow-up",
+          "meeting_claim": 1,
+          "no_meeting_claim": 3,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 1,
+            "denominator": 4,
+            "percent": 25.0
+          }
+        },
+        {
+          "response": "meeting",
+          "label": "Meeting proposed",
+          "meeting_claim": 0,
+          "no_meeting_claim": 1,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 0,
+            "denominator": 1,
+            "percent": 0.0
+          }
+        },
+        {
+          "response": "acknowledgement",
+          "label": "Acknowledgement only",
+          "meeting_claim": 1,
+          "no_meeting_claim": 2,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 1,
+            "denominator": 3,
+            "percent": 33.33
+          }
+        },
+        {
+          "response": "other_response",
+          "label": "Other bot response",
+          "meeting_claim": 1,
+          "no_meeting_claim": 5,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 1,
+            "denominator": 6,
+            "percent": 16.67
+          }
+        },
+        {
+          "response": "not_observed",
+          "label": "No eligible adjacent response",
+          "meeting_claim": 3,
+          "no_meeting_claim": 8,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 3,
+            "denominator": 11,
+            "percent": 27.27
+          }
+        }
+      ],
+      "strategy": "Answer one specific question in plain language, then check understanding before asking for a meeting.",
+      "assignment": "Current-call cue; overlapping, weak, unreviewed. Not a permanent seller label."
+    },
+    {
+      "id": "price",
+      "label": "Value and price questions",
+      "calls": 114,
+      "unique_sellers": 114,
+      "outcomes": {
+        "no_meeting_claim": 81,
+        "meeting_claim": 33
+      },
+      "meeting_share": {
+        "count": 33,
+        "denominator": 114,
+        "percent": 28.95
+      },
+      "descriptive_interval": [
+        21.4,
+        37.9
+      ],
+      "mixed_outcome_sellers": 0,
+      "with_usable_turns": 88,
+      "response_comparison": [
+        {
+          "response": "callback",
+          "label": "Callback/time offered",
+          "meeting_claim": 4,
+          "no_meeting_claim": 13,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 4,
+            "denominator": 17,
+            "percent": 23.53
+          }
+        },
+        {
+          "response": "clarification",
+          "label": "Clarification/question",
+          "meeting_claim": 9,
+          "no_meeting_claim": 21,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 9,
+            "denominator": 30,
+            "percent": 30.0
+          }
+        },
+        {
+          "response": "value",
+          "label": "Value/benefit explanation",
+          "meeting_claim": 0,
+          "no_meeting_claim": 3,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 0,
+            "denominator": 3,
+            "percent": 0.0
+          }
+        },
+        {
+          "response": "handoff",
+          "label": "Executive/support follow-up",
+          "meeting_claim": 2,
+          "no_meeting_claim": 1,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 2,
+            "denominator": 3,
+            "percent": 66.67
+          }
+        },
+        {
+          "response": "meeting",
+          "label": "Meeting proposed",
+          "meeting_claim": 0,
+          "no_meeting_claim": 2,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 0,
+            "denominator": 2,
+            "percent": 0.0
+          }
+        },
+        {
+          "response": "acknowledgement",
+          "label": "Acknowledgement only",
+          "meeting_claim": 2,
+          "no_meeting_claim": 7,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 2,
+            "denominator": 9,
+            "percent": 22.22
+          }
+        },
+        {
+          "response": "other_response",
+          "label": "Other bot response",
+          "meeting_claim": 0,
+          "no_meeting_claim": 4,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 0,
+            "denominator": 4,
+            "percent": 0.0
+          }
+        },
+        {
+          "response": "not_observed",
+          "label": "No eligible adjacent response",
+          "meeting_claim": 2,
+          "no_meeting_claim": 3,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 2,
+            "denominator": 5,
+            "percent": 40.0
+          }
+        }
+      ],
+      "strategy": "Ask which outcome matters and explain only catalog-backed benefits and prices; do not invent ROI.",
+      "assignment": "Current-call cue; overlapping, weak, unreviewed. Not a permanent seller label."
+    },
+    {
+      "id": "service",
+      "label": "Service recovery first",
+      "calls": 6,
+      "unique_sellers": 6,
+      "outcomes": {
+        "no_meeting_claim": 5,
+        "meeting_claim": 1
+      },
+      "meeting_share": {
+        "count": 1,
+        "denominator": 6,
+        "percent": 16.67
+      },
+      "descriptive_interval": [
+        3.0,
+        56.4
+      ],
+      "mixed_outcome_sellers": 0,
+      "with_usable_turns": 5,
+      "response_comparison": [
+        {
+          "response": "clarification",
+          "label": "Clarification/question",
+          "meeting_claim": 0,
+          "no_meeting_claim": 2,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 0,
+            "denominator": 2,
+            "percent": 0.0
+          }
+        },
+        {
+          "response": "value",
+          "label": "Value/benefit explanation",
+          "meeting_claim": 0,
+          "no_meeting_claim": 2,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 0,
+            "denominator": 2,
+            "percent": 0.0
+          }
+        }
+      ],
+      "strategy": "Acknowledge the issue, capture a concrete example and route an accountable follow-up before selling.",
+      "assignment": "Current-call cue; overlapping, weak, unreviewed. Not a permanent seller label."
+    },
+    {
+      "id": "continuity",
+      "label": "Relationship continuity",
+      "calls": 62,
+      "unique_sellers": 62,
+      "outcomes": {
+        "no_meeting_claim": 55,
+        "meeting_claim": 7
+      },
+      "meeting_share": {
+        "count": 7,
+        "denominator": 62,
+        "percent": 11.29
+      },
+      "descriptive_interval": [
+        5.6,
+        21.5
+      ],
+      "mixed_outcome_sellers": 0,
+      "with_usable_turns": 47,
+      "response_comparison": [
+        {
+          "response": "callback",
+          "label": "Callback/time offered",
+          "meeting_claim": 1,
+          "no_meeting_claim": 4,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 1,
+            "denominator": 5,
+            "percent": 20.0
+          }
+        },
+        {
+          "response": "clarification",
+          "label": "Clarification/question",
+          "meeting_claim": 1,
+          "no_meeting_claim": 9,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 1,
+            "denominator": 10,
+            "percent": 10.0
+          }
+        },
+        {
+          "response": "value",
+          "label": "Value/benefit explanation",
+          "meeting_claim": 1,
+          "no_meeting_claim": 0,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 1,
+            "denominator": 1,
+            "percent": 100.0
+          }
+        },
+        {
+          "response": "not_observed",
+          "label": "No eligible adjacent response",
+          "meeting_claim": 0,
+          "no_meeting_claim": 1,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 0,
+            "denominator": 1,
+            "percent": 0.0
+          }
+        }
+      ],
+      "strategy": "Confirm the prior executive and agreed next action; avoid duplicate meeting requests.",
+      "assignment": "Current-call cue; overlapping, weak, unreviewed. Not a permanent seller label."
+    },
+    {
+      "id": "language",
+      "label": "Language confirmation first",
+      "calls": 15,
+      "unique_sellers": 15,
+      "outcomes": {
+        "no_meeting_claim": 12,
+        "meeting_claim": 3
+      },
+      "meeting_share": {
+        "count": 3,
+        "denominator": 15,
+        "percent": 20.0
+      },
+      "descriptive_interval": [
+        7.0,
+        45.2
+      ],
+      "mixed_outcome_sellers": 0,
+      "with_usable_turns": 13,
+      "response_comparison": [
+        {
+          "response": "callback",
+          "label": "Callback/time offered",
+          "meeting_claim": 1,
+          "no_meeting_claim": 4,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 1,
+            "denominator": 5,
+            "percent": 20.0
+          }
+        },
+        {
+          "response": "clarification",
+          "label": "Clarification/question",
+          "meeting_claim": 1,
+          "no_meeting_claim": 2,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 1,
+            "denominator": 3,
+            "percent": 33.33
+          }
+        },
+        {
+          "response": "handoff",
+          "label": "Executive/support follow-up",
+          "meeting_claim": 0,
+          "no_meeting_claim": 1,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 0,
+            "denominator": 1,
+            "percent": 0.0
+          }
+        },
+        {
+          "response": "other_response",
+          "label": "Other bot response",
+          "meeting_claim": 0,
+          "no_meeting_claim": 3,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 0,
+            "denominator": 3,
+            "percent": 0.0
+          }
+        }
+      ],
+      "strategy": "Confirm the preferred language and use a supported speaker; ask one short confirmation.",
+      "assignment": "Current-call cue; overlapping, weak, unreviewed. Not a permanent seller label."
+    },
+    {
+      "id": "identity",
+      "label": "Identity confirmation first",
+      "calls": 64,
+      "unique_sellers": 64,
+      "outcomes": {
+        "no_meeting_claim": 64
+      },
+      "meeting_share": {
+        "count": 0,
+        "denominator": 64,
+        "percent": 0.0
+      },
+      "descriptive_interval": [
+        0.0,
+        5.7
+      ],
+      "mixed_outcome_sellers": 0,
+      "with_usable_turns": 15,
+      "response_comparison": [
+        {
+          "response": "callback",
+          "label": "Callback/time offered",
+          "meeting_claim": 0,
+          "no_meeting_claim": 1,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 0,
+            "denominator": 1,
+            "percent": 0.0
+          }
+        },
+        {
+          "response": "clarification",
+          "label": "Clarification/question",
+          "meeting_claim": 0,
+          "no_meeting_claim": 1,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 0,
+            "denominator": 1,
+            "percent": 0.0
+          }
+        },
+        {
+          "response": "other_response",
+          "label": "Other bot response",
+          "meeting_claim": 0,
+          "no_meeting_claim": 3,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 0,
+            "denominator": 3,
+            "percent": 0.0
+          }
+        },
+        {
+          "response": "not_observed",
+          "label": "No eligible adjacent response",
+          "meeting_claim": 0,
+          "no_meeting_claim": 1,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 0,
+            "denominator": 1,
+            "percent": 0.0
+          }
+        }
+      ],
+      "strategy": "Confirm business and decision-maker identity before a package pitch; do not assume the recipient is the seller.",
+      "assignment": "Current-call cue; overlapping, weak, unreviewed. Not a permanent seller label."
+    },
+    {
+      "id": "contact_stop",
+      "label": "Contact boundaries first",
+      "calls": 13,
+      "unique_sellers": 13,
+      "outcomes": {
+        "no_meeting_claim": 12,
+        "meeting_claim": 1
+      },
+      "meeting_share": {
+        "count": 1,
+        "denominator": 13,
+        "percent": 7.69
+      },
+      "descriptive_interval": [
+        1.4,
+        33.3
+      ],
+      "mixed_outcome_sellers": 0,
+      "with_usable_turns": 13,
+      "response_comparison": [
+        {
+          "response": "callback",
+          "label": "Callback/time offered",
+          "meeting_claim": 0,
+          "no_meeting_claim": 6,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 0,
+            "denominator": 6,
+            "percent": 0.0
+          }
+        },
+        {
+          "response": "acknowledgement",
+          "label": "Acknowledgement only",
+          "meeting_claim": 0,
+          "no_meeting_claim": 1,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 0,
+            "denominator": 1,
+            "percent": 0.0
+          }
+        },
+        {
+          "response": "other_response",
+          "label": "Other bot response",
+          "meeting_claim": 0,
+          "no_meeting_claim": 1,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 0,
+            "denominator": 1,
+            "percent": 0.0
+          }
+        },
+        {
+          "response": "not_observed",
+          "label": "No eligible adjacent response",
+          "meeting_claim": 1,
+          "no_meeting_claim": 2,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 1,
+            "denominator": 3,
+            "percent": 33.33
+          }
+        }
+      ],
+      "strategy": "Confirm and honor contact restrictions; do not rebut a stop request.",
+      "assignment": "Current-call cue; overlapping, weak, unreviewed. Not a permanent seller label."
+    },
+    {
+      "id": "declined",
+      "label": "Respect a stated lack of need",
+      "calls": 739,
+      "unique_sellers": 711,
+      "outcomes": {
+        "no_meeting_claim": 699,
+        "meeting_claim": 40
+      },
+      "meeting_share": {
+        "count": 40,
+        "denominator": 739,
+        "percent": 5.41
+      },
+      "descriptive_interval": [
+        4.0,
+        7.3
+      ],
+      "mixed_outcome_sellers": 0,
+      "with_usable_turns": 455,
+      "response_comparison": [
+        {
+          "response": "callback",
+          "label": "Callback/time offered",
+          "meeting_claim": 1,
+          "no_meeting_claim": 36,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 1,
+            "denominator": 37,
+            "percent": 2.7
+          }
+        },
+        {
+          "response": "clarification",
+          "label": "Clarification/question",
+          "meeting_claim": 1,
+          "no_meeting_claim": 22,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 1,
+            "denominator": 23,
+            "percent": 4.35
+          }
+        },
+        {
+          "response": "value",
+          "label": "Value/benefit explanation",
+          "meeting_claim": 1,
+          "no_meeting_claim": 10,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 1,
+            "denominator": 11,
+            "percent": 9.09
+          }
+        },
+        {
+          "response": "handoff",
+          "label": "Executive/support follow-up",
+          "meeting_claim": 0,
+          "no_meeting_claim": 2,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 0,
+            "denominator": 2,
+            "percent": 0.0
+          }
+        },
+        {
+          "response": "meeting",
+          "label": "Meeting proposed",
+          "meeting_claim": 0,
+          "no_meeting_claim": 2,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 0,
+            "denominator": 2,
+            "percent": 0.0
+          }
+        },
+        {
+          "response": "acknowledgement",
+          "label": "Acknowledgement only",
+          "meeting_claim": 1,
+          "no_meeting_claim": 9,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 1,
+            "denominator": 10,
+            "percent": 10.0
+          }
+        },
+        {
+          "response": "other_response",
+          "label": "Other bot response",
+          "meeting_claim": 0,
+          "no_meeting_claim": 9,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 0,
+            "denominator": 9,
+            "percent": 0.0
+          }
+        },
+        {
+          "response": "not_observed",
+          "label": "No eligible adjacent response",
+          "meeting_claim": 0,
+          "no_meeting_claim": 15,
+          "disputed": 0,
+          "meeting_share": {
+            "count": 0,
+            "denominator": 15,
+            "percent": 0.0
+          }
+        }
+      ],
+      "strategy": "Clarify once if welcome, then respect the refusal; do not reinterpret silence as interest.",
+      "assignment": "Current-call cue; overlapping, weak, unreviewed. Not a permanent seller label."
+    },
+    {
+      "id": "unclassified",
+      "label": "No supported need detected — confirm first",
+      "calls": 3262,
+      "unique_sellers": 3003,
+      "outcomes": {
+        "no_meeting_claim": 2309,
+        "meeting_claim": 953
+      },
+      "meeting_share": {
+        "count": 953,
+        "denominator": 3262,
+        "percent": 29.22
+      },
+      "descriptive_interval": [
+        27.7,
+        30.8
+      ],
+      "mixed_outcome_sellers": 22,
+      "with_usable_turns": 1131,
+      "response_comparison": [],
+      "strategy": "Ask permission, confirm language and current need; avoid inventing a stable personality.",
+      "assignment": "Current-call cue; overlapping, weak, unreviewed. Not a permanent seller label."
+    }
+  ],
+  "quality": {
+    "calls_with_turn_conflicts": 472,
+    "conflicting_slots": 3823,
+    "invalid_timing_or_ordinal": 32,
+    "exact_duplicate": 3
+  },
+  "canonical_calls": 269455,
+  "recording_scope": {
+    "memberships": 5000,
+    "joined": 5000,
+    "raw_turn_linked": 2494,
+    "audio_listened": 0,
+    "audio_note": "5,000 recording memberships; no audio was fetched or listened to in this study. Supplied role-labelled turns are machine transcripts, not newly validated recordings."
+  },
+  "limitations": [
+    "Association, not causal uplift or proof of which strategy works best.",
+    "Calls and sellers are different denominators; persona cohorts overlap and repeat sellers.",
+    "Broad lexical candidates can miss negation, actor nuance and unsupported languages.",
+    "Turn conflicts are excluded, never arbitrarily resolved. Historical labels remain unchanged.",
+    "Observed bot response does not establish a successful rebuttal; no validated resolution rate is available."
+  ]
+}

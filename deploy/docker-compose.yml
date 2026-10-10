@@ -1,0 +1,171 @@
+name: seller-persona
+
+services:
+  app:
+    build:
+      context: ${PERSONA_SOURCE_DIR:-/opt/sellergenome}
+      dockerfile: deploy/Dockerfile
+    image: seller-persona:2.0.0
+    container_name: seller-persona
+    init: true
+    restart: unless-stopped
+    read_only: true
+    env_file:
+      - /opt/secrets/env_files/seller-persona.env
+    environment:
+      PUBLIC_BASE_PATH: /hackathon/seller-persona
+      PUBLIC_BASE_URL: https://portfolio.aidhunik.com/hackathon/seller-persona
+      DATA_DIR: /srv/data
+      DATASET_DIR: /source-dataset
+      SERVER_HOST: lehana-rig
+    volumes:
+      - ${PERSONA_SOURCE_DIR:-/opt/sellergenome}:/app:ro
+      - ${PERSONA_SOURCE_DIR:-/opt/sellergenome}/dataset:/source-dataset:ro
+      - app-data:/srv/data
+    tmpfs:
+      - /tmp:size=128m,mode=1777
+    expose:
+      - "8000"
+    networks:
+      private:
+      root_default:
+        # Verified against this rig's live network, which is 172.19, not 172.18.
+        ipv4_address: 172.19.0.40
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=root_default
+      - 'traefik.http.routers.seller-persona-vm.rule=HostRegexp(`^((rig|vps)-)?portfolio\.(lehana\.in|aidhunik\.com)$$`) && (Path(`/hackathon/seller-persona`) || PathPrefix(`/hackathon/seller-persona/`))'
+      - traefik.http.routers.seller-persona-vm.entrypoints=web
+      - traefik.http.routers.seller-persona-vm.priority=150
+      - traefik.http.routers.seller-persona-vm.middlewares=seller-persona-strip,seller-persona-headers
+      - traefik.http.middlewares.seller-persona-strip.stripprefix.prefixes=/hackathon/seller-persona
+      - traefik.http.middlewares.seller-persona-headers.headers.customresponseheaders.X-Robots-Tag=noindex, nofollow
+      - traefik.http.middlewares.seller-persona-headers.headers.contenttypenosniff=true
+      - traefik.http.middlewares.seller-persona-headers.headers.referrerpolicy=same-origin
+      - traefik.http.services.seller-persona.loadbalancer.server.port=8000
+      - lehana.tier=production
+      - lehana.priority=medium
+      - lehana.description=Seller Persona hackathon portal; code remains in the Abhinav workspace
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=5)"]
+      interval: 600s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    mem_limit: 1g
+    cpus: 2
+    logging: &bounded-logs
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_VERSION:-8.19.23}
+    container_name: seller-persona-elasticsearch
+    init: true
+    restart: unless-stopped
+    environment:
+      discovery.type: single-node
+      cluster.name: seller-persona
+      node.name: seller-persona-01
+      xpack.security.enabled: "true"
+      xpack.security.http.ssl.enabled: "false"
+      xpack.security.transport.ssl.enabled: "false"
+      # The node stays private with no host ports. Public HTTPS access is through
+      # the separately authenticated sellergenome-elastic gateway, not this node.
+      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:?Pass --env-file seller-persona-infra.env}
+      ES_JAVA_OPTS: -Xms768m -Xmx768m
+    volumes:
+      - elastic-data:/usr/share/elasticsearch/data
+    networks:
+      - private
+    healthcheck:
+      test: ["CMD-SHELL", 'curl --fail --silent --user "elastic:$${ELASTIC_PASSWORD}" http://127.0.0.1:9200/_cluster/health >/dev/null']
+      interval: 600s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    mem_limit: 2g
+    cpus: 2
+    labels:
+      - traefik.enable=false
+      - lehana.tier=production
+      - lehana.priority=medium
+      - lehana.description=Isolated seller-persona search data; never delete its volume
+    logging: *bounded-logs
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:${ELASTIC_VERSION:-8.19.23}
+    container_name: seller-persona-kibana
+    init: true
+    # Private plugin settings are not all included in Docker's env allow-list.
+    # Pass the verified native config paths explicitly instead.
+    command: ["/usr/local/bin/kibana-docker", "--xpack.intercepts.enabled=false", "--xpack.product_intercept.enabled=false"]
+    restart: unless-stopped
+    environment:
+      SERVER_HOST: 0.0.0.0
+      # TLS terminates on the backend VPS; native cookies must still be Secure.
+      SERVER_PUBLICBASEURL: https://kibana.lehana.in
+      XPACK_SECURITY_SECURECOOKIES: "true"
+      XPACK_SECURITY_SAMESITECOOKIES: Strict
+      XPACK_SECURITY_SESSION_IDLETIMEOUT: 1h
+      XPACK_SECURITY_SESSION_LIFESPAN: 12h
+      # Installed8.19 plugin schemas permit disabling vendor feedback popups.
+      # They assume native user profiles and fail under stateless gateway access.
+      ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
+      ELASTICSEARCH_USERNAME: kibana_system
+      ELASTICSEARCH_PASSWORD: ${KIBANA_SYSTEM_PASSWORD:?Pass --env-file seller-persona-infra.env}
+      XPACK_SECURITY_ENCRYPTIONKEY: ${KIBANA_ENCRYPTION_KEY:?Pass --env-file seller-persona-infra.env}
+      XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY: ${KIBANA_ENCRYPTION_KEY}
+      XPACK_REPORTING_ENCRYPTIONKEY: ${KIBANA_ENCRYPTION_KEY}
+      # Use Space/application privileges rather than the deprecated reporting_user gate.
+      XPACK_REPORTING_ROLES_ENABLED: "false"
+      TELEMETRY_ENABLED: "false"
+      NODE_OPTIONS: --max-old-space-size=768
+    # Legacy loopback listener remains for authorized maintenance. Public HTTPS
+    # now uses the separately authenticated sellergenome-elastic gateway.
+    ports:
+      - "127.0.0.1:5602:5601"
+    networks:
+      - private
+      - management
+    volumes:
+      - kibana-data:/usr/share/kibana/data
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--silent", "http://127.0.0.1:5601/api/status"]
+      interval: 600s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    mem_limit: 1200m
+    cpus: 1
+    labels:
+      - traefik.enable=false
+      - lehana.tier=production
+      - lehana.priority=low
+      - lehana.description=Private Seller Persona Kibana; reachable through SSH tunnel only
+    logging: *bounded-logs
+
+networks:
+  private:
+    name: seller-persona-private
+    internal: true
+  management:
+    # Docker does not publish loopback ports on an internal-only network.
+    # This dedicated bridge enables the SSH-tunnel listener and Kibana updates;
+    # Elasticsearch remains attached solely to the internal private network.
+    name: seller-persona-management
+  root_default:
+    external: true
+
+volumes:
+  app-data:
+    name: seller-persona-data
+    # Created explicitly before import; survives even an accidental Compose
+    # project teardown. Do not delete this volume to reset a demo.
+    external: true
+  elastic-data:
+    name: seller-persona-elastic-data
+  kibana-data:
+    name: seller-persona-kibana-data

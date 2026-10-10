@@ -1,0 +1,16 @@
+{
+  "skill_name": "sellergenome-testing",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Run the tests for my change to parsers.py.",
+      "expected_output": "Uses run_tests.sh in the image.",
+      "files": [],
+      "expectations": [
+        "Runs scripts/run_tests.sh or docker run … pytest in the image",
+        "Does not use venv_persona/bin/python",
+        "Mentions node --check for frontend"
+      ]
+    }
+  ]
+}

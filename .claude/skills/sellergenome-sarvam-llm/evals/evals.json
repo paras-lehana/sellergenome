@@ -1,0 +1,26 @@
+{
+  "skill_name": "sellergenome-sarvam-llm",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "My new summary prompt gets HTTP 400 from the LLM. The system prompt is ~19k characters. Fix?",
+      "expected_output": "16k limit.",
+      "files": [],
+      "expectations": [
+        "Names the 16,000-character system prompt limit",
+        "Suggests moving reference sections into the user message (prompt_parts pattern)"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Can I call api.sarvam.ai directly from the new buyer feature to save latency?",
+      "expected_output": "Gateway rule.",
+      "files": [],
+      "expectations": [
+        "Says all inference goes through llm.lehana.in (owner OK needed to bypass)",
+        "Mentions SarvamClient.chat_json / BYOK",
+        "Mentions budgets or fallbacks"
+      ]
+    }
+  ]
+}

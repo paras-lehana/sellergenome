@@ -1,0 +1,182 @@
+{
+  "_about": "Synthetic call openings for the simulated call floor. Style follows real VANI transcripts (romanised Hinglish). The bot always introduces itself as IndiaMART's virtual assistant (decision D10). After a viewer barges in, the call continues live with Sarvam.",
+  "seller": {
+    "91000101": [
+      {"who": "bot", "text": "Namaste Imran ji, main IndiaMART ki virtual assistant Payal bol rahi hoon. Maine dekha aapne Star Supplier package do baar dekha. Kya do minute baat ho sakti hai?", "stage": "greeting"},
+      {"who": "seller", "text": "Haan boliye. Par pehle hi bata doon, abhi budget thoda tight hai.", "signal": "interest"},
+      {"who": "bot", "text": "Bilkul samajh sakti hoon. Price main phone pe nahi bataungi — bas yeh samajhna tha ki aapko zyada leads chahiye ya sahi leads?", "stage": "qualifying"},
+      {"who": "seller", "text": "Sahi leads. Pichli baar students ke calls aaye the, time waste hua.", "signal": "frustration"},
+      {"who": "system", "switch": "Frustration → softer tone, acknowledge first"},
+      {"who": "bot", "text": "Yeh sunke afsos hua, aapka time keemti hai. Isliye hamare executive aapki category ke filter set karke dikhayenge.", "stage": "package"},
+      {"who": "seller", "text": "Theek hai, 10 tareekh ke baad payment aata hai, tab baat karte hain.", "signal": "interest"},
+      {"who": "bot", "text": "Perfect. Toh 11 tareekh ko factory pe meeting rakh dein? Basni Industrial Area wala address sahi hai?", "stage": "meeting"}
+    ],
+    "91000102": [
+      {"who": "bot", "text": "Namaskaram Lakshmi Narayana garu, nenu IndiaMART virtual assistant Payal. Meeru Lead Manager chustunnaru kada?", "gloss": "Hello sir, I'm Payal, IndiaMART's virtual assistant. You were looking at the Lead Manager?", "stage": "greeting"},
+      {"who": "seller", "text": "Avunu, Karnataka leads kuda vastaya? Ela filter cheyali?", "gloss": "Yes, will I get Karnataka leads too? How do I filter?", "signal": "interest"},
+      {"who": "bot", "text": "Vastayi sir. State filter lo Karnataka add cheyochu. Mee sprayer category lo gata nela 64 buy leads vachayi.", "gloss": "Yes sir. You can add Karnataka in the state filter. Your sprayer category had 64 buy leads last month.", "stage": "qualifying"},
+      {"who": "seller", "text": "Interesting. Demo chupistara?", "gloss": "Interesting. Will you show a demo?", "signal": "interest"},
+      {"who": "system", "switch": "Interest → go deeper, move to next step"},
+      {"who": "bot", "text": "Tappakunda. Mee Autonagar office ki executive vachi demo chupistaru. Repu sayantram 4 ki okay na?", "gloss": "Sure. An executive will come to your Autonagar office for a demo. Tomorrow 4 pm okay?", "stage": "meeting"}
+    ],
+    "91000103": [
+      {"who": "bot", "text": "Hello Rohit, this is Payal, IndiaMART's virtual assistant. You just bought a 20-lead top-up — do you have two minutes?", "stage": "greeting"},
+      {"who": "seller", "text": "I'm on the shop floor, make it quick.", "signal": "rush"},
+      {"who": "system", "switch": "Rush → shorter replies, pace 1.0 → 1.12"},
+      {"who": "bot", "text": "One line: 18 of 20 leads used in 4 days. A monthly quota could save you top-ups. Call at 6 pm?", "stage": "qualifying"},
+      {"who": "seller", "text": "Fine, 6 pm. Send the pump housing buyers too.", "signal": "interest"},
+      {"who": "bot", "text": "Done — 6 pm with your executive. Thank you, Rohit.", "stage": "wrap_up"}
+    ],
+    "91000104": [
+      {"who": "bot", "text": "Hello Meenakshi ji, this is Payal, IndiaMART's virtual assistant. You added 12 towel products today — great work!", "stage": "greeting"},
+      {"who": "seller", "text": "Puriyala... English konjam kashtam. Tamil-la pesunga.", "gloss": "Didn't understand... English is a bit hard. Please speak in Tamil.", "signal": "language_switch"},
+      {"who": "system", "switch": "Language switch (explicit) → Tamil, slower pace"},
+      {"who": "bot", "text": "Sari amma. Neenga 12 towel products add pannirukeenga. Buyers ungala nera contact panna enquiry varum.", "gloss": "Sure ma'am. You added 12 towel products. When buyers contact you directly it comes as an enquiry.", "stage": "qualifying"},
+      {"who": "seller", "text": "Buy lead-um enquiry-um enna vithyasam?", "gloss": "What's the difference between buy lead and enquiry?", "signal": "confusion"},
+      {"who": "system", "switch": "Confusion → one idea at a time, simpler words"},
+      {"who": "bot", "text": "Enquiry ungalukku mattum varum. Buy lead IndiaMART-kku varum, neenga vaangalaam. Oru executive Tamil-la vilakkuvaanga.", "gloss": "An enquiry comes only to you. A buy lead comes to IndiaMART and you can pick it. An executive will explain in Tamil.", "stage": "meeting"}
+    ],
+    "91000105": [
+      {"who": "bot", "text": "Namaste Farhan ji, main IndiaMART ki virtual assistant Payal. Aapne renewal page dekha—", "stage": "greeting"},
+      {"who": "seller", "text": "Renewal? Pehle meri complaint ka kya hua? Callback ka promise kiya tha, kisi ne call nahi kiya!", "signal": "frustration"},
+      {"who": "system", "switch": "Frustration → acknowledge first, no pitch, warmth high"},
+      {"who": "bot", "text": "Aap bilkul sahi keh rahe hain, callback nahi hua — iske liye maafi chahti hoon. Main abhi aapki complaint senior executive ko escalate kar rahi hoon.", "stage": "qualifying"},
+      {"who": "seller", "text": "Theek hai. Mujhe sirf pharma companies ki leads chahiye, students ki nahi.", "signal": "interest"},
+      {"who": "bot", "text": "Note kar liya: sirf pharma buyers. Baddi wali enquiry aapke paas hai — executive kal 11 baje aapko call karenge?", "stage": "meeting"}
+    ],
+    "91000106": [
+      {"who": "bot", "text": "Namaste Kavita ji, main IndiaMART ki virtual assistant Payal. Aap TrustSEAL ki document list dekh rahi thi?", "stage": "greeting"},
+      {"who": "seller", "text": "Haan! Kitne din lagenge verification mein? Aur FSSAI chahiye kya?", "signal": "interest"},
+      {"who": "system", "switch": "Interest → go deeper, move to next step"},
+      {"who": "bot", "text": "FSSAI aur GST dono kaam aayenge. Executive aapke Dhayari shop pe aake documents dekh lenge, process wahi samjha denge.", "stage": "package"},
+      {"who": "seller", "text": "Chalega, Saturday ko aa sakte hain?", "signal": "interest"},
+      {"who": "bot", "text": "Saturday 12 baje fix kar deti hoon. Main aapko calendar invite aur address confirm bhej deti hoon.", "stage": "meeting"}
+    ],
+    "91000107": [
+      {"who": "bot", "text": "Namaste Harish bhai, main IndiaMART ki virtual assistant Payal. Aapne renewal page dekha—", "stage": "greeting"},
+      {"who": "seller", "text": "Dekho, Desai ji sab handle karte hain. Aap log baar baar call mat karo.", "signal": "frustration"},
+      {"who": "system", "switch": "Existing executive → do not pitch, hand off"},
+      {"who": "bot", "text": "Samajh gayi, Desai ji aapke account manager hain. Main unhe aapka message de deti hoon, aur aage se yeh call band.", "stage": "wrap_up"},
+      {"who": "seller", "text": "Haan theek hai. Dubai wali enquiry Desai ji ko bata dena.", "signal": "interest"},
+      {"who": "bot", "text": "Zaroor, Dubai porcelain slab enquiry Desai ji tak pahuncha dungi. Dhanyavaad.", "stage": "wrap_up"}
+    ],
+    "91000108": [
+      {"who": "bot", "text": "Namaste Sanjay ji, main IndiaMART ki virtual assistant Payal. Aapne naya LED product add kiya—", "stage": "greeting"},
+      {"who": "seller", "text": "Haan kiya, par business slow hai. Paid kuch nahi lena.", "signal": "interest"},
+      {"who": "bot", "text": "Bilkul, main kuch bechne nahi aayi. Bas bata doon, Lucknow se 200 LED bulb ki PNS call aayi thi.", "stage": "qualifying"},
+      {"who": "seller", "text": "Achha? Woh number mila nahi mujhe.", "signal": "interest"},
+      {"who": "system", "switch": "Interest → go deeper"},
+      {"who": "bot", "text": "Woh enquiry aapke account mein hai. Ek mahine baad dobara call karun, ya abhi app mein dikha doon?", "stage": "qualifying"}
+    ],
+    "91000109": [
+      {"who": "bot", "text": "Hello Anita ji, this is Payal, IndiaMART's virtual assistant. Your enquiries tripled this week — congratulations!", "stage": "greeting"},
+      {"who": "seller", "text": "Thank you! But tell me, are there foreign buyers also on IndiaMART? How do they find me?", "signal": "interest"},
+      {"who": "bot", "text": "Yes, export buyers search on IndiaMART too. They find sellers through category search and listing priority.", "stage": "qualifying"},
+      {"who": "seller", "text": "Ektu bujhte parchhi na... priority mane ki?", "gloss": "I don't quite understand... what does priority mean?", "signal": "confusion"},
+      {"who": "system", "switch": "Confusion + Bengali words → simpler, slower"},
+      {"who": "bot", "text": "Simple way: when a buyer searches 'Jamdani saree', sellers with priority appear first. An executive can show you live.", "stage": "package"}
+    ],
+    "91000110": [
+      {"who": "bot", "text": "Khamma ghani Vikram Singh ji, main IndiaMART ki virtual assistant Payal. Aapne export package dekha—", "stage": "greeting"},
+      {"who": "seller", "text": "Dekha, par doosre log isse kam mein le rahe hain. Aap logon ka rate zyada hai.", "signal": "interest"},
+      {"who": "bot", "text": "Main rate phone pe nahi bata sakti. Aapko kisne aur kitna bataya tha, woh confirm kar loon?", "stage": "qualifying"},
+      {"who": "seller", "text": "Kisi ne nahi bataya, suna hai. Muscat se ek container ki enquiry aayi hai.", "signal": "interest"},
+      {"who": "bot", "text": "Toh executive aapko export buyers ka data aur sahi plan dikha denge — RIICO Marble Area mein visit rakhein?", "stage": "meeting"}
+    ],
+    "91000111": [
+      {"who": "bot", "text": "Hello Deepa, this is Payal, IndiaMART's virtual assistant. You viewed the Leader package — do you have—", "stage": "greeting"},
+      {"who": "seller", "text": "I'm at the auction. One minute. What is it?", "signal": "rush"},
+      {"who": "system", "switch": "Rush → one-line pitch, pace 1.0 → 1.12"},
+      {"who": "bot", "text": "Hamburg buyer wants 2 tonnes cardamom. Leader puts you on top. Call after 2 pm?", "stage": "qualifying"},
+      {"who": "seller", "text": "After 2 is fine.", "signal": "interest"},
+      {"who": "bot", "text": "Booked for 2:30 pm. Thank you.", "stage": "wrap_up"}
+    ],
+    "91000112": [
+      {"who": "bot", "text": "Sat Sri Akal Gurpreet ji, main IndiaMART ki virtual assistant Payal. Aapki kuch buyer calls miss—", "stage": "greeting"},
+      {"who": "seller", "text": "Roz roz IndiaMART se call aate hain, buyer ka ek call nahi aata! Pareshan ho gayi hoon.", "signal": "frustration"},
+      {"who": "system", "switch": "Frustration → acknowledge, slower, no pitch"},
+      {"who": "bot", "text": "Maafi chahti hoon, itne calls pareshan karte hain. Asal mein 8 buyers ne aapko call kiya tha — woh calls miss ho gayi.", "stage": "qualifying"},
+      {"who": "seller", "text": "Kya? Mujhe toh pata hi nahi. Kaise dekhun?", "signal": "confusion"},
+      {"who": "system", "switch": "Confusion → one step at a time"},
+      {"who": "bot", "text": "App mein 'PNS calls' kholiye, wahan Karnal wale buyer ka number hai. Executive aake setting bhi theek kar denge.", "stage": "meeting"}
+    ],
+    "91000113": [
+      {"who": "bot", "text": "Hello Mohammed Arif, this is Payal, IndiaMART's virtual assistant. I saw you updated six rack products today.", "stage": "greeting"},
+      {"who": "seller", "text": "Yes yes. Arey, Hindi mein baat karo na, aaram se samajh aata hai.", "signal": "language_switch"},
+      {"who": "system", "switch": "Language switch (explicit) → Hindi, bypasses cooldown"},
+      {"who": "bot", "text": "Bilkul Arif bhai. Shamshabad mein ek logistics company ko 120 racks chahiye — aapke heavy duty racks match karte hain.", "stage": "qualifying"},
+      {"who": "seller", "text": "Achha! Unse milna hai mujhe. Kab hoga?", "signal": "interest"},
+      {"who": "bot", "text": "Executive kal Balanagar aake details denge — 3 baje theek rahega?", "stage": "meeting"}
+    ],
+    "91000114": [
+      {"who": "bot", "text": "Namaste Sneha ji, main IndiaMART ki virtual assistant Payal. Aapne buy-lead package dekha — kya do minute baat ho sakti hai?", "stage": "greeting"},
+      {"who": "seller", "text": "Haan, par pehle sample leads dikhao. Bina dekhe paise nahi lagaungi.", "signal": "interest"},
+      {"who": "bot", "text": "Bilkul sahi baat. Bhopal ke ek caterer ko har mahine 50,000 cups chahiye — aisi leads executive dikha denge.", "stage": "package"},
+      {"who": "seller", "text": "50,000 har mahine? Batao aur, kitne buyers hain aise?", "signal": "interest"},
+      {"who": "system", "switch": "Interest → deeper, propose meeting"},
+      {"who": "bot", "text": "Madhya Pradesh mein pichle mahine 9 lakh ki demand thi. Sanwer Road wale address pe meeting rakh dein?", "stage": "meeting"}
+    ]
+  },
+  "buyer": [
+    {"id": "b1", "buyer": "Ramesh Yadav", "buyer_glid": "73000101", "city": "Gurugram", "state": "Haryana", "product": "Industrial Air Compressor", "missed_seller": "Delhi Pneumatics", "flow": "new_requirement", "language": "hi-IN",
+     "turns": [
+       {"who": "bot", "text": "Namaste, IndiaMART Help Desk se main Payal bol rahi hoon, virtual assistant. Aapne Delhi Pneumatics ko call kiya tha — kya aapko industrial air compressor chahiye?"},
+       {"who": "buyer", "text": "Haan ji, compressor chahiye factory ke liye.", "capture": {"product": "Industrial Air Compressor"}},
+       {"who": "bot", "text": "Ji bilkul. Kitne compressor chahiye aapko?"},
+       {"who": "buyer", "text": "Do chahiye, 10 HP wale.", "capture": {"quantity": "2 Piece", "spec:Power": "10 HP"}},
+       {"who": "bot", "text": "Samajh gayi. Aapka shubh naam kya hai?"},
+       {"who": "buyer", "text": "Ramesh Yadav.", "capture": {"name": "Ramesh Yadav"}}
+     ]},
+    {"id": "b2", "buyer": "Swati Kulkarni", "buyer_glid": "73000102", "city": "Nashik", "state": "Maharashtra", "product": "Solar Water Heater", "missed_seller": "SunGreen Solar", "flow": "new_requirement", "language": "hi-IN",
+     "turns": [
+       {"who": "bot", "text": "Namaste, IndiaMART Help Desk se Payal, virtual assistant. Aap solar water heater ke liye call kar rahi thi?"},
+       {"who": "buyer", "text": "Haan, 200 litre wala chahiye ghar ke liye.", "capture": {"product": "Solar Water Heater", "spec:Capacity": "200 L"}},
+       {"who": "bot", "text": "Ji. Kitne units chahiye?"},
+       {"who": "buyer", "text": "Ek hi.", "capture": {"quantity": "1 Piece"}},
+       {"who": "bot", "text": "Aap kis shehar se hain?"},
+       {"who": "buyer", "text": "Nashik, Maharashtra.", "capture": {"city": "Nashik", "state": "Maharashtra"}}
+     ]},
+    {"id": "b3", "buyer": "Venkat Rao", "buyer_glid": "73000103", "city": "Vijayawada", "state": "Andhra Pradesh", "product": "Paddy Harvester Spare Parts", "missed_seller": "Krishna Agri Spares", "flow": "new_requirement", "language": "te-IN",
+     "turns": [
+       {"who": "bot", "text": "Namaskaram, IndiaMART Help Desk nunchi Payal, virtual assistant. Meeku harvester spare parts kavali kada?", "gloss": "Hello, Payal from IndiaMART Help Desk, virtual assistant. You need harvester spare parts?"},
+       {"who": "buyer", "text": "Avunu, cutter bar blades kavali.", "gloss": "Yes, I need cutter bar blades.", "capture": {"product": "Paddy Harvester Spare Parts", "spec:Part": "Cutter bar blade"}},
+       {"who": "bot", "text": "Entha quantity kavali?", "gloss": "What quantity do you need?"},
+       {"who": "buyer", "text": "Fifty pieces.", "capture": {"quantity": "50 Piece"}}
+     ]},
+    {"id": "b4", "buyer": "Neha Gupta", "buyer_glid": "73000104", "city": "Jaipur", "state": "Rajasthan", "product": "Corrugated Boxes", "missed_seller": "Pink City Packaging", "flow": "enrichment", "language": "hi-IN",
+     "turns": [
+       {"who": "bot", "text": "Namaste Neha ji, IndiaMART Help Desk se Payal. Aapki corrugated boxes ki requirement mili hai — kuch details confirm kar loon?"},
+       {"who": "buyer", "text": "Haan boliye, jaldi.", "signal": "rush"},
+       {"who": "bot", "text": "Bas do sawal. Kitne boxes chahiye?"},
+       {"who": "buyer", "text": "5000, 5 ply.", "capture": {"quantity": "5000 Piece", "spec:Ply": "5 Ply"}}
+     ]},
+    {"id": "b5", "buyer": "Abdul Rehman", "buyer_glid": "73000105", "city": "Lucknow", "state": "Uttar Pradesh", "product": "Chikan Kurti", "missed_seller": "Awadh Chikan House", "flow": "new_requirement", "language": "hi-IN",
+     "turns": [
+       {"who": "bot", "text": "Adaab, IndiaMART Help Desk se Payal, virtual assistant. Aap chikan kurti ke liye call kar rahe the?"},
+       {"who": "buyer", "text": "Ji, boutique ke liye wholesale chahiye.", "capture": {"product": "Chikan Kurti"}},
+       {"who": "bot", "text": "Kitne piece chahiye?"},
+       {"who": "buyer", "text": "Abhi 100 piece, baad mein aur.", "capture": {"quantity": "100 Piece"}}
+     ]},
+    {"id": "b6", "buyer": "Priya Nair", "buyer_glid": "73000106", "city": "Kochi", "state": "Kerala", "product": "Commercial Coffee Machine", "missed_seller": "BrewTech India", "flow": "connection_retry", "language": "en-IN",
+     "turns": [
+       {"who": "bot", "text": "Hello Priya, this is Payal from IndiaMART Help Desk, a virtual assistant. You were trying to reach BrewTech India about a coffee machine?"},
+       {"who": "buyer", "text": "Yes, for my cafe. Is any seller available now?", "capture": {"product": "Commercial Coffee Machine"}},
+       {"who": "bot", "text": "Let me check sellers near Kochi. Which city and state are you in?"},
+       {"who": "buyer", "text": "Kochi, Kerala.", "capture": {"city": "Kochi", "state": "Kerala"}}
+     ]},
+    {"id": "b7", "buyer": "Harpreet Singh", "buyer_glid": "73000107", "city": "Amritsar", "state": "Punjab", "product": "Tractor Tyre", "missed_seller": "Punjab Tyre House", "flow": "new_requirement", "language": "hi-IN",
+     "turns": [
+       {"who": "bot", "text": "Sat Sri Akal, IndiaMART Help Desk se Payal, virtual assistant. Aapko tractor tyre chahiye?"},
+       {"who": "buyer", "text": "Kya? Kaun bol raha hai? Main toh seller ko call kar raha tha.", "signal": "confusion"},
+       {"who": "bot", "text": "Ji, seller abhi uplabdh nahi the, isliye call yahan aayi. Main aapko doosre seller se jodne mein madad karungi. Kaun sa tyre chahiye?"},
+       {"who": "buyer", "text": "Achha. 13.6-28 rear tyre, do.", "capture": {"product": "Tractor Tyre", "spec:Size": "13.6-28", "quantity": "2 Piece"}}
+     ]},
+    {"id": "b8", "buyer": "Fatima Begum", "buyer_glid": "73000108", "city": "Hyderabad", "state": "Telangana", "product": "Biryani Handi", "missed_seller": "Deccan Copperware", "flow": "new_requirement", "language": "hi-IN",
+     "turns": [
+       {"who": "bot", "text": "Namaste, IndiaMART Help Desk se Payal, virtual assistant. Kya aapko biryani handi chahiye?"},
+       {"who": "buyer", "text": "Haan, restaurant ke liye. Copper wali.", "capture": {"product": "Biryani Handi", "spec:Material": "Copper"}},
+       {"who": "bot", "text": "Ji. Kitni handi chahiye?"},
+       {"who": "buyer", "text": "Chhe. Aur price kya hai?", "capture": {"quantity": "6 Piece"}, "signal": "interest"}
+     ]}
+  ]
+}

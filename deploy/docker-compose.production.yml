@@ -1,0 +1,98 @@
+name: sellergenome-v4
+services:
+  app:
+    image: sellergenome:5.3.0
+    build:
+      context: /opt/sellergenome/.worktrees/production
+      dockerfile: /srv/sellergenome-v4/Dockerfile
+    container_name: sellergenome-v4
+    init: true
+    restart: unless-stopped
+    read_only: true
+    env_file:
+    - /srv/sellergenome-v4/seller-persona-v4.env
+    - /srv/sellergenome-v4/sellergenome-im-apis.env
+    - /srv/sellergenome-v4/sellergenome-sarvam-voice.env
+    environment:
+      PUBLIC_BASE_PATH: ''
+      PUBLIC_BASE_URL: https://sellergenome.lehana.in
+      DEPLOYMENT_ENVIRONMENT: production
+      DATA_DIR: /srv/data
+      DATASET_DIR: /source-dataset
+      PRIVATE_CONFIG_DIR: /srv/config
+      APPROVED_GLIDS_PATH: /srv/approved/approved_glids.json
+      SESSION_COOKIE_NAME: persona_v4_access
+      OWNER_COOKIE_NAME: persona_v4_owner
+      ELASTICSEARCH_INDEX_PREFIX: seller-persona-v4
+      SERVER_HOST: lehana-rig
+      PREVIEW_PAUSE_SCHEDULES: 'true'
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      SARVAM_MCP_PYTHON: /opt/sarvam-mcp/bin/python
+      SELLER_PRODUCTION_EXAMPLE_PATH: /srv/inputs/seller_persona_prod.json
+      BUYER_ORIGINAL_PROMPT_PATH: /srv/inputs/Sarvam Prompt - Buyer Side VANI.docx.md
+      SARVAM_SPEECH_SCOPE: designated_v4
+    volumes:
+    - /opt/sellergenome/.worktrees/production:/app:ro
+    - /opt/sellergenome/dataset:/source-dataset:ro
+    - /opt/sellergenome/private/v4/data:/srv/data
+    - /opt/sellergenome/private/v4/config:/srv/config
+    - /opt/sellergenome/private/v4/approved:/srv/approved:ro
+    - /opt/sellergenome/private/inputs/production:/srv/inputs:ro
+    expose:
+    - '8000'
+    networks:
+      root_default:
+        ipv4_address: 172.19.0.43
+      persona_search: null
+    tmpfs:
+    - /tmp:size=128m,mode=1777
+    labels:
+      traefik.enable: 'true'
+      traefik.docker.network: root_default
+      traefik.http.routers.sellergenome-v4-vm.rule: HostRegexp(`^((rig|vps)-)?sellergenome\.(lehana\.in|aidhunik\.com)$$`)
+        && (Path(`/`) || Path(`/walkthrough`) || PathPrefix(`/walkthrough/`) || Path(`/analysis`)
+        || PathPrefix(`/analysis/`) || Path(`/pm`) || PathPrefix(`/api/`) || PathPrefix(`/static/`)
+        || Path(`/health`) || Path(`/sw.js`) || Path(`/slide`) || Path(`/docs`) ||
+        Path(`/openapi.json`) || Path(`/redoc`) || Path(`/operations`) || PathPrefix(`/operations/`)
+        || Path(`/studio`) || PathPrefix(`/studio/`) || Path(`/buyer`) || PathPrefix(`/buyer/`)
+        || Path(`/meetings`) || PathPrefix(`/meetings/`) || Path(`/sarvam`) || PathPrefix(`/sarvam/`)
+        || Path(`/admin`) || PathPrefix(`/admin/`) || PathPrefix(`/call/`) || PathPrefix(`/persona/`) || Path(`/genome`)
+        || Path(`/v4`) || PathPrefix(`/v4/`))
+      traefik.http.routers.sellergenome-v4-vm.entrypoints: web
+      traefik.http.routers.sellergenome-v4-vm.priority: '141'
+      traefik.http.routers.sellergenome-v4-vm.middlewares: sellergenome-v4-https,sellergenome-v4-headers
+      traefik.http.routers.sellergenome-v4-vm.service: sellergenome-v4
+      traefik.http.middlewares.sellergenome-v4-https.headers.customrequestheaders.X-Forwarded-Proto: https
+      traefik.http.middlewares.sellergenome-v4-headers.headers.customresponseheaders.X-Robots-Tag: noindex,
+        nofollow
+      traefik.http.middlewares.sellergenome-v4-headers.headers.contenttypenosniff: 'true'
+      traefik.http.middlewares.sellergenome-v4-headers.headers.referrerpolicy: same-origin
+      traefik.http.services.sellergenome-v4.loadbalancer.server.port: '8000'
+      lehana.tier: production
+      lehana.priority: medium
+      lehana.description: SellerGenome V5 command center (V4 at /v4); preserve private state and search
+        volumes
+    healthcheck:
+      test:
+      - CMD
+      - python
+      - -c
+      - import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health',
+        timeout=8)
+      interval: 600s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    mem_limit: 2g
+    cpus: 2
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+networks:
+  root_default:
+    external: true
+  persona_search:
+    external: true
+    name: seller-persona-private

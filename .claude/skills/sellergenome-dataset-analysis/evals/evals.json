@@ -1,0 +1,27 @@
+{
+  "skill_name": "sellergenome-dataset-analysis",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "What's the answer rate in our bot-call data? A PM quoted 65% and I see 51% somewhere.",
+      "expected_output": "Explains both numbers and denominators.",
+      "files": [],
+      "expectations": [
+        "Gives 50.77% by attempts",
+        "Gives 65.43% as per-seller mean",
+        "Explains the denominators differ"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I want to add a chart of objection categories from the corpus to the analysis page. How should I compute it without leaking data?",
+      "expected_output": "Aggregate-only approach with scripts.",
+      "files": [],
+      "expectations": [
+        "Says to print/publish only aggregates, never rows or ids",
+        "Points to facts.md or raw ES indices / the analysis build script",
+        "Mentions keeping outputs outside Git / private paths"
+      ]
+    }
+  ]
+}

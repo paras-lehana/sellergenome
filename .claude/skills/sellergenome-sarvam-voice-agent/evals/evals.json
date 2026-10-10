@@ -1,0 +1,26 @@
+{
+  "skill_name": "sellergenome-sarvam-voice-agent",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Rebuild Payal with a new hotword 'Star Supplier' and make it live for callers.",
+      "expected_output": "Build + commit flow.",
+      "files": [],
+      "expectations": [
+        "Says to add via settings/build (Admin → Sarvam voice agent → Build)",
+        "Mentions draft vs committed version and reading the committed version",
+        "Mentions never writing state files as root / run via Admin"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Can Payal call a real seller GLID from the approved list for a quick demo?",
+      "expected_output": "Refusal with reason.",
+      "files": [],
+      "expectations": [
+        "Says synthetic sellers only (real- gets 403)",
+        "Says no telephony/test calls to real numbers"
+      ]
+    }
+  ]
+}

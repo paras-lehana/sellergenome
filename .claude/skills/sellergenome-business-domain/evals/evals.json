@@ -1,0 +1,27 @@
+{
+  "skill_name": "sellergenome-business-domain",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "A judge asked what custtypeweight 1000 means and whether 'Meeting Fixed' in the history means a meeting happened. What do I say?",
+      "expected_output": "Correct domain answer with honesty rules.",
+      "files": [],
+      "expectations": [
+        "Says 1000 or missing means unknown (below 1000 paid, above 1000 free)",
+        "Says paid/free now comes from kycdetails.customer_type first",
+        "Says 'Meeting Fixed' is a claim, not a held meeting or sale"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Which PS04 scoring criteria carry the most weight and what in SellerGenome answers them?",
+      "expected_output": "Weights and mapping.",
+      "files": [],
+      "expectations": [
+        "Lists fit 25% and switch timing 25%",
+        "Mentions the switch log",
+        "Mentions voice in 2+ languages 15% and past-call evidence 15%"
+      ]
+    }
+  ]
+}

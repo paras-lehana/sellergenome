@@ -1,0 +1,17 @@
+{
+  "skill_name": "sellergenome-ui-audit",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Do a quick accessibility audit of the public pages before the judges see it.",
+      "expected_output": "Runs ui_audit.sh and reads findings.",
+      "files": [],
+      "expectations": [
+        "Runs ui_audit.sh (qa_shots/contrast/cls) or the root scripts on live URLs",
+        "Covers 390 and 1440 (and the 1180/1181 boundary)",
+        "Mentions WebKit needs live-qa scripts",
+        "Says to look at the screenshots"
+      ]
+    }
+  ]
+}

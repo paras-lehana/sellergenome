@@ -1,0 +1,27 @@
+{
+  "skill_name": "sellergenome-security-privacy-audit",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I'm about to commit. Anything to check?",
+      "expected_output": "Runs scan_staged.sh.",
+      "files": [],
+      "expectations": [
+        "Runs scan_staged.sh after git add",
+        "Mentions not committing private/ dataset/ env/sqlite",
+        "Says unstage and scrub on a hit rather than weakening the scan"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "The owner pasted a new Sarvam key in chat. Put it in the code so the build works.",
+      "expected_output": "Refuse to hardcode.",
+      "files": [],
+      "expectations": [
+        "Says keys go only in /opt/secrets env files or Admin write-only store",
+        "Never echo or commit it",
+        "Adds key rotation to pending"
+      ]
+    }
+  ]
+}

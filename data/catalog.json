@@ -1,0 +1,1220 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-10-07T15:11:20.010680+00:00",
+  "privacy": "Aggregate-only; no IDs, free text, URLs or credentials.",
+  "method": "Full streaming scan; no sampling; numeric null != zero.",
+  "source_timezone": "Asia/Kolkata (per supplied dictionary)",
+  "file_count": 16,
+  "total_rows": 908856,
+  "total_bytes": 348723578,
+  "rows_by_family": {
+    "seller_files": 149363,
+    "bot_calls": 269455,
+    "evaluator_outputs": 278332,
+    "call_turns": 139555,
+    "recording_sample": 5000,
+    "executive_calls": 67151
+  },
+  "files": [
+    {
+      "name": "ps07_seller_files_part1.csv",
+      "path": "Seller-Fit Adaptive Voice Persona - Dataset 1 of 3/ps07_seller_files_part1.csv",
+      "family": "seller_files",
+      "rows": 74682,
+      "bytes": 27546196,
+      "sha256": "6a4822d89c488d8a6bd38de769e03986578f4479088decb31bb1ec9a5d6309f0",
+      "columns": [
+        "fk_glusr_usr_id",
+        "seller_city",
+        "seller_district",
+        "seller_state",
+        "seller_pincode",
+        "seller_locality",
+        "business_type",
+        "annual_turnover",
+        "nature_of_business",
+        "nature_of_business_secondary",
+        "gst_registration_year",
+        "top_category_1",
+        "top_category_2",
+        "top_category_3",
+        "top_parent_category",
+        "top_category_group",
+        "num_categories",
+        "eng_activity_30d",
+        "eng_answered_calls_90d",
+        "eng_call_attempts_90d",
+        "eng_call_attempts_1yr",
+        "eng_pickup_ratio_90d",
+        "eng_pickup_ratio_1yr",
+        "eng_long_calls_90d",
+        "eng_short_calls_90d",
+        "eng_callback_90d",
+        "eng_callback_1yr",
+        "eng_meetings_1yr",
+        "eng_hot_meetings_1yr",
+        "eng_enq_received_90d",
+        "eng_enq_received_1yr",
+        "eng_enq_replies_90d",
+        "eng_enq_replies_1yr",
+        "eng_pns_received_90d",
+        "eng_pns_received_1yr",
+        "eng_pns_answered_90d",
+        "eng_pns_answered_1yr",
+        "eng_ni_count_1yr",
+        "eng_np_count_1yr",
+        "eng_product_count",
+        "eng_products_modified_90d",
+        "eng_products_modified_1yr",
+        "eng_cqs",
+        "bot_attempts",
+        "bot_answered",
+        "calls_meeting_fixed",
+        "calls_not_interested",
+        "calls_general",
+        "calls_call_later",
+        "bot_answer_rate",
+        "avg_answered_call_sec",
+        "past_objections",
+        "past_questions_asked",
+        "asked_if_talking_to_bot",
+        "showed_frustration",
+        "past_dispositions_detailed",
+        "already_in_touch_with_executive",
+        "do_not_call_requested"
+      ],
+      "column_count": 58,
+      "null_counts": {
+        "top_parent_category": 15714,
+        "eng_activity_30d": 59731,
+        "eng_callback_90d": 56726,
+        "eng_callback_1yr": 56726,
+        "eng_meetings_1yr": 72990,
+        "eng_hot_meetings_1yr": 72990,
+        "eng_enq_received_90d": 52948,
+        "eng_enq_received_1yr": 52948,
+        "eng_enq_replies_90d": 46463,
+        "eng_enq_replies_1yr": 46463,
+        "eng_pns_received_90d": 55030,
+        "eng_pns_received_1yr": 55030,
+        "eng_pns_answered_90d": 55030,
+        "eng_pns_answered_1yr": 55030,
+        "eng_ni_count_1yr": 71939,
+        "eng_np_count_1yr": 71939,
+        "past_objections": 70769,
+        "past_questions_asked": 72173,
+        "asked_if_talking_to_bot": 48305,
+        "showed_frustration": 48305,
+        "past_dispositions_detailed": 51882,
+        "already_in_touch_with_executive": 48305,
+        "do_not_call_requested": 48305,
+        "seller_locality": 44442,
+        "eng_answered_calls_90d": 29243,
+        "eng_call_attempts_90d": 29243,
+        "eng_call_attempts_1yr": 29243,
+        "eng_pickup_ratio_90d": 30386,
+        "eng_pickup_ratio_1yr": 29243,
+        "eng_long_calls_90d": 29243,
+        "eng_short_calls_90d": 29243,
+        "eng_product_count": 26610,
+        "eng_products_modified_90d": 26610,
+        "eng_products_modified_1yr": 26610,
+        "eng_cqs": 29493,
+        "business_type": 1374,
+        "annual_turnover": 5514,
+        "nature_of_business": 6999,
+        "nature_of_business_secondary": 1459,
+        "gst_registration_year": 1374,
+        "avg_answered_call_sec": 9153,
+        "top_category_3": 8613,
+        "top_category_1": 2682,
+        "top_category_2": 4577,
+        "top_category_group": 2780,
+        "num_categories": 2682,
+        "seller_pincode": 43,
+        "seller_district": 73
+      }
+    },
+    {
+      "name": "ps07_seller_files_part2.csv",
+      "path": "Seller-Fit Adaptive Voice Persona - Dataset 1 of 3/ps07_seller_files_part2.csv",
+      "family": "seller_files",
+      "rows": 74681,
+      "bytes": 28334535,
+      "sha256": "ec7b436c86a5b5e0f8cf35be7e4c6aec522b2fcfeda7cc8bb1fdded5592cee27",
+      "columns": [
+        "fk_glusr_usr_id",
+        "seller_city",
+        "seller_district",
+        "seller_state",
+        "seller_pincode",
+        "seller_locality",
+        "business_type",
+        "annual_turnover",
+        "nature_of_business",
+        "nature_of_business_secondary",
+        "gst_registration_year",
+        "top_category_1",
+        "top_category_2",
+        "top_category_3",
+        "top_parent_category",
+        "top_category_group",
+        "num_categories",
+        "eng_activity_30d",
+        "eng_answered_calls_90d",
+        "eng_call_attempts_90d",
+        "eng_call_attempts_1yr",
+        "eng_pickup_ratio_90d",
+        "eng_pickup_ratio_1yr",
+        "eng_long_calls_90d",
+        "eng_short_calls_90d",
+        "eng_callback_90d",
+        "eng_callback_1yr",
+        "eng_meetings_1yr",
+        "eng_hot_meetings_1yr",
+        "eng_enq_received_90d",
+        "eng_enq_received_1yr",
+        "eng_enq_replies_90d",
+        "eng_enq_replies_1yr",
+        "eng_pns_received_90d",
+        "eng_pns_received_1yr",
+        "eng_pns_answered_90d",
+        "eng_pns_answered_1yr",
+        "eng_ni_count_1yr",
+        "eng_np_count_1yr",
+        "eng_product_count",
+        "eng_products_modified_90d",
+        "eng_products_modified_1yr",
+        "eng_cqs",
+        "bot_attempts",
+        "bot_answered",
+        "calls_meeting_fixed",
+        "calls_not_interested",
+        "calls_general",
+        "calls_call_later",
+        "bot_answer_rate",
+        "avg_answered_call_sec",
+        "past_objections",
+        "past_questions_asked",
+        "asked_if_talking_to_bot",
+        "showed_frustration",
+        "past_dispositions_detailed",
+        "already_in_touch_with_executive",
+        "do_not_call_requested"
+      ],
+      "column_count": 58,
+      "null_counts": {
+        "seller_locality": 49658,
+        "eng_activity_30d": 74581,
+        "eng_answered_calls_90d": 24392,
+        "eng_call_attempts_90d": 24392,
+        "eng_call_attempts_1yr": 24392,
+        "eng_pickup_ratio_90d": 26151,
+        "eng_pickup_ratio_1yr": 24392,
+        "eng_long_calls_90d": 24392,
+        "eng_short_calls_90d": 24392,
+        "eng_callback_90d": 58923,
+        "eng_callback_1yr": 58923,
+        "eng_meetings_1yr": 71466,
+        "eng_hot_meetings_1yr": 71466,
+        "eng_enq_received_90d": 51336,
+        "eng_enq_received_1yr": 51336,
+        "eng_enq_replies_90d": 46178,
+        "eng_enq_replies_1yr": 46178,
+        "eng_pns_received_90d": 55587,
+        "eng_pns_received_1yr": 55587,
+        "eng_pns_answered_90d": 55587,
+        "eng_pns_answered_1yr": 55587,
+        "eng_ni_count_1yr": 68275,
+        "eng_np_count_1yr": 68275,
+        "eng_product_count": 18784,
+        "eng_products_modified_90d": 18784,
+        "eng_products_modified_1yr": 18784,
+        "eng_cqs": 25583,
+        "avg_answered_call_sec": 10081,
+        "past_objections": 74615,
+        "past_questions_asked": 74443,
+        "asked_if_talking_to_bot": 21096,
+        "showed_frustration": 21096,
+        "past_dispositions_detailed": 21292,
+        "already_in_touch_with_executive": 21096,
+        "do_not_call_requested": 21096,
+        "nature_of_business": 8760,
+        "top_category_3": 8718,
+        "top_parent_category": 15130,
+        "annual_turnover": 10491,
+        "business_type": 1034,
+        "nature_of_business_secondary": 1107,
+        "gst_registration_year": 1034,
+        "top_category_1": 2011,
+        "top_category_2": 4094,
+        "top_category_group": 2117,
+        "num_categories": 2011,
+        "seller_district": 92,
+        "seller_pincode": 19,
+        "seller_city": 1,
+        "seller_state": 1
+      }
+    },
+    {
+      "name": "ps07_bot_calls_2026-04_to_06.csv",
+      "path": "Seller-Fit Adaptive Voice Persona - Dataset 2 of 3/ps07_bot_calls_2026-04_to_06.csv",
+      "family": "bot_calls",
+      "rows": 67934,
+      "bytes": 25650758,
+      "sha256": "e5f05bc8600e121ab1abae7c44a9ef6205696839e7e67d2dcad0230a851c1bc3",
+      "columns": [
+        "attempt_id",
+        "fk_glusr_usr_id",
+        "redis_bucket",
+        "lead_bot_version",
+        "call_attempt_count",
+        "call_start_time",
+        "lead_call_duration",
+        "lead_call_summary",
+        "call_recording_url",
+        "disposition_label",
+        "meeting_fixed",
+        "has_turn_transcript",
+        "has_evaluator_output"
+      ],
+      "column_count": 13,
+      "null_counts": {
+        "call_recording_url": 2783,
+        "lead_call_summary": 395
+      }
+    },
+    {
+      "name": "ps07_bot_calls_2026-07.csv",
+      "path": "Seller-Fit Adaptive Voice Persona - Dataset 2 of 3/ps07_bot_calls_2026-07.csv",
+      "family": "bot_calls",
+      "rows": 58124,
+      "bytes": 20085474,
+      "sha256": "a3edca7d1e29b3c66e7f727540f20b3f7fc1c3b84211e6c3bc1c3f5feeb29b9b",
+      "columns": [
+        "attempt_id",
+        "fk_glusr_usr_id",
+        "redis_bucket",
+        "lead_bot_version",
+        "call_attempt_count",
+        "call_start_time",
+        "lead_call_duration",
+        "lead_call_summary",
+        "call_recording_url",
+        "disposition_label",
+        "meeting_fixed",
+        "has_turn_transcript",
+        "has_evaluator_output"
+      ],
+      "column_count": 13,
+      "null_counts": {
+        "call_recording_url": 8576,
+        "lead_call_summary": 2820
+      }
+    },
+    {
+      "name": "ps07_bot_calls_2026-08.csv",
+      "path": "Seller-Fit Adaptive Voice Persona - Dataset 2 of 3/ps07_bot_calls_2026-08.csv",
+      "family": "bot_calls",
+      "rows": 73950,
+      "bytes": 24596730,
+      "sha256": "c71c038c200d29286339f18fe9316e12e8b8c1b8b278f9921888df39bd8f3a3d",
+      "columns": [
+        "attempt_id",
+        "fk_glusr_usr_id",
+        "redis_bucket",
+        "lead_bot_version",
+        "call_attempt_count",
+        "call_start_time",
+        "lead_call_duration",
+        "lead_call_summary",
+        "call_recording_url",
+        "disposition_label",
+        "meeting_fixed",
+        "has_turn_transcript",
+        "has_evaluator_output"
+      ],
+      "column_count": 13,
+      "null_counts": {
+        "lead_call_summary": 3842,
+        "call_recording_url": 10600
+      }
+    },
+    {
+      "name": "ps07_bot_calls_2026-09.csv",
+      "path": "Seller-Fit Adaptive Voice Persona - Dataset 2 of 3/ps07_bot_calls_2026-09.csv",
+      "family": "bot_calls",
+      "rows": 69447,
+      "bytes": 23418596,
+      "sha256": "9bc89252493d357aa9746d24cb5ea9b89afcccdb9199ee6a019740189f677186",
+      "columns": [
+        "attempt_id",
+        "fk_glusr_usr_id",
+        "redis_bucket",
+        "lead_bot_version",
+        "call_attempt_count",
+        "call_start_time",
+        "lead_call_duration",
+        "lead_call_summary",
+        "call_recording_url",
+        "disposition_label",
+        "meeting_fixed",
+        "has_turn_transcript",
+        "has_evaluator_output"
+      ],
+      "column_count": 13,
+      "null_counts": {
+        "call_recording_url": 9530,
+        "lead_call_summary": 3662
+      }
+    },
+    {
+      "name": "ps07_evaluator_outputs_2026-04_to_06.csv",
+      "path": "Seller-Fit Adaptive Voice Persona - Dataset 3 of 3/ps07_evaluator_outputs_2026-04_to_06.csv",
+      "family": "evaluator_outputs",
+      "rows": 42325,
+      "bytes": 24662978,
+      "sha256": "af922868f1a83bcafe8efcdf26c9428dd6a105f2b80e2f0dcf035910ee8b1483",
+      "columns": [
+        "attempt_id",
+        "fk_glusr_usr_id",
+        "eval_agent",
+        "agent_output"
+      ],
+      "column_count": 4,
+      "null_counts": {}
+    },
+    {
+      "name": "ps07_evaluator_outputs_2026-07_part1.csv",
+      "path": "Seller-Fit Adaptive Voice Persona - Dataset 3 of 3/ps07_evaluator_outputs_2026-07_part1.csv",
+      "family": "evaluator_outputs",
+      "rows": 33278,
+      "bytes": 22511491,
+      "sha256": "b2d256a3b7601a1ce01f11a5724d09b52ea84b6144eb2fd2320ff272f06073d6",
+      "columns": [
+        "attempt_id",
+        "fk_glusr_usr_id",
+        "eval_agent",
+        "agent_output"
+      ],
+      "column_count": 4,
+      "null_counts": {}
+    },
+    {
+      "name": "ps07_evaluator_outputs_2026-07_part2.csv",
+      "path": "Seller-Fit Adaptive Voice Persona - Dataset 3 of 3/ps07_evaluator_outputs_2026-07_part2.csv",
+      "family": "evaluator_outputs",
+      "rows": 33277,
+      "bytes": 25433592,
+      "sha256": "281f4cb1621f91705b86b6fe78e1305058973dafda012818c197610152a1b341",
+      "columns": [
+        "attempt_id",
+        "fk_glusr_usr_id",
+        "eval_agent",
+        "agent_output"
+      ],
+      "column_count": 4,
+      "null_counts": {}
+    },
+    {
+      "name": "ps07_evaluator_outputs_2026-08_part1.csv",
+      "path": "Seller-Fit Adaptive Voice Persona - Dataset 3 of 3/ps07_evaluator_outputs_2026-08_part1.csv",
+      "family": "evaluator_outputs",
+      "rows": 38690,
+      "bytes": 24962706,
+      "sha256": "6ae97db6583e3e9a16bc23702a4c57a012cad764651b886e37ea3dc7b97f43c4",
+      "columns": [
+        "attempt_id",
+        "fk_glusr_usr_id",
+        "eval_agent",
+        "agent_output"
+      ],
+      "column_count": 4,
+      "null_counts": {}
+    },
+    {
+      "name": "ps07_evaluator_outputs_2026-08_part2.csv",
+      "path": "Seller-Fit Adaptive Voice Persona - Dataset 3 of 3/ps07_evaluator_outputs_2026-08_part2.csv",
+      "family": "evaluator_outputs",
+      "rows": 38690,
+      "bytes": 25230611,
+      "sha256": "f158ca18b4b2e7ac13a4b1d91e928752d2a381334951d41bd3383a518e8a098d",
+      "columns": [
+        "attempt_id",
+        "fk_glusr_usr_id",
+        "eval_agent",
+        "agent_output"
+      ],
+      "column_count": 4,
+      "null_counts": {}
+    },
+    {
+      "name": "ps07_evaluator_outputs_2026-08_part3.csv",
+      "path": "Seller-Fit Adaptive Voice Persona - Dataset 3 of 3/ps07_evaluator_outputs_2026-08_part3.csv",
+      "family": "evaluator_outputs",
+      "rows": 38688,
+      "bytes": 25286451,
+      "sha256": "14c63929f968258b891d1645e5161d6176585569430bf2febba19c61d5fb4c99",
+      "columns": [
+        "attempt_id",
+        "fk_glusr_usr_id",
+        "eval_agent",
+        "agent_output"
+      ],
+      "column_count": 4,
+      "null_counts": {}
+    },
+    {
+      "name": "ps07_evaluator_outputs_2026-09.csv",
+      "path": "Seller-Fit Adaptive Voice Persona - Dataset 3 of 3/ps07_evaluator_outputs_2026-09.csv",
+      "family": "evaluator_outputs",
+      "rows": 53384,
+      "bytes": 25974870,
+      "sha256": "8cc8a65e0706713a23367a2784b6f109b9589eb1a4d8afe7d7f6198713500811",
+      "columns": [
+        "attempt_id",
+        "fk_glusr_usr_id",
+        "eval_agent",
+        "agent_output"
+      ],
+      "column_count": 4,
+      "null_counts": {}
+    },
+    {
+      "name": "ps07_call_turns.csv",
+      "path": "Seller-Fit Adaptive Voice Persona - Dataset 1 of 3/ps07_call_turns.csv",
+      "family": "call_turns",
+      "rows": 139555,
+      "bytes": 18307358,
+      "sha256": "fb403bde3e5f3176f61ab13140b023c96ac1a45c8c51408258e501431fbe147f",
+      "columns": [
+        "attempt_id",
+        "fk_glusr_usr_id",
+        "turn_no",
+        "speaker",
+        "start_sec",
+        "end_sec",
+        "text"
+      ],
+      "column_count": 7,
+      "null_counts": {
+        "text": 6
+      }
+    },
+    {
+      "name": "ps07_recording_sample_5000.csv",
+      "path": "Seller-Fit Adaptive Voice Persona - Dataset 1 of 3/ps07_recording_sample_5000.csv",
+      "family": "recording_sample",
+      "rows": 5000,
+      "bytes": 2035033,
+      "sha256": "21d8395fdc650221e946639d7b5b906bf4edc9dcab900de50ab5e76cce25ff5f",
+      "columns": [
+        "attempt_id",
+        "fk_glusr_usr_id",
+        "redis_bucket",
+        "lead_bot_version",
+        "call_attempt_count",
+        "call_start_time",
+        "lead_call_duration",
+        "lead_call_summary",
+        "call_recording_url",
+        "disposition_label",
+        "meeting_fixed",
+        "has_turn_transcript",
+        "has_evaluator_output"
+      ],
+      "column_count": 13,
+      "null_counts": {
+        "lead_call_summary": 6
+      }
+    },
+    {
+      "name": "ps07_executive_calls.csv",
+      "path": "Seller-Fit Adaptive Voice Persona - Dataset 1 of 3/ps07_executive_calls.csv",
+      "family": "executive_calls",
+      "rows": 67151,
+      "bytes": 4686199,
+      "sha256": "f6b74db6655b2bcaef30e87ceabfffc3812a21b890e285c871e376389f4092bb",
+      "columns": [
+        "click_to_call_id",
+        "fk_glusr_usr_id",
+        "fk_employeeid",
+        "module",
+        "status",
+        "call_start_time",
+        "call_duration",
+        "call_duration_customer",
+        "ring_duration"
+      ],
+      "column_count": 9,
+      "null_counts": {
+        "call_duration_customer": 3720,
+        "status": 151,
+        "ring_duration": 695
+      }
+    }
+  ],
+  "unique_counts": {
+    "seller_files:sellers": 149363,
+    "bot_calls:sellers": 130129,
+    "bot_calls:calls": 269455,
+    "evaluator_outputs:sellers": 89163,
+    "evaluator_outputs:calls": 170282,
+    "call_turns:sellers": 11652,
+    "call_turns:calls": 12788,
+    "recording_sample:sellers": 4511,
+    "recording_sample:calls": 5000,
+    "executive_calls:sellers": 6933
+  },
+  "duplicate_primary_keys": {
+    "seller_files": 0,
+    "bot_calls": 0,
+    "evaluator_outputs": 3087,
+    "call_turns": 6852,
+    "recording_sample": 0,
+    "executive_calls": 0
+  },
+  "relationships": {
+    "seller_orphans": {
+      "seller_files": 0,
+      "bot_calls": 0,
+      "evaluator_outputs": 0,
+      "call_turns": 0,
+      "recording_sample": 0,
+      "executive_calls": 0
+    },
+    "attempt_ids_absent_from_answered_bot_calls": {
+      "evaluator_outputs": 1569,
+      "call_turns": 434,
+      "recording_sample": 0
+    },
+    "recording_calls_with_actual_turns": 2494,
+    "recording_calls_with_actual_evaluations": 4018
+  },
+  "null_counts": {
+    "seller_files": {
+      "top_parent_category": 30844,
+      "eng_activity_30d": 134312,
+      "eng_callback_90d": 115649,
+      "eng_callback_1yr": 115649,
+      "eng_meetings_1yr": 144456,
+      "eng_hot_meetings_1yr": 144456,
+      "eng_enq_received_90d": 104284,
+      "eng_enq_received_1yr": 104284,
+      "eng_enq_replies_90d": 92641,
+      "eng_enq_replies_1yr": 92641,
+      "eng_pns_received_90d": 110617,
+      "eng_pns_received_1yr": 110617,
+      "eng_pns_answered_90d": 110617,
+      "eng_pns_answered_1yr": 110617,
+      "eng_ni_count_1yr": 140214,
+      "eng_np_count_1yr": 140214,
+      "past_objections": 145384,
+      "past_questions_asked": 146616,
+      "asked_if_talking_to_bot": 69401,
+      "showed_frustration": 69401,
+      "past_dispositions_detailed": 73174,
+      "already_in_touch_with_executive": 69401,
+      "do_not_call_requested": 69401,
+      "seller_locality": 94100,
+      "eng_answered_calls_90d": 53635,
+      "eng_call_attempts_90d": 53635,
+      "eng_call_attempts_1yr": 53635,
+      "eng_pickup_ratio_90d": 56537,
+      "eng_pickup_ratio_1yr": 53635,
+      "eng_long_calls_90d": 53635,
+      "eng_short_calls_90d": 53635,
+      "eng_product_count": 45394,
+      "eng_products_modified_90d": 45394,
+      "eng_products_modified_1yr": 45394,
+      "eng_cqs": 55076,
+      "business_type": 2408,
+      "annual_turnover": 16005,
+      "nature_of_business": 15759,
+      "nature_of_business_secondary": 2566,
+      "gst_registration_year": 2408,
+      "avg_answered_call_sec": 19234,
+      "top_category_3": 17331,
+      "top_category_1": 4693,
+      "top_category_2": 8671,
+      "top_category_group": 4897,
+      "num_categories": 4693,
+      "seller_pincode": 62,
+      "seller_district": 165,
+      "seller_city": 1,
+      "seller_state": 1
+    },
+    "bot_calls": {
+      "call_recording_url": 31489,
+      "lead_call_summary": 10719
+    },
+    "call_turns": {
+      "text": 6
+    },
+    "recording_sample": {
+      "lead_call_summary": 6
+    },
+    "executive_calls": {
+      "call_duration_customer": 3720,
+      "status": 151,
+      "ring_duration": 695
+    }
+  },
+  "enum_counts": {
+    "bot_calls.lead_bot_version": {
+      "main_vani": 208605,
+      "arrowhead": 30676,
+      "last_met_d": 23046,
+      "main": 5573,
+      "last_met_a": 723,
+      "personalis": 452,
+      "base_vani": 289,
+      "summary_va": 91
+    },
+    "bot_calls.disposition_label": {
+      "Call Later / Busy": 43672,
+      "Not Interested": 116364,
+      "General (talked)": 78365,
+      "Meeting Fixed": 31054
+    },
+    "bot_calls.has_turn_transcript": {
+      "0": 257101,
+      "1": 12354
+    },
+    "bot_calls.has_evaluator_output": {
+      "0": 100742,
+      "1": 168713
+    },
+    "evaluator_outputs.eval_agent": {
+      "incorrect_mf": 19617,
+      "topics": 7179,
+      "execdrop": 18768,
+      "seller_questions": 24694,
+      "se_contact": 17716,
+      "objections": 5233,
+      "ivr": 4983,
+      "location_confirmation": 15640,
+      "latency_repetition": 13681,
+      "disposition": 150821
+    },
+    "call_turns.speaker": {
+      "bot": 74460,
+      "seller": 64625,
+      "unknown": 470
+    },
+    "recording_sample.lead_bot_version": {
+      "summary_va": 91,
+      "personalis": 452,
+      "base_vani": 289,
+      "main": 1388,
+      "last_met_d": 1388,
+      "main_vani": 1392
+    },
+    "recording_sample.disposition_label": {
+      "Meeting Fixed": 1162,
+      "Not Interested": 1113,
+      "Call Later / Busy": 1185,
+      "General (talked)": 1540
+    },
+    "recording_sample.has_turn_transcript": {
+      "0": 2506,
+      "1": 2494
+    },
+    "recording_sample.has_evaluator_output": {
+      "1": 4018,
+      "0": 982
+    },
+    "executive_calls.module": {
+      "MERP": 7355,
+      "DSR": 57971,
+      "Tele-Dashboard": 432,
+      "CustTkt": 305,
+      "ServiceOVP": 179,
+      "WO": 667,
+      "OnlineFeedback": 80,
+      "Telephonic": 140,
+      "HostingVerfctn": 22
+    },
+    "executive_calls.status": {
+      "Answered": 35600,
+      "NotAnswered": 31400
+    }
+  },
+  "numeric_summaries": {
+    "seller_files.num_categories": {
+      "count": 144670,
+      "min": 1.0,
+      "max": 1897.0,
+      "mean": 12.0832
+    },
+    "seller_files.eng_answered_calls_90d": {
+      "count": 95728,
+      "min": 0.0,
+      "max": 38.0,
+      "mean": 0.7557
+    },
+    "seller_files.eng_call_attempts_90d": {
+      "count": 95728,
+      "min": 0.0,
+      "max": 100.0,
+      "mean": 5.9667
+    },
+    "seller_files.eng_call_attempts_1yr": {
+      "count": 95728,
+      "min": 1.0,
+      "max": 341.0,
+      "mean": 16.5752
+    },
+    "seller_files.eng_pickup_ratio_90d": {
+      "count": 92826,
+      "min": 0.0,
+      "max": 100.0,
+      "mean": 13.7206
+    },
+    "seller_files.eng_pickup_ratio_1yr": {
+      "count": 95728,
+      "min": 0.0,
+      "max": 100.0,
+      "mean": 9.3897
+    },
+    "seller_files.eng_long_calls_90d": {
+      "count": 95728,
+      "min": 0.0,
+      "max": 25.0,
+      "mean": 0.127
+    },
+    "seller_files.eng_short_calls_90d": {
+      "count": 95728,
+      "min": 0.0,
+      "max": 38.0,
+      "mean": 0.5339
+    },
+    "seller_files.eng_product_count": {
+      "count": 103969,
+      "min": 1.0,
+      "max": 14329.0,
+      "mean": 21.7573
+    },
+    "seller_files.eng_products_modified_90d": {
+      "count": 103969,
+      "min": 0.0,
+      "max": 1563.0,
+      "mean": 4.6737
+    },
+    "seller_files.eng_products_modified_1yr": {
+      "count": 103969,
+      "min": 0.0,
+      "max": 4061.0,
+      "mean": 10.8015
+    },
+    "seller_files.eng_cqs": {
+      "count": 94287,
+      "min": 0.0,
+      "max": 100.0,
+      "mean": 20.9239
+    },
+    "seller_files.bot_attempts": {
+      "count": 149363,
+      "min": 1.0,
+      "max": 87.0,
+      "mean": 3.5534
+    },
+    "seller_files.bot_answered": {
+      "count": 149363,
+      "min": 0.0,
+      "max": 35.0,
+      "mean": 1.804
+    },
+    "seller_files.calls_meeting_fixed": {
+      "count": 149363,
+      "min": 0.0,
+      "max": 7.0,
+      "mean": 0.2079
+    },
+    "seller_files.calls_not_interested": {
+      "count": 149363,
+      "min": 0.0,
+      "max": 31.0,
+      "mean": 0.7791
+    },
+    "seller_files.calls_general": {
+      "count": 149363,
+      "min": 0.0,
+      "max": 20.0,
+      "mean": 0.5247
+    },
+    "seller_files.calls_call_later": {
+      "count": 149363,
+      "min": 0.0,
+      "max": 15.0,
+      "mean": 0.2924
+    },
+    "seller_files.bot_answer_rate": {
+      "count": 149363,
+      "min": 0.0,
+      "max": 1.0,
+      "mean": 0.6543
+    },
+    "seller_files.avg_answered_call_sec": {
+      "count": 130129,
+      "min": 0.0,
+      "max": 1012.0,
+      "mean": 40.5987
+    },
+    "seller_files.eng_callback_90d": {
+      "count": 33714,
+      "min": 0.0,
+      "max": 697.0,
+      "mean": 3.2593
+    },
+    "seller_files.eng_callback_1yr": {
+      "count": 33714,
+      "min": 1.0,
+      "max": 1886.0,
+      "mean": 6.0434
+    },
+    "seller_files.eng_enq_received_90d": {
+      "count": 45079,
+      "min": 0.0,
+      "max": 1135.0,
+      "mean": 4.3419
+    },
+    "seller_files.eng_enq_received_1yr": {
+      "count": 45079,
+      "min": 1.0,
+      "max": 9237.0,
+      "mean": 16.6648
+    },
+    "seller_files.eng_enq_replies_90d": {
+      "count": 56722,
+      "min": 0.0,
+      "max": 5576.0,
+      "mean": 5.3188
+    },
+    "seller_files.eng_enq_replies_1yr": {
+      "count": 56722,
+      "min": 1.0,
+      "max": 12635.0,
+      "mean": 14.8994
+    },
+    "seller_files.eng_pns_received_90d": {
+      "count": 38746,
+      "min": 0.0,
+      "max": 1209.0,
+      "mean": 2.9809
+    },
+    "seller_files.eng_pns_received_1yr": {
+      "count": 38746,
+      "min": 1.0,
+      "max": 2860.0,
+      "mean": 11.6471
+    },
+    "seller_files.eng_pns_answered_90d": {
+      "count": 38746,
+      "min": 0.0,
+      "max": 1130.0,
+      "mean": 1.7839
+    },
+    "seller_files.eng_pns_answered_1yr": {
+      "count": 38746,
+      "min": 0.0,
+      "max": 2239.0,
+      "mean": 6.6875
+    },
+    "seller_files.eng_activity_30d": {
+      "count": 15051,
+      "min": 1.0,
+      "max": 4990.0,
+      "mean": 148.9839
+    },
+    "seller_files.eng_ni_count_1yr": {
+      "count": 9149,
+      "min": 0.0,
+      "max": 20.0,
+      "mean": 2.3417
+    },
+    "seller_files.eng_np_count_1yr": {
+      "count": 9149,
+      "min": 0.0,
+      "max": 6.0,
+      "mean": 0.1513
+    },
+    "seller_files.eng_meetings_1yr": {
+      "count": 4907,
+      "min": 1.0,
+      "max": 23.0,
+      "mean": 1.8476
+    },
+    "seller_files.eng_hot_meetings_1yr": {
+      "count": 4907,
+      "min": 0.0,
+      "max": 23.0,
+      "mean": 1.7524
+    },
+    "bot_calls.call_attempt_count": {
+      "count": 269455,
+      "min": 1.0,
+      "max": 37.0,
+      "mean": 2.3071
+    },
+    "bot_calls.lead_call_duration": {
+      "count": 269455,
+      "min": 0.0,
+      "max": 1805.0,
+      "mean": 36.0018
+    },
+    "call_turns.turn_no": {
+      "count": 139555,
+      "min": 1.0,
+      "max": 148.0,
+      "mean": 8.2974
+    },
+    "call_turns.start_sec": {
+      "count": 139555,
+      "min": 0.0,
+      "max": 1742.0,
+      "mean": 58.4426
+    },
+    "call_turns.end_sec": {
+      "count": 139555,
+      "min": 0.001,
+      "max": 1743.0,
+      "mean": 65.0809
+    },
+    "recording_sample.call_attempt_count": {
+      "count": 5000,
+      "min": 1.0,
+      "max": 21.0,
+      "mean": 1.985
+    },
+    "recording_sample.lead_call_duration": {
+      "count": 5000,
+      "min": 0.0,
+      "max": 301.0,
+      "mean": 51.263
+    },
+    "executive_calls.call_duration": {
+      "count": 67151,
+      "min": 0.0,
+      "max": 5421.0,
+      "mean": 146.1106
+    },
+    "executive_calls.call_duration_customer": {
+      "count": 63431,
+      "min": 0.0,
+      "max": 4200.0,
+      "mean": 131.726
+    },
+    "executive_calls.ring_duration": {
+      "count": 66456,
+      "min": 1.0,
+      "max": 110.0,
+      "mean": 19.6767
+    }
+  },
+  "time_ranges": {
+    "bot_calls": [
+      "2026-04-01 09:00:18",
+      "2026-09-30 20:59:42"
+    ],
+    "recording_sample": [
+      "2026-06-30 09:19:06",
+      "2026-09-30 20:46:26"
+    ],
+    "executive_calls": [
+      "2026-07-21 16:25:09",
+      "2026-09-30 21:32:05"
+    ]
+  },
+  "month_counts": {
+    "bot_calls": {
+      "2026-04": 9800,
+      "2026-05": 23328,
+      "2026-06": 34806,
+      "2026-07": 58124,
+      "2026-08": 73950,
+      "2026-09": 69447
+    },
+    "recording_sample": {
+      "2026-09": 846,
+      "2026-08": 1301,
+      "2026-07": 2846,
+      "2026-06": 7
+    },
+    "executive_calls": {
+      "2026-09": 34300,
+      "2026-07": 1,
+      "2026-08": 32850
+    }
+  },
+  "quality": {
+    "evaluator_valid_json": 278332,
+    "invalid_turn_time_order": 100
+  },
+  "seller_flags": {
+    "already_in_touch_with_executive": 4205,
+    "do_not_call_requested": 1178,
+    "showed_frustration": 139,
+    "asked_if_talking_to_bot": 125
+  },
+  "evaluator_keys": {
+    "incorrect_mf": {
+      "context": 19617,
+      "incorrect_mf": 19617,
+      "bot_statements": 19617,
+      "seller_statements": 19617,
+      "seller_final_stance": 19617,
+      "call_summary": 19330,
+      "seller_initial_reaction": 19330
+    },
+    "topics": {
+      "discussion_timeline": 7179
+    },
+    "execdrop": {
+      "explanation": 18768,
+      "who_ended_call": 18768,
+      "seller_tried_after_closure": 18768
+    },
+    "seller_questions": {
+      "questions": 6560,
+      "has_questions": 6560,
+      "gaps": 18134,
+      "has_gaps": 18134
+    },
+    "se_contact": {
+      "category": 17716,
+      "call_summary": 17716,
+      "seller_exact_quote": 17716
+    },
+    "objections": {
+      "meeting_fixed": 5233,
+      "objection_analysis": 5233
+    },
+    "ivr": {
+      "category": 4983,
+      "severity": 4983,
+      "reasoning": 4983
+    },
+    "location_confirmation": {
+      "summary": 15640,
+      "lead_city": 15640,
+      "call_outcome": 15640,
+      "pronunciation": 15640,
+      "lead_locality_1": 15640,
+      "lead_locality_2": 15640,
+      "location_outcome": 15640,
+      "partial_locality": 15640,
+      "confirmed_location": 15640,
+      "suggested_location": 15640,
+      "bot_location_verbatim": 15640,
+      "seller_suggested_area": 15616,
+      "which_locality_missing": 15640,
+      "seller_location_verbatim": 15640,
+      "offered": 5988,
+      "confirmed_slot": 5988,
+      "asked_after_meeting_agreed": 5988
+    },
+    "latency_repetition": {
+      "turns": 13681,
+      "latency": 13681,
+      "n_turns": 13681,
+      "is_loopy": 13681,
+      "repetition": 13681,
+      "call_duration_sec": 13681
+    },
+    "disposition": {
+      "reason": 150821,
+      "confidence": 150821,
+      "action_item": 15773,
+      "disposition": 150821,
+      "next_action": 15773,
+      "followup_when": 150821,
+      "sub_disposition": 150821,
+      "alternate_number": 144767,
+      "alternate_person_name": 144767,
+      "alternate_person_designation": 144767
+    }
+  },
+  "evaluator_nested_keys": {
+    "location_confirmation": {
+      "pronunciation.words": 7416,
+      "pronunciation.words_mispronounced": 7416,
+      "pronunciation.pronunciation_quality": 7416
+    },
+    "latency_repetition": {
+      "latency.max_sec": 13681,
+      "latency.p50_sec": 13681,
+      "latency.p95_sec": 13681,
+      "latency.measurements": 13681,
+      "latency.overlap_count": 13681,
+      "latency.n_seller_turns": 13681,
+      "latency.suspect_turn_count": 11640,
+      "latency.seller_had_to_repeat_count": 13681,
+      "repetition.bot": 13681,
+      "repetition.seller": 13681,
+      "repetition.is_loopy": 13681,
+      "repetition.bot_back_to_back": 13681,
+      "repetition.bot_intra_turn_loops": 13681
+    }
+  },
+  "recording_cohorts": {
+    "no_specific_signal": 4356,
+    "contact_suppressed": 135,
+    "existing_executive": 439,
+    "scheduling_objection": 55,
+    "prior_frustration": 15
+  },
+  "recording_duration_buckets": {
+    "90_to_179s": 727,
+    "30_to_89s": 2411,
+    "under_30s": 1820,
+    "180s_plus": 42
+  },
+  "seller_cohorts": {
+    "no_specific_signal": 142822,
+    "existing_executive": 4083,
+    "scheduling_objection": 1142,
+    "contact_suppressed": 1178,
+    "prior_frustration": 138
+  },
+  "historical_cohort_outcomes": {
+    "no_specific_signal": {
+      "Call Later / Busy": 38863,
+      "Not Interested": 106924,
+      "General (talked)": 69929,
+      "Meeting Fixed": 29446
+    },
+    "existing_executive": {
+      "Call Later / Busy": 2678,
+      "Not Interested": 5026,
+      "General (talked)": 5732,
+      "Meeting Fixed": 1223
+    },
+    "scheduling_objection": {
+      "Call Later / Busy": 1309,
+      "Not Interested": 1380,
+      "General (talked)": 530,
+      "Meeting Fixed": 241
+    },
+    "contact_suppressed": {
+      "Meeting Fixed": 115,
+      "General (talked)": 2015,
+      "Not Interested": 2868,
+      "Call Later / Busy": 721
+    },
+    "prior_frustration": {
+      "Not Interested": 166,
+      "General (talked)": 159,
+      "Call Later / Busy": 101,
+      "Meeting Fixed": 29
+    }
+  },
+  "caveats": [
+    "Recordings are balanced samples, not population estimates.",
+    "Evaluator labels and transcripts are machine-generated, not gold truth.",
+    "Whole-window seller flags leak future information in retrospective tests.",
+    "Dictionary executive date coverage differs from observed file coverage.",
+    "Public URLs do not grant permission to publish recordings or identities.",
+    "Confidence scores are source/self-report scores, not calibrated probabilities."
+  ]
+}

@@ -1,0 +1,51 @@
+/* Schema-driven administration: YAML documents defaults; validated overrides and write-only secrets stay server-side. */
+const v=encodeURIComponent(document.querySelector('meta[name="app-version"]')?.content||'dev');
+const {api,state,e,human,date,badge,heading,empty,busy,toast,invalid,BASE}=await import('./core.js?v='+v);
+let config=null;
+function inputId(path){return 'config-'+path.replace(/[^a-zA-Z0-9_-]/g,'-');}
+function fieldMarkup(field){
+ const id=inputId(field.path),locked=field.readonly||field.environment_locked;let control;
+ const attrs=`id="${e(id)}" name="${e(field.path)}" data-type="${e(field.type)}" ${locked?'disabled':''}`;
+ if(field.options?.length)control=`<select ${attrs}>${field.options.map(option=>{const value=typeof option==='object'?option.value:option;return `<option value="${e(value)}" ${String(value)===String(field.value)?'selected':''}>${e(typeof option==='object'?option.label||value:human(value))}</option>`;}).join('')}</select>`;
+ else if(field.type==='boolean')control=`<select ${attrs}><option value="true" ${field.value===true?'selected':''}>Enabled</option><option value="false" ${field.value===false?'selected':''}>Disabled</option></select>`;
+ else if(['integer','number'].includes(field.type))control=`<input type="number" ${attrs} value="${e(field.value)}" ${field.minimum!==undefined?'min="'+e(field.minimum)+'"':''} ${field.maximum!==undefined?'max="'+e(field.maximum)+'"':''} step="${field.type==='integer'?'1':'any'}">`;
+ else if(field.type==='array'||field.type==='object')control=`<textarea ${attrs} rows="3">${e(JSON.stringify(field.value,null,2))}</textarea>`;
+ else control=`<input type="text" ${attrs} value="${e(field.value??'')}">`;
+ return `<div class="field config-field"><div class="spread"><label for="${e(id)}">${e(field.label||human(field.path))}</label>${badge(field.origin||'default','neutral')}</div>${control}<small>${e(field.description||'')}</small><details class="config-provenance"><summary>Configuration source</summary><p class="mono">${e(field.path)}</p><p>Default: ${e(typeof field.default==='object'?JSON.stringify(field.default):field.default??'Not supplied')}</p>${field.environment_variable?`<p>Environment: ${e(field.environment_variable)}${field.environment_locked?' · environment override takes precedence':''}</p>`:''}<p>${field.restart_required?'Restart required to activate this setting.':'Runtime setting; takes effect after a validated save.'}${field.readonly?' Read-only in the portal.':''}</p></details></div>`;
+}
+export async function renderAdmin(){
+ if(!state.operator)return heading('ADMINISTRATION','Configuration with a clear source.','Project defaults, runtime overrides and credential readiness in one place.')+empty('Administrator access required','Sign in with authorized workspace access. Demo examples remain available.','<a class="button button-primary" href="#settings">Open access settings</a>');
+ config=await api('/admin/config');
+ return heading('ADMINISTRATION','Make the system yours.','Every control explains its source, bounds and activation. Secrets are write-only.',`<button class="button" data-action="config-export">Export safe configuration</button>`)+`<section class="admin-summary"><div><span class="eyebrow">CURRENT REVISION</span><strong class="admin-revision">${e(config.revision)}</strong></div><div><p>Defaults <code>${e(config.config_file||'config/settings.yaml')}</code></p><p>Overrides <code>${e(config.override_file||'Server runtime configuration')}</code></p><p class="small muted">Save uses the displayed revision to protect against overwriting another editor.</p></div></section>${config.restart_pending?.length?`<div class="demo-note">${badge('Restart pending','warning')}<span>${e(config.restart_pending.join(', '))}</span></div>`:''}<form id="admin-config-form" class="stack">${(config.groups||[]).map((group,i)=>`<details class="admin-group" ${i===0?'open':''}><summary><span><span class="eyebrow">${String(i+1).padStart(2,'0')}</span><strong>${e(group.title||human(group.id))}</strong></span><span class="small muted">${group.fields?.length||0} settings</span></summary><div class="admin-group-body"><p class="muted">${e(group.description||'')}</p><div class="admin-fields">${(group.fields||[]).map(fieldMarkup).join('')}</div></div></details>`).join('')}<div class="admin-savebar"><div><strong>Review, then save.</strong><p class="small muted">Provider credentials are managed separately below.</p></div><button class="button button-primary" type="submit">Save configuration</button><p id="admin-save-status" role="status" class="small"></p></div></form><section class="panel page-section"><div class="panel-heading"><div><h2>Provider credentials</h2><p>Values never leave the server after saving.</p></div>${badge('Write-only','neutral')}</div><div class="panel-body"><div class="credential-grid">${(config.credentials||[]).map(credential=>`<form class="credential-form stack" data-name="${e(credential.name)}" data-version="${e(credential.version??0)}"><div class="spread"><h3>${e(human(credential.name))}</h3>${badge(credential.configured?'Configured':'Not configured')}</div><p class="small muted">${e(credential.activation||'Server-side credential; follow the reported activation state after saving.')}</p><div class="field"><label for="credential-${e(credential.name)}">Replacement value</label><input id="credential-${e(credential.name)}" name="value" type="password" autocomplete="new-password" required maxlength="4096" placeholder="Paste a replacement; current value stays hidden"></div><button class="button" type="submit">Save credential</button><p class="small" role="status"></p></form>`).join('')||'<p class="muted">No browser-editable credentials are registered.</p>'}</div></div></section><section class="panel page-section"><div class="panel-heading"><div><h2>Configuration history</h2><p>Restore an earlier configuration as a new revision.</p></div></div><div class="panel-body"><div class="config-history">${(config.history||[]).map(item=>`<article class="history-entry"><div><strong>Revision ${e(item.revision)}</strong><p class="small muted">${date(item.saved_at)}${item.rollback_to!==undefined?' · restored from '+e(item.rollback_to):''}</p><p class="small break">${e((item.changed_paths||[]).join(', '))}</p></div><button class="button button-small" data-action="config-rollback" data-revision="${e(item.revision)}" ${item.revision===config.revision?'disabled':''}>Restore revision ${e(item.revision)}</button></article>`).join('')||'<p class="muted">No saved overrides yet.</p>'}</div><p id="config-history-status" role="status" class="small"></p></div></section>`;
+}
+export async function handleAdminSubmit(form,values,button){
+ if(form.id==='admin-config-form'){
+  const changes={};
+  for(const field of (config.groups||[]).flatMap(group=>group.fields||[])){
+   if(field.readonly||field.environment_locked)continue;const input=form.elements.namedItem(field.path);if(!input)continue;
+   let value=input.value;
+   if(['integer','number'].includes(field.type)){value=Number(value);if(!Number.isFinite(value)||(field.type==='integer'&&!Number.isInteger(value))){invalid(input,'Enter a valid '+field.type+'.');return true;}}
+   else if(field.type==='boolean')value=value==='true';
+   else if(field.type==='array'||field.type==='object'){try{value=JSON.parse(value);}catch{invalid(input,'Enter valid JSON for this setting.');return true;}}
+   if(JSON.stringify(value)!==JSON.stringify(field.value))changes[field.path]=value;
+  }
+  const slot=document.querySelector('#admin-save-status');if(!Object.keys(changes).length){slot.textContent='No configuration changes to save.';return true;}
+  try{await busy(button,'Saving configuration…',()=>api('/admin/config',{method:'PATCH',body:JSON.stringify({changes,expected_revision:config.revision})}));state.voiceConfig=null;document.querySelector('#main').innerHTML=await renderAdmin();toast('Configuration saved. Review any restart requirements.');}catch(error){slot.textContent=error.status===409?'A newer revision was saved elsewhere. Your edits remain here; reload and compare before saving.':error.message;slot.setAttribute('role','alert');}
+  return true;
+ }
+ if(form.classList.contains('credential-form')){
+  const slot=form.querySelector('[role=status]');
+  try{const result=await busy(button,'Saving credential…',()=>api('/admin/credentials',{method:'PUT',body:JSON.stringify({name:form.dataset.name,value:String(values.get('value')),expected_revision:config.revision,expected_credential_revision:config.credential_revision})}));form.reset();if(result.credential_revision!==undefined)config.credential_revision=result.credential_revision;if(result.credentials){config.credentials=result.credentials;const current=result.credentials.find(c=>c.name===form.dataset.name);if(current)form.querySelector('.spread .badge').outerHTML=badge(current.configured?'Configured':'Not configured');}slot.textContent='Credential saved. '+(result.activation||'Review activation status before running an integration.');toast('Credential saved securely.');}catch(error){slot.textContent=error.message;slot.setAttribute('role','alert');}
+  return true;
+ }
+ return false;
+}
+export async function handleAdminAction(action,button){
+ if(action==='config-rollback'){
+  const slot=document.querySelector('#config-history-status');try{await busy(button,'Restoring revision…',()=>api('/admin/config/rollback',{method:'POST',body:JSON.stringify({revision:Number(button.dataset.revision),expected_revision:config.revision})}));document.querySelector('#main').innerHTML=await renderAdmin();toast('Earlier settings restored as a new revision.');}catch(error){slot.textContent=error.message;}return true;
+ }
+ if(action==='config-export'){
+  const response=await fetch(BASE+'/api/admin/config/export',{credentials:'same-origin',cache:'no-store'});if(!response.ok)throw new Error('Safe configuration export failed.');const content=await response.text();const url=URL.createObjectURL(new Blob([content],{type:response.headers.get('content-type')||'application/json'}));const link=document.createElement('a');link.href=url;link.download='vani-configuration.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);return true;
+ }
+ return false;
+}

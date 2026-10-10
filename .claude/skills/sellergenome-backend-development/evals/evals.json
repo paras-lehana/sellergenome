@@ -1,0 +1,17 @@
+{
+  "skill_name": "sellergenome-backend-development",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Add GET /api/v5/sellers/{id}/summary that returns the persona summary for operators only.",
+      "expected_output": "Endpoint recipe.",
+      "files": [],
+      "expectations": [
+        "Route inside genome_router in api.py",
+        "require_operator",
+        "Access test in tests/test_v5_genome.py",
+        "Error mapping (ValueError→422 etc.) or can_see"
+      ]
+    }
+  ]
+}

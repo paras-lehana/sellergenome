@@ -1,0 +1,26 @@
+{
+  "skill_name": "sellergenome-admin-settings",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "The owner wants an Admin toggle to disable Payal for anonymous visitors. Add it properly.",
+      "expected_output": "Setting end-to-end.",
+      "files": [],
+      "expectations": [
+        "Add commented default in config/genome/settings.yaml",
+        "Read with settings.get",
+        "Admin renders it (generic section or custom renderer)",
+        "Add a test / validation"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I changed the TTS default in Admin and want to undo it.",
+      "expected_output": "Rollback.",
+      "files": [],
+      "expectations": [
+        "Mentions settings history/rollback (POST /admin/settings/rollback or Admin 'Roll back last change')"
+      ]
+    }
+  ]
+}

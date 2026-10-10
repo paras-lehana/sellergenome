@@ -1,0 +1,16 @@
+{
+  "skill_name": "sellergenome-meeting-desk",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Can we email the seller a calendar invite when the bot fixes a meeting?",
+      "expected_output": "No invitations without owner.",
+      "files": [],
+      "expectations": [
+        "Says no customer invitations are sent",
+        "Mentions .ics / Google Calendar link / Jitsi as what exists",
+        "Says Google Calendar API needs OAuth and the owner's go-ahead"
+      ]
+    }
+  ]
+}

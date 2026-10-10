@@ -1,0 +1,16 @@
+{
+  "id": "../",
+  "name": "VANI Persona Studio",
+  "short_name": "VANI Studio",
+  "description": "Evidence-backed seller personas and adaptive conversation rehearsal. A network connection is required.",
+  "start_url": "../",
+  "scope": "../",
+  "display": "standalone",
+  "background_color": "#f5f3ed",
+  "theme_color": "#102630",
+  "icons": [
+    { "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./mark.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

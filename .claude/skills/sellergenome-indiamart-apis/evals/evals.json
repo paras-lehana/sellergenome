@@ -1,0 +1,32 @@
+{
+  "skill_name": "sellergenome-indiamart-apis",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Live data for real-5678901 shows FAIL on every IndiaMART node today. What should I check and fix?",
+      "expected_output": "Gateway/AK/userCtx diagnosis.",
+      "files": [],
+      "expectations": [
+        "Mentions the ngrok gateway may be offline / URL changed and Admin → APIs → Gateway check",
+        "Mentions IM_EMPLOYEE_AK expiry (~24 h) and Admin → Keys",
+        "Mentions userCtx 404 upstream",
+        "Says not to fall back to mocks for real sellers"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I need to add a new IndiaMART API 'seller.ratings' to the pipeline. List every place I must touch.",
+      "expected_output": "Full add-API checklist.",
+      "files": [],
+      "expectations": [
+        "Registry ApiDef in registry.py DEFAULTS",
+        "allowed_hosts.yaml",
+        "mock in mock_upstream.py and _mock mapping",
+        "graph.js LABEL/LEFT/RIGHT",
+        "tests (executor policy)",
+        "Warns that ratings/star split are never-mention data and must stay out of the persona input (or need an owner decision)",
+        "Says to press Reset to default after testing the API from Admin"
+      ]
+    }
+  ]
+}

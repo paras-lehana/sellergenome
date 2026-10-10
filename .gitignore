@@ -1,0 +1,12 @@
+# Internal notes, the supplied dataset, runtime state and keys are not part of the public copy.
+docs/
+dataset/
+runtime/
+private/
+.env
+.env.*
+!.env.example
+__pycache__/
+*.pyc
+.pytest_cache/
+node_modules/

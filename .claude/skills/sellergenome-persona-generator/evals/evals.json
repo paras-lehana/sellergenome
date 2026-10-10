@@ -1,0 +1,28 @@
+{
+  "skill_name": "sellergenome-persona-generator",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "The owner wants the persona prompt to also output a 'best_time_to_call' field. Walk me through doing it safely.",
+      "expected_output": "Prompt-change procedure.",
+      "files": [],
+      "expectations": [
+        "Edit config/genome/prompts/persona_generator_v0.3.md and add to the change list",
+        "Check the 16,000-char system prompt limit",
+        "Run the evaluation before and after",
+        "Map it into the brief/to_persona if it should show"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Tamil sellers' briefs show '[line to be written and checked by a native speaker]' — is that a bug? What does the bot actually say?",
+      "expected_output": "Explains placeholder and English hook.",
+      "files": [],
+      "expectations": [
+        "Says it is the prompt rule for non-Hindi/English",
+        "Says the placeholder is never spoken",
+        "Mentions the English per-trigger hook (TRIGGER_HOOK_EN) or the bot's own intro"
+      ]
+    }
+  ]
+}

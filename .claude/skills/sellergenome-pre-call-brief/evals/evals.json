@@ -1,0 +1,27 @@
+{
+  "skill_name": "sellergenome-pre-call-brief",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "The PM wants the 'Last payment' row moved up and chips in block 2 to open the STS entry. Where do I change this?",
+      "expected_output": "brief.py/brief.js mapping.",
+      "files": [],
+      "expectations": [
+        "Names backend/genome/brief.py from_generated",
+        "Names frontend/cc/brief.js",
+        "Mentions api + pointer / _gen_sources for chips",
+        "Mentions live QA or the brief test afterwards"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Products show as empty bubbles in Basic details. What's wrong?",
+      "expected_output": "Strings vs objects.",
+      "files": [],
+      "expectations": [
+        "Explains generator products are strings while the UI expects objects with name",
+        "Says normalise server-side in brief.py"
+      ]
+    }
+  ]
+}

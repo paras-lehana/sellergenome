@@ -1,0 +1,141 @@
+/* SellerGenome Command Center — design tokens.
+   Re-skin by editing this file only. Every text/background pair is measured in docs/DESIGN.md.
+   Colour carries meaning, never decoration:
+     --o-*  = where a value came from (origin) — the same hue on persona fields, graph nodes and inspector badges.
+     --s-*  = live conversation signals.
+     --accent = the one action/selection colour (saffron). --onair = a call that is happening now. */
+
+@font-face { font-family: "Plex"; src: url("fonts/ibm-plex-sans-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Plex"; src: url("fonts/ibm-plex-sans-latin-500-normal.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Plex"; src: url("fonts/ibm-plex-sans-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Plex"; src: url("fonts/ibm-plex-sans-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Plex Devanagari"; src: url("fonts/ibm-plex-sans-devanagari-devanagari-400-normal.woff2") format("woff2"); font-weight: 400; font-display: swap; unicode-range: U+0900-097F, U+1CD0-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FF; }
+@font-face { font-family: "Plex Devanagari"; src: url("fonts/ibm-plex-sans-devanagari-devanagari-600-normal.woff2") format("woff2"); font-weight: 600; font-display: swap; unicode-range: U+0900-097F, U+1CD0-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FF; }
+@font-face { font-family: "Noto Telugu"; src: url("fonts/noto-sans-telugu-telugu-400-normal.woff2") format("woff2"); font-weight: 400; font-display: swap; unicode-range: U+0C00-0C7F, U+200C-200D, U+25CC; }
+@font-face { font-family: "JB Mono"; src: url("fonts/jetbrains-mono-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "JB Mono"; src: url("fonts/jetbrains-mono-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+
+:root {
+  color-scheme: dark;
+  /* Surfaces: a control room at night — blue-black, never pure #000. */
+  --bg: #0b0e14;
+  --panel: #121722;
+  --panel-2: #172031;
+  --panel-3: #1e2840;
+  --line: #263042;
+  --line-strong: #3a4760;
+  /* Text */
+  --text: #e7ebf2;
+  --text-2: #bcc5d3;
+  --dim: #94a0b4;
+  /* Action and state */
+  --accent: #ffb547;
+  --accent-ink: #1a1205;
+  --accent-soft: rgba(255, 181, 71, 0.14);
+  --onair: #ff6161;
+  --onair-soft: rgba(255, 97, 97, 0.14);
+  --onair-ink: #1a0505;  /* text on --onair: 6.68:1 (white was 2.94:1) */
+  --talk: #3ddc97;        /* Talk as Seller — the floor's main action (owner, 2026-10-10) */
+  --talk-ink: #04140c;
+  --ok: #3ddc97;
+  --warn: #ffb547;
+  --err: #ff7a7a;
+  /* Origins (where a value came from) */
+  --o-live: #3ddc97;
+  --o-cache: #f2c94c;
+  --o-db: #6cb6ff;
+  --o-mock: #c4a1ff;
+  --o-llm: #ff8f6b;
+  --o-default: #a3adbd;
+  --o-blank: #8a95a9;
+  /* Signals */
+  --s-frustration: #ff7a7a;
+  --s-confusion: #c4a1ff;
+  --s-interest: #3ddc97;
+  --s-rush: #ffb547;
+  --s-language: #6cb6ff;
+  /* Code (parse.lehana.in / Prism "tomorrow" hues) */
+  --code-bg: #07090e;
+  --code-text: #cfd5df;
+  --code-key: #f8c555;
+  --code-string: #7ec699;
+  --code-number: #f08d49;
+  --code-null: #cc99cd;
+  --code-op: #67cdcc;
+  /* Type */
+  --sans: "Plex", "Plex Devanagari", "Noto Telugu", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JB Mono", ui-monospace, "SF Mono", Consolas, monospace;
+  --fs-xs: 11px;
+  --fs-sm: 12.5px;
+  --fs-md: 14px;
+  --fs-lg: 17px;
+  --fs-xl: 22px;
+  --fs-2xl: clamp(24px, 2.2vw, 32px);
+  /* Shape and motion */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+  --shadow: 0 18px 60px rgba(0, 0, 0, 0.45);
+  --ease: cubic-bezier(0.2, 0.7, 0.3, 1);
+  --t-fast: 150ms;
+  --rail: 232px;
+  --topbar: 60px;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f3f5f9;
+  --panel: #ffffff;
+  --panel-2: #f2f5f9;
+  --panel-3: #e8edf4;
+  --line: #d9e0ea;
+  --line-strong: #a9b4c5;
+  --text: #121926;
+  --text-2: #36414f;
+  --dim: #556173;
+  --accent: #965400;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(150, 84, 0, 0.1);
+  --onair: #c52a2a;
+  --onair-soft: rgba(197, 42, 42, 0.09);
+  --onair-ink: #ffffff;  /* 5.6:1 on #c52a2a */
+  --talk: #0c7a4c;
+  --talk-ink: #ffffff;
+  --ok: #0c7a4c;
+  --warn: #8a5a00;
+  --err: #b42323;
+  --o-live: #0c7a4c;
+  --o-cache: #7d6200;
+  --o-db: #1d64b0;
+  --o-mock: #6d43c6;
+  --o-llm: #b34622;
+  --o-default: #5b6676;
+  --o-blank: #5d6879;
+  --s-frustration: #b42323;
+  --s-confusion: #6d43c6;
+  --s-interest: #0c7a4c;
+  --s-rush: #8a5a00;
+  --s-language: #1d64b0;
+  --code-bg: #f7f8fa;
+  --code-text: #1f2733;
+  --code-key: #8a5a00;
+  --code-string: #17703a;
+  --code-number: #b34a00;
+  --code-null: #7a3e9d;
+  --code-op: #0a6f75;
+  --shadow: 0 18px 50px rgba(18, 25, 38, 0.14);
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    color-scheme: light;
+    --bg: #f3f5f9; --panel: #ffffff; --panel-2: #f2f5f9; --panel-3: #e8edf4; --line: #d9e0ea; --line-strong: #a9b4c5;
+    --text: #121926; --text-2: #36414f; --dim: #556173;
+    --accent: #965400; --accent-ink: #ffffff; --accent-soft: rgba(150, 84, 0, 0.1);
+    --onair: #c52a2a; --onair-soft: rgba(197, 42, 42, 0.09); --onair-ink: #ffffff; --talk: #0c7a4c; --talk-ink: #ffffff; --ok: #0c7a4c; --warn: #8a5a00; --err: #b42323;
+    --o-live: #0c7a4c; --o-cache: #7d6200; --o-db: #1d64b0; --o-mock: #6d43c6; --o-llm: #b34622; --o-default: #5b6676; --o-blank: #5d6879;
+    --s-frustration: #b42323; --s-confusion: #6d43c6; --s-interest: #0c7a4c; --s-rush: #8a5a00; --s-language: #1d64b0;
+    --code-bg: #f7f8fa; --code-text: #1f2733; --code-key: #8a5a00; --code-string: #17703a; --code-number: #b34a00; --code-null: #7a3e9d; --code-op: #0a6f75;
+    --shadow: 0 18px 50px rgba(18, 25, 38, 0.14);
+  }
+}

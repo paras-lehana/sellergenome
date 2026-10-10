@@ -1,0 +1,41 @@
+<!doctype html>
+<!-- Server replaces base/version tokens; all product data is requested from the same-origin API. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="app-base" content="__BASE_PATH__">
+  <meta name="app-version" content="__APP_VERSION__">
+  <meta name="description" content="An evidence-backed seller persona studio. Inspect seller context, rehearse adaptive conversations and trace every delivery decision.">
+  <meta name="theme-color" content="#102630">
+  <link rel="canonical" href="__PUBLIC_BASE_URL__/walkthrough">
+  <title>VANI Persona Studio · Seller Persona</title>
+  <link rel="icon" type="image/svg+xml" href="__BASE_PATH__/static/mark.svg">
+  <link rel="manifest" href="__BASE_PATH__/static/manifest.webmanifest">
+  <link rel="apple-touch-icon" href="__BASE_PATH__/static/icons/icon-192.png">
+  <link rel="stylesheet" href="__BASE_PATH__/static/tokens.css?v=__APP_VERSION__">
+  <link rel="stylesheet" href="__BASE_PATH__/static/styles.css?v=__APP_VERSION__">
+  <script type="module" src="__BASE_PATH__/static/app.js?v=__APP_VERSION__"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to workspace</a>
+  <aside class="sidebar" aria-label="Studio sidebar">
+    <a class="brand" href="#overview"><span class="brand-mark" aria-hidden="true">Ⅴ</span><span>VANI<span class="brand-sub">SELLER INTELLIGENCE</span></span></a>
+    <div class="sidebar-eyebrow">SELLER INTELLIGENCE</div>
+    <nav id="desktop-nav" aria-label="Workspace"></nav>
+    <div class="sidebar-bottom"><div class="project-tag"><span class="live-dot"></span> Voice Hackathon 2.0</div><p>One seller.<br>One considered conversation.</p><span class="mono">PS04 · SELLER PERSONA</span></div>
+  </aside>
+  <div class="workspace">
+    <header class="topbar">
+      <div class="topbar-left"><button class="icon-button menu-button" id="open-menu" aria-label="Open navigation" aria-haspopup="dialog">☰</button><span class="breadcrumb">Workspace <span>/</span> <strong id="breadcrumb">Overview</strong></span></div>
+      <div class="topbar-right"><span class="badge badge-neutral" id="access-badge">Synthetic demo</span><button class="icon-button" id="command-button" aria-label="Search workspace" title="Search workspace (Ctrl K)">⌕</button><a class="operator-link" href="#settings" aria-label="Open access and password settings"><span class="avatar avatar-small">↗</span><span class="operator-label">Access</span></a></div>
+    </header>
+    <nav class="workspace-modes" aria-label="Workspace mode"><a href="__BASE_PATH__/">SellerGenome Operations ↗</a><a href="#workshop" data-workspace-mode="workshop">PM Workshop</a><a href="#overview" data-workspace-mode="studio">Working Studio</a><a href="#admin" data-workspace-mode="admin">Administration</a><a href="__BASE_PATH__/analysis">Analysis &amp; evidence ↗</a></nav>
+    <main id="main" tabindex="-1"><div class="loading-page" role="status"><span class="spinner"></span>Opening the persona workspace…</div><noscript>This portal needs JavaScript to use the API. API documentation is available from the service's OpenAPI endpoint.</noscript></main>
+    <footer class="footer"><div class="footer-top"><a href="https://paras.lehana.in/" target="_blank" rel="noopener">Say hi to the creator, the <em>“God”</em> ↗</a><span class="mono">VANI PERSONA STUDIO · <span id="version">__APP_VERSION__</span></span></div><nav aria-label="Legal"><a href="#legal/about">About</a><a href="#legal/terms">Terms &amp; Conditions</a><a href="#legal/privacy">Privacy Policy</a><a href="#legal/refund">Refund &amp; Cancellation</a><a href="#legal/contact">Contact Us</a><a href="#legal/disclaimer">Disclaimer</a><a href="#legal/shipping">Shipping &amp; Delivery</a><a href="#legal/grievance">Grievance Redressal</a><a href="https://www.aidhunik.com/about" target="_blank" rel="noopener">Our Team ↗</a></nav><p>Proudly Made in India · © 2026 <a href="https://aidhunik.com" target="_blank" rel="noopener">Aidhunik.com</a> × <a href="https://paras.lehana.in" target="_blank" rel="noopener">Lehana.in</a>. All rights reserved.</p><p class="small">Registered as a Micro Enterprise under Udyam, Ministry of Micro, Small &amp; Medium Enterprises (MSME), Government of India. URN: UDYAM-UP-28-0207886</p></footer>
+  </div>
+  <dialog id="nav-dialog" class="nav-dialog" aria-labelledby="nav-title"><div class="dialog-heading"><h2 id="nav-title">Your workspace</h2><button class="icon-button" data-close="nav-dialog" aria-label="Close navigation">✕</button></div><nav id="mobile-nav" aria-label="Mobile workspace"></nav></dialog>
+  <dialog id="command-dialog" class="command-dialog" aria-labelledby="command-title"><div class="dialog-heading"><h2 id="command-title">Go to a workspace</h2><button class="icon-button" data-close="command-dialog" aria-label="Close workspace search">✕</button></div><label for="command-query" class="sr-only">Find a section</label><input id="command-query" placeholder="Sellers, conversation, evidence…" autocomplete="off"><nav id="command-results" aria-label="Workspace results"></nav><p class="small muted">Ctrl / ⌘ K to open · Escape to close</p></dialog>
+  <div id="toasts" class="toast-stack" aria-live="polite" aria-atomic="false"></div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "skill_name": "sellergenome-incident-runbook",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Right after deploy every /api/v5 call returns 404 and the site looks old.",
+      "expected_output": "V3 rollback window.",
+      "files": [],
+      "expectations": [
+        "Explains Traefik serves the V3 rollback until the container is healthy",
+        "Says wait for healthy (wait_healthy.sh)",
+        "Checks docker logs if it stays unhealthy"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Every private seller suddenly has a blank company name.",
+      "expected_output": "Stale admin override.",
+      "files": [],
+      "expectations": [
+        "Mentions a leftover Admin → APIs override (e.g. company.alias Mock)",
+        "Says Reset to default",
+        "Names the gateway outage (ERR_NGROK / gateway offline) as a second cause and how to tell the two apart (Company node inspector)",
+        "Notes that any Admin → APIs edit bumps the registry revision and drops cached company responses"
+      ]
+    }
+  ]
+}

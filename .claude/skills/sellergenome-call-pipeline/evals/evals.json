@@ -1,0 +1,28 @@
+{
+  "skill_name": "sellergenome-call-pipeline",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "After barge-in the Persona node shows 'fallback' and the persona says Rules. Why would that happen and where do I look?",
+      "expected_output": "Fallback explanation.",
+      "files": [],
+      "expectations": [
+        "Names SarvamError/BudgetExceeded/ValueError fallback to the rules persona",
+        "Mentions orchestrator _generate or phase 3",
+        "Suggests checking /api/v5/status or logs"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I want a new step 'risk.check' to appear in the architecture graph after the persona. What do I change?",
+      "expected_output": "Node recipe.",
+      "files": [],
+      "expectations": [
+        "emit events with the new node id in orchestrator _execute",
+        "results[node] for the inspector",
+        "graph.js LABEL + layout + edge",
+        "warns unknown node ids are silently ignored"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,207 @@
+# SellerGenome V5 "Command Center" — every non-secret default lives here.
+# Admin overrides are stored, revisioned, in PRIVATE_CONFIG_DIR/genome-settings.json.
+# Secrets never live in this file; API keys are write-only in Admin (PRIVATE_CONFIG_DIR/genome-secrets.json)
+# or come from the deployment env file.
+
+app:
+  version: 5.13.7
+  # Shown in the bot's self-introduction (decision D10).
+  bot_name: Payal
+  # named_assistant: "IndiaMART ki virtual assistant Payal" (default, honest and natural)
+  # explicit_ai: "IndiaMART ka AI assistant" opening.
+  disclosure_mode: named_assistant
+
+elastic:
+  # Physical indices are <prefix>-<kind>-v1 behind aliases <prefix>-<kind>.
+  index_prefix: sellergenome-v5
+  # Read previous API responses from Elasticsearch before calling an API.
+  cache_reads: true
+  # Store every API response in Elasticsearch (asynchronously; never blocks a run).
+  persist_responses: true
+  # Write persona and factor documents.
+  index_personas: true
+  flush_interval_seconds: 1.0
+  timeout_seconds: 6
+
+runs:
+  # Sources fetched at the same time inside one run.
+  max_concurrent_sources: 4
+  # Related buyers fetched per seller and how many at once.
+  max_buyers: 5
+  buyer_concurrency: 3
+  # A run gives up on slow sources after this many seconds (facts already published stay).
+  timeout_seconds: 25
+  # Run creation limit per visitor per minute (anonymous) and per operator.
+  public_runs_per_minute: 20
+  operator_runs_per_minute: 60
+  # Mock APIs sleep this long (ms, uniform range) so timings in the graph look like real network calls.
+  mock_latency_ms: [60, 260]
+
+upstream:
+  # IndiaMART's internal hosts do not resolve from this server. A pass-through gateway (the "IM API
+  # Portal") forwards <gateway_base_url> + the original path to the original host. Change the URL here
+  # (Admin → APIs → Gateway) when the tunnel moves; switch it off to call the hosts directly.
+  gateway_enabled: true
+  # Empty here on purpose: the tunnel URL is an open proxy, so it lives in the private env file
+  # (UPSTREAM_GATEWAY_BASE_URL) and/or as an Admin override — never in Git.
+  gateway_base_url: ""
+  # Sent with every gateway request (ngrok shows a browser warning page without it).
+  gateway_headers: {ngrok-skip-browser-warning: "1"}
+  # Employee the IndiaMART AK was issued to (PNS EMP_ID, STS/getContext empid).
+  employee_id: "84206"
+  # Fan-out bounds per run: purchased buy leads expanded, and chat threads read.
+  max_leads: 3
+  max_lms_contacts: 2
+  # Approved test GLIDs with known chat history, tried after the seller's own buyers.
+  lms_test_contacts: ["11111111", "22222222"]
+  # Which GLIDs may call the live IndiaMART APIs (Admin → APIs → Gateway, or Admin search "glid access"; D51).
+  #   dev  = only the approved test GLIDs in APPROVED_GLIDS_PATH (the original rule; the default).
+  #   prod = any numeric GLID a signed-in user (PM session or operator key) enters, so clients can test their own.
+  # Both modes keep the sign-in rule: anonymous visitors never trigger a live call. In prod the LMS test contacts
+  # above are not tried (they only made sense for the approved test list).
+  glid_access: dev
+
+sarvam_voice:
+  # Payal on Sarvam's Voice Agents platform (built through the Sarvam Voice MCP; Admin → Sarvam voice agent).
+  # The workspace id is in the Sarvam dashboard URL or Settings; with it and the Voice Agents API key
+  # (SARVAM_VOICE_AGENTS_API_KEY, Admin → Keys) the site can open live browser voice calls to Payal.
+  workspace_id: 01a110b3-f03e-79cd-b765-aefbf9b8b01f
+  # The agent Talk as Seller starts with when the browser has no choice of its own (5.12, owner: "this v2 is default
+  # now (hope we can set this from admin)"). A Sarvam app id from the workspace (e.g. Manjula Executive v2), or "builtin".
+  default_agent: builtin
+  public_chat_turns_per_minute: 12
+  # Live browser voice calls to Payal (Sarvam conversational SDK). The page asks this server for a short-lived
+  # signed WebSocket URL; the Voice Agents key never reaches the browser. Synthetic demo sellers only.
+  live_calls_enabled: true
+  live_calls_per_visitor_per_hour: 6
+  live_call_max_seconds: 300
+  # Applied to Payal's agent on the next "Build / update" (Admin → Sarvam voice agent).
+  # vad: basic-vad (platform default) or hybrid-vad. silence_frames: pause frames before Payal treats the seller's
+  # turn as finished (platform default 6; lower = snappier, higher = more patient).
+  vad: hybrid-vad
+  # 5.4 sweep on live calls (3 calls × 3 answers each, seller hesitations of 450 ms): hybrid 6 frames answered in 1.42 s
+  # (median), 4 → 1.36 s, 3 → 1.33 s (range 1.23–1.40 s) with no talk-over — 3 is the fastest and most consistent.
+  silence_frames: 3
+  # Payal's speaking pace on Sarvam (1.0 = the voice's natural pace) and her voice: a display name from Sarvam's catalogue
+  # (Admin lists them after a build); empty = the best Hinglish support voice ("Ishita – Hinglish Support Agent").
+  pace: 1.15
+  voice: ""
+  allow_interrupt: true
+  # Words Sarvam's speech recognition should expect on Payal's calls (also sent per call at start).
+  hotwords: [IndiaMART, Payal, BuyLead, TrustSEAL, Lead Manager, GST, catalogue, enquiry, meeting, executive]
+
+sarvam_buyer:
+  # VANI, the buyer-requirement agent on Sarvam Voice Agents (5.7; Admin → Sarvam voice agent → Build VANI). Same sign-in,
+  # workspace and Voice Agents key as Payal; listening (vad, silence frames, interrupts) follows sarvam_voice.
+  live_calls_enabled: true
+  # A display name from Sarvam's catalogue; empty = the best male Hinglish voice (the owner's lines use masculine forms).
+  voice: ""
+  pace: 1.1
+  hotwords: [IndiaMART, VANI, WhatsApp, seller, piece, pieces, kilogram, set, box, unit, size, capacity]
+
+llm:
+  # Platform rule: inference goes through llm.lehana.in; custom provider points at Sarvam.
+  provider_base_url: https://api.sarvam.ai/v1
+  model: sarvam-105b-conversations
+  organization_id: 01a110b3-f038-7adb-b627-6863a3785c40
+  reasoning_effort: low
+  temperature: 0.2
+  max_tokens: 3500
+  timeout_seconds: 40
+  # Aggregations are cached by the hash of their input for this long.
+  aggregation_cache_hours: 24
+
+engines:
+  # Defaults for every place SellerGenome speaks, listens or hands a call to a bot (decision D25). Each place
+  # (call workspace, buyer desk, /sarvam) also has its own picker; "default" there means these values.
+  # Earlier choices stay selectable — nothing was replaced.
+  # bot: builtin (SellerGenome VANI, our pipeline) | sarvam_agent (Payal on Sarvam Voice Agents, live voice)
+  bot: builtin
+  # tts_model: bulbul:v4-flash (latest, 224 voices) | bulbul:v3 (5.2 default)
+  tts_model: bulbul:v4-flash
+  # tts_voice: auto = the persona's voice mapped into the model's catalogue; or a named voice
+  tts_voice: auto
+  # tts_transport: stream (WebSocket, first audio ≈0.3 s) | rest (≈1.5 s per line)
+  tts_transport: stream
+  # listen: realtime (streaming STT with live partials and end-of-turn detection) | clip (record, then transcribe)
+  listen: realtime
+  # stt_model (clips): saaras:v4 | saaras:v3 | saarika:v2.5; stt_realtime_model: saaras:v4 | saaras:v3-realtime
+  stt_model: saaras:v4
+  stt_realtime_model: saaras:v4
+  # stt_mode: codemix | transcribe | translit | verbatim | translate
+  stt_mode: codemix
+  # translate_model: mayura:v1 (colloquial register, the 5.2 model) | sarvam-translate:v1
+  translate_model: mayura:v1
+  # Romanised Hindi → Devanagari before speaking: auto (only for Bulbul v3; v4 reads romanised Hinglish correctly and
+  # this saves ≈0.7 s per line) | always (5.3 behaviour) | never. Measured 2026-10-10 (docs/architecture/voice-engines.md).
+  transliterate: auto
+  # Recognition hints for saaras:v4 (keyterms, ≤50 terms of ≤64 chars).
+  keyterms: [IndiaMART, Payal, BuyLead, TrustSEAL, Lead Manager, GST, catalogue, enquiry]
+  # Buyer desk: none by default — seller words biased a clipped buyer fragment into "TrustSEAL." in 5.4 live QA.
+  buyer_keyterms: []
+  realtime:
+    # Sarvam realtime STT: fast = partials at low latency; balanced = more accurate partials.
+    stream_type: fast
+    # Pause (ms) that ends a turn, speech-detection threshold (0–1), minimum speech length (ms) and audio kept
+    # before detected speech (ms). Sarvam's guide suggests 500 / 0.3 / 250 / 300; 600 gives sellers room to pause.
+    silence_duration_ms: 600
+    threshold: 0.4
+    min_speech_duration_ms: 250
+    prefix_padding_ms: 300
+    # A listening session closes after this many seconds.
+    max_seconds: 90
+    sessions_per_visitor_per_minute: 6
+
+budgets:
+  # Sarvam calls per UTC day. Public = anonymous visitors combined.
+  # Raised in 5.2: a spoken call costs ~2 calls per line (transliterate + speech) — see decision D21.
+  public_sarvam_calls_per_day: 1200
+  operator_sarvam_calls_per_day: 3000
+  # Live-conversation turns per call before Auto pauses.
+  max_auto_turns_per_call: 24
+
+persona:
+  # Persona engine (5.5): generator = the owner's Persona Generator prompt v0.3 (config/genome/prompts/), with automatic
+  # quality checks and one repair round; aggregator = the 5.x Sarvam aggregation. Both feed the same live bot.
+  engine: generator
+  # Policy weights, not probabilities.
+  established_weight: 0.6
+  incidental_weight: 0.4
+  # In-call recency: latest turns matter most (half-life in turns).
+  turn_half_life: 3
+  # Inferred switches wait for cooldown; explicit requests bypass it.
+  cooldown_seconds: 8
+  cooldown_turns: 1
+  # Speakers the persona may choose (Bulbul v3 has no pitch control).
+  speakers: [ritu, priya, kavya, shubh, rahul, amit]
+  pace_min: 0.8
+  pace_max: 1.25
+  languages: [hi-IN, en-IN, te-IN, ta-IN, mr-IN, gu-IN, bn-IN, kn-IN, ml-IN, pa-IN, od-IN]
+
+floor:
+  # Tiles on the seller floor and the buyer desk.
+  seller_lanes: 12
+  buyer_lanes: 8
+  # Accelerated clock for the exploration window (15 simulated minutes per real minute).
+  clock_multiplier: 15
+  exploration_window_minutes: 15
+  # Seconds between transcript lines on a simulated call.
+  seconds_per_turn: 4.5
+  # Real sellers (approved GLIDs) pinned at the top of the floor for signed-in operators only. Their tiles show no
+  # simulated call — only identity confirmed by an earlier live run — and "Talk as Seller" starts a real preparation.
+  pinned_real_sellers: []
+
+meetings:
+  # Online meetings get a real, working Jitsi room; no account needed.
+  meeting_link_base: https://meet.jit.si/IndiaMART-SellerGenome-
+  duration_minutes: 30
+  timezone: Asia/Kolkata
+
+buyer:
+  # Ask limits from the Buyer-side VANI prompt (Collection Control).
+  limits: {product: 4, quantity: 3, specification: 2, name: 3, city: 3, state: 3, transfer: 2}
+  languages: [hi-IN, en-IN, te-IN]
+
+voice_plugin:
+  # Seconds without events before a connected call leaves the floor.
+  idle_timeout_seconds: 120

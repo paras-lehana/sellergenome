@@ -1,0 +1,12 @@
+
+# V3 private inputs, credentials and isolated checkouts.
+private/
+.worktrees/
+config/private/
+.git
+dataset/
+runtime/
+venv_*/
+.env*
+*.zip
+*.sqlite*

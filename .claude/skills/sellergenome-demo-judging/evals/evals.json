@@ -1,0 +1,18 @@
+{
+  "skill_name": "sellergenome-demo-judging",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Judges in 30 minutes. Give me the checklist and a 5-minute path.",
+      "expected_output": "Pre-demo + path.",
+      "files": [],
+      "expectations": [
+        "Health on both mirrors",
+        "No eval suites running / gateway limit",
+        "Pre-warm demo sellers",
+        "Path includes barge-in, brief with evidence, live switch, voice in two languages",
+        "States honest caveats (simulated floor etc.)"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+# Public SellerGenome deployment. Source stays in the project; no application host port.
+name: seller-persona-v3
+services:
+  app:
+    image: sellergenome:3.1.0
+    build:
+      context: /opt/sellergenome/.worktrees/v3
+      dockerfile: /root/docker/sellergenome/Dockerfile
+    container_name: seller-persona-v3
+    init: true
+    restart: unless-stopped
+    read_only: true
+    env_file:
+      - /opt/secrets/env_files/seller-persona-v3.env
+    environment:
+      PUBLIC_BASE_PATH: ""
+      PUBLIC_BASE_URL: https://sellergenome.lehana.in
+      DEPLOYMENT_ENVIRONMENT: production
+      DATA_DIR: /srv/data
+      DATASET_DIR: /source-dataset
+      PRIVATE_CONFIG_DIR: /srv/config
+      APPROVED_GLIDS_PATH: /srv/approved/approved_glids.json
+      SESSION_COOKIE_NAME: persona_v3_access
+      OWNER_COOKIE_NAME: persona_v3_owner
+      ELASTICSEARCH_INDEX_PREFIX: seller-persona-v3
+      SERVER_HOST: lehana-rig
+      PREVIEW_PAUSE_SCHEDULES: "true"
+    volumes:
+      - /opt/sellergenome/.worktrees/v3:/app:ro
+      - /opt/sellergenome/dataset:/source-dataset:ro
+      - /opt/sellergenome/private/v3/data:/srv/data
+      - /opt/sellergenome/private/v3/config:/srv/config
+      - /opt/sellergenome/private/v3/approved:/srv/approved:ro
+    expose:
+      - "8000"
+    networks:
+      root_default:
+        # Actual measured rig subnet; recheck allocation before recreating.
+        ipv4_address: 172.19.0.41
+      persona_search:
+    tmpfs:
+      - /tmp:size=128m,mode=1777
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=root_default
+      - 'traefik.http.routers.sellergenome-vm.rule=HostRegexp(`^((rig|vps)-)?sellergenome\.(lehana\.in|aidhunik\.com)$$`) && (Path(`/`) || Path(`/walkthrough`) || PathPrefix(`/walkthrough/`) || Path(`/analysis`) || PathPrefix(`/analysis/`) || Path(`/pm`) || PathPrefix(`/api/`) || PathPrefix(`/static/`) || Path(`/health`) || Path(`/sw.js`) || Path(`/slide`) || Path(`/docs`) || Path(`/openapi.json`) || Path(`/redoc`))'
+      - traefik.http.routers.sellergenome-vm.entrypoints=web
+      - traefik.http.routers.sellergenome-vm.priority=140
+      - traefik.http.routers.sellergenome-vm.middlewares=sellergenome-https,sellergenome-headers
+      - traefik.http.routers.sellergenome-vm.service=sellergenome
+      # TLS terminates on the VPS; preserve scheme across the second HTTP proxy hop.
+      - traefik.http.middlewares.sellergenome-https.headers.customrequestheaders.X-Forwarded-Proto=https
+      - traefik.http.middlewares.sellergenome-headers.headers.customresponseheaders.X-Robots-Tag=noindex, nofollow
+      - traefik.http.middlewares.sellergenome-headers.headers.contenttypenosniff=true
+      - traefik.http.middlewares.sellergenome-headers.headers.referrerpolicy=same-origin
+      - traefik.http.services.sellergenome.loadbalancer.server.port=8000
+      - lehana.tier=production
+      - lehana.priority=medium
+      - lehana.description=SellerGenome workshop and aggregate research; preserve private state and Elasticsearch volumes
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=8)"]
+      interval: 600s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    mem_limit: 1500m
+    cpus: 2
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+networks:
+  root_default:
+    external: true
+  persona_search:
+    external: true
+    name: seller-persona-private

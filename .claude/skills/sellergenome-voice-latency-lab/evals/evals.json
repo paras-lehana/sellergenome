@@ -1,0 +1,27 @@
+{
+  "skill_name": "sellergenome-voice-latency-lab",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Payal feels slow. Before changing anything, how do I measure her answer time and test 2 vs 3 silence frames?",
+      "expected_output": "Lab procedure on the draft.",
+      "files": [],
+      "expectations": [
+        "Uses scripts/voice_lab.py payal inside the container",
+        "Experiments on the draft version (LAB_VERSION), commit via Build",
+        "Says per-call VAD overrides are ignored"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Give me today's end-to-end reply times for VANI and Payal and where the time goes.",
+      "expected_output": "Numbers with breakdown.",
+      "files": [],
+      "expectations": [
+        "VANI ≈1.8–2.1 s",
+        "Payal ≈1.2–2.0 s (1.33 s median)",
+        "Breakdown includes end of turn ~1 s and LLM via gateway"
+      ]
+    }
+  ]
+}

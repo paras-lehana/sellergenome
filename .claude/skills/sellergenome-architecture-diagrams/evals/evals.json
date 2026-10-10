@@ -1,0 +1,17 @@
+{
+  "skill_name": "sellergenome-architecture-diagrams",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Draw the barge-in sequence for the slide.",
+      "expected_output": "Uses archify sequence with project facts.",
+      "files": [],
+      "expectations": [
+        "Uses the root archify skill (finalize sequence)",
+        "Includes POST /api/v5/runs and SSE stream",
+        "Includes executor policy → ES cache → mock/live and persona generator steps",
+        "No secrets or gateway URLs"
+      ]
+    }
+  ]
+}

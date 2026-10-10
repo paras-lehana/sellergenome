@@ -1,0 +1,14 @@
+[tool.ruff]
+target-version = "py312"
+line-length = 79
+exclude = ["docs/refenrenceCode", "dataset", "venv_persona", "runtime"]
+
+[tool.ruff.lint]
+select = ["E9", "F"]
+
+[tool.ruff.lint.per-file-ignores]
+# Executable scripts add the repository root before loading the application.
+"scripts/*.py" = ["E402"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

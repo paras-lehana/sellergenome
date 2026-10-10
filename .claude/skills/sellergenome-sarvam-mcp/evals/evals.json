@@ -1,0 +1,16 @@
+{
+  "skill_name": "sellergenome-sarvam-mcp",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "List Payal's knowledge bases and tell me which one is the orphan; then delete it.",
+      "expected_output": "Read via helper, refuse delete without owner.",
+      "files": [],
+      "expectations": [
+        "Uses mcp_call.py knowledge_base list inside the container",
+        "Says delete_kb needs the owner's OK",
+        "Mentions KB list returns names without ids"
+      ]
+    }
+  ]
+}

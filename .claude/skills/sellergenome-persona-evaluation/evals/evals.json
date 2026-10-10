@@ -1,0 +1,31 @@
+{
+  "skill_name": "sellergenome-persona-evaluation",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I changed the fact labels in persona_generator.py on the v5 branch (not deployed). How do I measure whether quality changed vs the last run?",
+      "expected_output": "Run the suite from the worktree and compare.",
+      "files": [],
+      "expectations": [
+        "Uses run_eval.sh (or docker run --network container:sellergenome-v4 with the worktree)",
+        "Compares with a previous report (summarize.py or table)",
+        "Reports delivered and model raw score",
+        "Mentions the 30 req/min gateway limit / not running two suites",
+        "Reuses the bundled run_eval.sh and summarize.py instead of hand-building the docker command",
+        "Says only Admin runs are indexed in ES and script vs Admin runs should not be mixed"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Add an edge case: a seller whose last meeting note says 'work to be done: upload catalogue by 12 Oct'. What should it expect?",
+      "expected_output": "EDGE entry design.",
+      "files": [],
+      "expectations": [
+        "Adds to EDGE in backend/genome/persona_eval.py",
+        "Bases it on a hero seller",
+        "Expectation observable on the output (e.g. trigger type)",
+        "Mentions follow_up_due vs unresolved_last_interaction depending on the date rule"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+# Separate worker runtime; do not install provider SDKs into the portal process.
+livekit-agents==1.8.5
+livekit-api==1.2.1
+httpx==0.28.1

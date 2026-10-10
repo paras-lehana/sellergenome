@@ -1,0 +1,7 @@
+{
+  "contract_version": "1.0",
+  "notice": "Reviewed server-owned endpoint registry. Empty entries are intentionally not configured; never invent company URLs. Admin selects modes and keys but cannot add arbitrary endpoints.",
+  "required_contract_fields": ["endpoint", "seller_parameter", "response_identity_pointer", "credential_required", "credential_header"],
+  "buyer_detail_additional_field": "buyer_parameter",
+  "contracts": {}
+}

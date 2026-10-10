@@ -1,0 +1,542 @@
+{
+  "_about": "Synthetic hero sellers for the V5 call floor and public demo. Every name, company, number and quote is fictional. Shapes follow the production hot-lead payload (see docs/architecture/production-persona-contract.md). GLIDs 91000101-91000114 are reserved synthetic IDs.",
+  "sellers": [
+    {
+      "glid": "91000101", "contact_name": "Imran Qureshi", "company_name": "Qureshi Wood Art",
+      "business_nature": "Manufacturer", "legal_status": "Individual - Proprietor", "employees": "11 to 25 People", "year_established": "2014",
+      "city": "Jodhpur", "state": "Rajasthan", "pincode": "342008", "locality": "Basni Industrial Area",
+      "address_profile": "Plot 41, Phase 2, Basni Industrial Area, Jodhpur, Rajasthan 342005",
+      "address_gst": "41 PHASE II BASNI INDUSTRIAL AREA JODHPUR RAJASTHAN 342005",
+      "language": "hi-IN", "speaks": "Hinglish", "archetype": "price_sensitive", "speaker": "ritu",
+      "custtype": 53, "custtypeweight": 1199, "custtype_name": "vFCP with PNS", "data_type": "PIM", "tenure_days": 1610, "turnover_band": "₹40 lakh – 1.5 crore",
+      "products": [
+        {"name": "Sheesham Wood Dining Chair", "price": null, "unit": "Piece", "isq": {"Material": "Sheesham Wood", "Finish": "Natural Polish"}},
+        {"name": "Cafe Chair", "price": "₹ 2,400 / Piece", "unit": "Piece", "isq": {"Material": "Mango Wood", "Seat": "Cane"}},
+        {"name": "Banquet Chair", "price": null, "unit": "Piece", "isq": {"Frame": "Iron", "Cushion": "Foam"}},
+        {"name": "Wooden Bar Stool", "price": null, "unit": "Piece", "isq": {"Height": "30 inch"}}
+      ],
+      "top_mcats": [{"mcat_name": "Wooden Dining Chairs", "product_count": 9}, {"mcat_name": "Cafe Chair", "product_count": 4}, {"mcat_name": "Banquet Chair", "product_count": 3}],
+      "counts": {"pns_received_30d": 6, "pns_picked_30d": 3, "local_buylead_count": 18, "national_buylead_count": 940, "enquiries_received_30d": 4},
+      "competitors": ["Marwar Furniture House: Jan 2021", "Thar Crafts: Aug 2023", "Royal Teak Studio: Mar 2025"],
+      "last_call": {"summary": "Seller said monthly plan is costly right now, asked to call after the 10th when payments come in.", "start": "2026-09-30 16:12:41", "by": "bot"},
+      "last_meeting_date": "12-08-2026",
+      "trigger": {"activity_id": 2368, "activity": "Viewed the Star Supplier package page twice"},
+      "insights": {
+        "purchase_intent": ["Imran viewed the Star Supplier package twice this week after asking about monthly plans in August.", "- On 12 August the executive noted: \"interested in monthly, will decide after festival orders\".\n- He opened the Star Supplier page on 7 and 9 October."],
+        "objection_or_blocker": ["Cash flow is the repeated blocker, not interest.", "- Two call notes (12 Aug, 30 Sep) mention payments arriving after the 10th.\n- He has never said the product is not useful."],
+        "last_interaction": ["Last clear talk was a 3-minute bot call on 30 September asking to call after the 10th.", "- 30 Sep: bot call, 3 min 10 s, callback requested.\n- 4 Oct: executive call not answered."],
+        "market_opportunity": ["Jodhpur saw ₹9.8 lakh of buyer demand for wooden and cafe chairs last month.", "- Wooden dining chairs: ₹6.1 lakh from 5 buy leads.\n- Cafe chairs: ₹2.3 lakh from 7 buy leads."],
+        "competitor_landscape": ["Two paid Jodhpur sellers list the same chair categories with prices.", "- Marwar Furniture House shows prices on 20 of 22 products.\n- Thar Crafts holds a TrustSEAL."],
+        "engagement_history": ["He replies to most enquiries, usually within a day.", "- 11 enquiries received in 90 days, 9 replied.\n- 3 PNS calls missed this month."],
+        "catalog_gaps": ["3 of 4 key products show no price.", "- No brochure on any product.\n- Banquet Chair has no description."]
+      },
+      "doubts": [{"doubt": "A bot call on 2 October recorded 'galat number', but the same number opened the package page on 7 October. Confirm you are speaking with Imran.", "category": ["purchase_intent", "last_interaction"]}],
+      "buyers": [
+        {"glid": "72000301", "name": "Rakesh Mehta", "city": "Ahmedabad", "channel": "enquiry", "product": "Cafe Chair", "qty": "40 Piece", "last_at": "2026-10-06", "intent": "High"},
+        {"glid": "72000302", "name": "Hotel Sunrise Inn", "city": "Udaipur", "channel": "pns", "product": "Banquet Chair", "qty": "120 Piece", "last_at": "2026-10-03", "intent": "High"},
+        {"glid": "72000303", "name": "Neha Kapoor", "city": "Delhi", "channel": "buylead", "product": "Sheesham Wood Dining Chair", "qty": "6 Piece", "last_at": "2026-09-28", "intent": "Medium"}
+      ],
+      "sts": [
+        {"date": "2026-08-12", "by": "Field executive", "note": "Met at factory. Interested in monthly plan, will decide after festival orders."},
+        {"date": "2026-09-30", "by": "Bot", "note": "Asked to call after 10th, payments pending."},
+        {"date": "2026-10-04", "by": "Tele executive", "note": "Not answered."}
+      ],
+      "lms": [
+        {"date": "2026-10-06 11:20", "from": "buyer", "text": "Need 40 cafe chairs for new outlet. Send best price."},
+        {"date": "2026-10-06 18:05", "from": "seller", "text": "Ji sir, mango wood with cane seat available. Rate share kar raha hoon."}
+      ],
+      "bot_calls": [
+        {"date": "2026-09-30", "outcome": "Call Later", "duration_s": 190, "summary": "Monthly plan costly now, call after 10th."},
+        {"date": "2026-10-02", "outcome": "General", "duration_s": 14, "summary": "Respondent said wrong number."}
+      ]
+    },
+    {
+      "glid": "91000102", "contact_name": "Lakshmi Narayana Reddy", "company_name": "Sri Venkateswara Agro Tools",
+      "business_nature": "Manufacturer", "legal_status": "Partnership", "employees": "26 to 50 People", "year_established": "2009",
+      "city": "Guntur", "state": "Andhra Pradesh", "pincode": "522004", "locality": "Autonagar",
+      "address_profile": "D.No 5-87, Autonagar, Guntur, Andhra Pradesh 522004",
+      "address_gst": "5-87 AUTONAGAR GUNTUR ANDHRA PRADESH 522004",
+      "language": "te-IN", "speaks": "Telugu with some English", "archetype": "curious", "speaker": "kavya",
+      "custtype": 21, "custtypeweight": 520, "custtype_name": "Star Supplier", "data_type": "PIM", "tenure_days": 2890, "turnover_band": "₹5 – 25 crore",
+      "products": [
+        {"name": "Battery Operated Knapsack Sprayer", "price": "₹ 3,150 / Piece", "unit": "Piece", "isq": {"Tank Capacity": "16 L", "Battery": "12V 8Ah"}},
+        {"name": "Power Weeder", "price": "₹ 48,000 / Piece", "unit": "Piece", "isq": {"Engine": "7 HP Petrol"}},
+        {"name": "Brush Cutter", "price": "₹ 11,500 / Piece", "unit": "Piece", "isq": {"Engine": "52 cc 2 Stroke"}}
+      ],
+      "top_mcats": [{"mcat_name": "Agricultural Sprayer", "product_count": 14}, {"mcat_name": "Power Weeder", "product_count": 5}, {"mcat_name": "Brush Cutter", "product_count": 4}],
+      "counts": {"pns_received_30d": 22, "pns_picked_30d": 19, "local_buylead_count": 31, "national_buylead_count": 2210, "enquiries_received_30d": 17},
+      "competitors": ["Kisan Agro Implements: Feb 2019", "Godavari Farm Machines: Jul 2022"],
+      "last_call": {"summary": "Asked how Lead Manager filters work and whether leads from Karnataka can be included.", "start": "2026-10-01 11:40:02", "by": "executive"},
+      "last_meeting_date": "",
+      "trigger": {"activity_id": 2412, "activity": "Explored the Lead Manager and buy-lead filters"},
+      "insights": {
+        "purchase_intent": ["He is exploring how to get more leads from neighbouring states.", "- Opened Lead Manager settings 3 times this week.\n- Asked about Karnataka leads on 1 October."],
+        "objection_or_blocker": ["No objection yet; he asks detailed questions before deciding.", "- Every recorded call contains a 'how does it work' question."],
+        "last_interaction": ["1 October executive call: product questions, no decision.", "- 6 min 40 s call, asked about state filters."],
+        "market_opportunity": ["Andhra Pradesh and Karnataka had ₹38 lakh of sprayer demand last month.", "- 64 buy leads for battery sprayers across AP and KA."],
+        "competitor_landscape": ["One Guntur competitor recently upgraded to a higher package.", "- Kisan Agro Implements moved to Leader in September."],
+        "engagement_history": ["Very responsive: 19 of 22 PNS calls picked in 30 days.", "- Replies to enquiries in about 2 hours on average."],
+        "catalog_gaps": ["Catalog is strong; only videos are missing.", "- 14 of 14 sprayer products priced.\n- No product videos."]
+      },
+      "doubts": [],
+      "buyers": [
+        {"glid": "72000311", "name": "Ravi Kumar Agencies", "city": "Kurnool", "channel": "pns", "product": "Battery Operated Knapsack Sprayer", "qty": "50 Piece", "last_at": "2026-10-07", "intent": "High"},
+        {"glid": "72000312", "name": "Hosur Farm Supplies", "city": "Hosur", "channel": "buylead", "product": "Power Weeder", "qty": "4 Piece", "last_at": "2026-10-02", "intent": "Medium"}
+      ],
+      "sts": [
+        {"date": "2026-07-20", "by": "Renewal desk", "note": "Renewed Star Supplier annual."},
+        {"date": "2026-10-01", "by": "Tele executive", "note": "Asked about Lead Manager state filters. Wants demo."}
+      ],
+      "lms": [
+        {"date": "2026-10-07 09:40", "from": "buyer", "text": "Battery sprayer 16 L, 50 nos, delivery Kurnool?"},
+        {"date": "2026-10-07 10:02", "from": "seller", "text": "Yes sir, available. Delivery in 4 days. Sending quote."}
+      ],
+      "bot_calls": [
+        {"date": "2026-09-12", "outcome": "General", "duration_s": 96, "summary": "Asked many questions on lead filters, wanted Telugu explanation."}
+      ]
+    },
+    {
+      "glid": "91000103", "contact_name": "Rohit Malhotra", "company_name": "Malhotra Precision Castings",
+      "business_nature": "Manufacturer", "legal_status": "Private Limited Company", "employees": "51 to 100 People", "year_established": "2003",
+      "city": "Ludhiana", "state": "Punjab", "pincode": "141003", "locality": "Focal Point Phase 8",
+      "address_profile": "B-27, Focal Point Phase 8, Ludhiana, Punjab 141010",
+      "address_gst": "B 27 FOCAL POINT PHASE VIII LUDHIANA PUNJAB 141010",
+      "language": "en-IN", "speaks": "English and Hinglish, short sentences", "archetype": "rushed", "speaker": "rahul",
+      "custtype": 12, "custtypeweight": 310, "custtype_name": "Leader", "data_type": "PIM", "tenure_days": 3650, "turnover_band": "₹25 – 50 crore",
+      "products": [
+        {"name": "CI Casting", "price": "₹ 95 / Kg", "unit": "Kg", "isq": {"Grade": "FG 260", "Weight Range": "1-200 Kg"}},
+        {"name": "SG Iron Casting", "price": "₹ 120 / Kg", "unit": "Kg", "isq": {"Grade": "SG 500/7"}},
+        {"name": "Pump Housing Casting", "price": null, "unit": "Piece", "isq": {"Material": "Cast Iron"}}
+      ],
+      "top_mcats": [{"mcat_name": "Iron Castings", "product_count": 22}, {"mcat_name": "Pump Casting", "product_count": 6}],
+      "counts": {"pns_received_30d": 35, "pns_picked_30d": 21, "local_buylead_count": 12, "national_buylead_count": 3120, "enquiries_received_30d": 28},
+      "competitors": ["Punjab Foundry Works: Oct 2015", "Ludhiana Alloys: Jun 2020"],
+      "last_call": {"summary": "Bought 20 extra buy leads; said call only between 6 and 7 pm.", "start": "2026-10-05 18:32:10", "by": "executive"},
+      "last_meeting_date": "22-07-2026",
+      "trigger": {"activity_id": 2501, "activity": "Bought a 20 buy-lead top-up"},
+      "insights": {
+        "purchase_intent": ["He just bought a 20-lead top-up; upgrade to more monthly leads is likely.", "- 5 Oct: top-up purchase.\n- Consumed 18 of 20 leads in 4 days."],
+        "objection_or_blocker": ["Time is the blocker: he cuts calls short during work hours.", "- 4 of 6 bot calls under 20 seconds.\n- STS: 'call only 6-7 pm'."],
+        "last_interaction": ["5 October executive call during the evening window went well.", "- 4 min call, discussed lead quality."],
+        "market_opportunity": ["National demand for pump housing castings rose 30% month on month.", "- 41 buy leads last month."],
+        "competitor_landscape": ["Competitors in Ludhiana are mostly free listings; he is the visible paid seller.", "- 2 paid competitors, both smaller catalogs."],
+        "engagement_history": ["High volume: 28 enquiries in 30 days, 25 replied.", "- Misses daytime PNS calls (21 of 35 picked)."],
+        "catalog_gaps": ["Pump housing products lack prices.", "- 6 pump products, none priced."]
+      },
+      "doubts": [],
+      "buyers": [
+        {"glid": "72000321", "name": "Shakti Pumps Pvt Ltd", "city": "Indore", "channel": "enquiry", "product": "Pump Housing Casting", "qty": "500 Piece", "last_at": "2026-10-06", "intent": "High"},
+        {"glid": "72000322", "name": "Arora Engineering", "city": "Faridabad", "channel": "buylead", "product": "CI Casting", "qty": "2 Tonne", "last_at": "2026-10-04", "intent": "High"},
+        {"glid": "72000323", "name": "Kumar Valves", "city": "Coimbatore", "channel": "pns", "product": "SG Iron Casting", "qty": "800 Kg", "last_at": "2026-10-01", "intent": "Medium"}
+      ],
+      "sts": [
+        {"date": "2026-07-22", "by": "Field executive", "note": "Met MD. Wants better quality leads, not more leads."},
+        {"date": "2026-10-05", "by": "Tele executive", "note": "Top-up 20 leads. Call only 6-7 pm."}
+      ],
+      "lms": [
+        {"date": "2026-10-06 12:10", "from": "buyer", "text": "Pump housing 500 pcs drawing attached, need quote by Friday."}
+      ],
+      "bot_calls": [
+        {"date": "2026-10-03", "outcome": "Busy", "duration_s": 12, "summary": "Seller said busy in meeting."},
+        {"date": "2026-10-06", "outcome": "Call Later", "duration_s": 18, "summary": "Asked to call in the evening."}
+      ]
+    },
+    {
+      "glid": "91000104", "contact_name": "Meenakshi Sundaram", "company_name": "Sundaram Terry Textiles",
+      "business_nature": "Manufacturer", "legal_status": "Individual - Proprietor", "employees": "11 to 25 People", "year_established": "2011",
+      "city": "Erode", "state": "Tamil Nadu", "pincode": "638001", "locality": "Chithode",
+      "address_profile": "12/4 Bhavani Main Road, Chithode, Erode, Tamil Nadu 638102",
+      "address_gst": "12/4 BHAVANI MAIN ROAD CHITHODE ERODE TAMIL NADU 638102",
+      "language": "ta-IN", "speaks": "Tamil, little English", "archetype": "confused", "speaker": "priya",
+      "custtype": 60, "custtypeweight": 1300, "custtype_name": "FCP", "data_type": "PIM", "tenure_days": 410, "turnover_band": "₹1 – 5 crore",
+      "products": [
+        {"name": "Cotton Terry Towel", "price": null, "unit": "Piece", "isq": {"GSM": "450", "Size": "27x54 inch"}},
+        {"name": "Hotel Bath Towel", "price": null, "unit": "Piece", "isq": {"Colour": "White"}},
+        {"name": "Kitchen Towel", "price": "₹ 38 / Piece", "unit": "Piece", "isq": {"Material": "Cotton"}}
+      ],
+      "top_mcats": [{"mcat_name": "Terry Towel", "product_count": 12}, {"mcat_name": "Bath Towel", "product_count": 5}],
+      "counts": {"pns_received_30d": 4, "pns_picked_30d": 1, "local_buylead_count": 9, "national_buylead_count": 1480, "enquiries_received_30d": 6},
+      "competitors": ["Kongu Textiles: Dec 2019", "Bhavani Weaves: Apr 2024"],
+      "last_call": {"summary": "Seller did not understand difference between buy lead and enquiry; asked to explain in Tamil.", "start": "2026-09-26 15:05:55", "by": "bot"},
+      "last_meeting_date": "",
+      "trigger": {"activity_id": 2203, "activity": "Added 12 new towel products in one session"},
+      "insights": {
+        "purchase_intent": ["She is building her catalog actively — 12 products added today.", "- New account (410 days), first big catalog update."],
+        "objection_or_blocker": ["Confusion about how IndiaMART works, not price.", "- 26 Sep: asked difference between buy lead and enquiry.\n- Asked for Tamil explanation."],
+        "last_interaction": ["26 September bot call: explanation needed, no decision.", "- 1 min 50 s, language mismatch noted."],
+        "market_opportunity": ["Hotel towel demand from Kerala and Karnataka is high.", "- ₹14 lakh of hotel towel buy leads last month."],
+        "competitor_landscape": ["Erode competitors show GSM and prices clearly.", "- Kongu Textiles prices all products."],
+        "engagement_history": ["Misses most PNS calls (1 of 4 picked).", "- 6 enquiries, 2 replied."],
+        "catalog_gaps": ["Only 1 of 3 key products has a price; no photos on 4 products.", "- GSM missing on hotel towels."]
+      },
+      "doubts": [{"doubt": "Profile language is English, but the last call note says she asked for Tamil. Confirm preferred language early.", "category": ["last_interaction"]}],
+      "buyers": [
+        {"glid": "72000331", "name": "Hotel Malabar Residency", "city": "Kozhikode", "channel": "buylead", "product": "Hotel Bath Towel", "qty": "600 Piece", "last_at": "2026-10-05", "intent": "High"}
+      ],
+      "sts": [
+        {"date": "2026-09-26", "by": "Bot", "note": "Explain BL vs enquiry in Tamil."}
+      ],
+      "lms": [
+        {"date": "2026-10-05 13:00", "from": "buyer", "text": "Need 600 white bath towels 500 GSM. Price?"}
+      ],
+      "bot_calls": [
+        {"date": "2026-09-26", "outcome": "General", "duration_s": 110, "summary": "Did not understand buy lead vs enquiry; asked Tamil."}
+      ]
+    },
+    {
+      "glid": "91000105", "contact_name": "Farhan Shaikh", "company_name": "Shaikh Pharma Pack",
+      "business_nature": "Manufacturer", "legal_status": "Partnership", "employees": "26 to 50 People", "year_established": "2012",
+      "city": "Bhiwandi", "state": "Maharashtra", "pincode": "421302", "locality": "Vadpe",
+      "address_profile": "Gala 7, Shree Ganesh Compound, Vadpe, Bhiwandi, Maharashtra 421302",
+      "address_gst": "GALA NO 7 SHREE GANESH COMPOUND VADPE BHIWANDI THANE MAHARASHTRA 421302",
+      "language": "hi-IN", "speaks": "Hinglish, direct", "archetype": "frustrated", "speaker": "shubh",
+      "custtype": 25, "custtypeweight": 650, "custtype_name": "TrustSEAL", "data_type": "PIM", "tenure_days": 2100, "turnover_band": "₹5 – 25 crore",
+      "products": [
+        {"name": "Alu Alu Blister Packing Machine", "price": "₹ 18,50,000 / Piece", "unit": "Piece", "isq": {"Output": "60 blister/min"}},
+        {"name": "PVC Blister Foil", "price": "₹ 260 / Kg", "unit": "Kg", "isq": {"Thickness": "250 micron"}}
+      ],
+      "top_mcats": [{"mcat_name": "Blister Packing Machine", "product_count": 6}, {"mcat_name": "Blister Foil", "product_count": 3}],
+      "counts": {"pns_received_30d": 14, "pns_picked_30d": 11, "local_buylead_count": 5, "national_buylead_count": 420, "enquiries_received_30d": 9},
+      "competitors": ["Mumbai Pack Tech: Sep 2018", "Thane Pharma Machines: Jan 2022"],
+      "last_call": {"summary": "Complained that last month's leads were irrelevant (students, job seekers); wants refund discussion.", "start": "2026-10-04 12:22:30", "by": "executive"},
+      "last_meeting_date": "18-06-2026",
+      "trigger": {"activity_id": 2650, "activity": "Opened the package renewal page after raising a complaint"},
+      "insights": {
+        "purchase_intent": ["Renewal is due in 20 days; he opened the renewal page after complaining.", "- Package expires 29 Oct.\n- Opened renewal page on 8 Oct."],
+        "objection_or_blocker": ["Lead quality complaint is open and unresolved.", "- 4 Oct: 'leads from students and job seekers'.\n- Ticket CT-88213 still open."],
+        "last_interaction": ["4 October: angry call about lead relevance.", "- 7 min call; executive promised a callback that did not happen."],
+        "market_opportunity": ["Pharma machinery buyers in Gujarat and Himachal are active.", "- 23 blister machine buy leads last month."],
+        "competitor_landscape": ["Two Thane competitors renewed at a higher package.", "- Both show video demos."],
+        "engagement_history": ["Responsive but impatient; picks most PNS calls.", "- 11 of 14 PNS picked."],
+        "catalog_gaps": ["Machine specs are thin; no video.", "- Output is the only listed spec."]
+      },
+      "doubts": [{"doubt": "The 4 October note says a callback was promised, but no callback is recorded. Acknowledge the missed callback before anything else.", "category": ["objection_or_blocker", "last_interaction"]}],
+      "buyers": [
+        {"glid": "72000341", "name": "Himalaya Lifecare", "city": "Baddi", "channel": "enquiry", "product": "Alu Alu Blister Packing Machine", "qty": "1 Piece", "last_at": "2026-10-07", "intent": "High"},
+        {"glid": "72000342", "name": "Student enquiry (unverified)", "city": "Nagpur", "channel": "buylead", "product": "Alu Alu Blister Packing Machine", "qty": "1 Piece", "last_at": "2026-09-21", "intent": "Low"}
+      ],
+      "sts": [
+        {"date": "2026-06-18", "by": "Field executive", "note": "TrustSEAL renewed. Wants pharma-only leads."},
+        {"date": "2026-10-04", "by": "Tele executive", "note": "Escalated complaint CT-88213: irrelevant leads. Promised callback."}
+      ],
+      "lms": [
+        {"date": "2026-10-07 16:30", "from": "buyer", "text": "Need Alu Alu blister machine for new plant at Baddi. Share specs and video."}
+      ],
+      "bot_calls": [
+        {"date": "2026-10-06", "outcome": "Not Interested", "duration_s": 25, "summary": "Seller angry about leads, asked not to call bot again for the same thing."}
+      ]
+    },
+    {
+      "glid": "91000106", "contact_name": "Kavita Joshi", "company_name": "Joshi Millet Foods",
+      "business_nature": "Manufacturer", "legal_status": "Individual - Proprietor", "employees": "Upto 10 People", "year_established": "2021",
+      "city": "Pune", "state": "Maharashtra", "pincode": "411041", "locality": "Dhayari",
+      "address_profile": "Shop 3, Sai Complex, Dhayari Phata, Pune, Maharashtra 411041",
+      "address_gst": "SHOP NO 3 SAI COMPLEX DHAYARI PHATA PUNE MAHARASHTRA 411041",
+      "language": "mr-IN", "speaks": "Marathi and Hinglish", "archetype": "interested", "speaker": "kavya",
+      "custtype": 60, "custtypeweight": 1250, "custtype_name": "FCP", "data_type": "PIM", "tenure_days": 640, "turnover_band": "₹40 lakh – 1.5 crore",
+      "products": [
+        {"name": "Ragi Millet Cookies", "price": "₹ 180 / Kg", "unit": "Kg", "isq": {"Pack Size": "200 g"}},
+        {"name": "Jowar Puffs", "price": "₹ 210 / Kg", "unit": "Kg", "isq": {"Flavour": "Masala"}},
+        {"name": "Millet Mix Atta", "price": null, "unit": "Kg", "isq": {"Pack Size": "1 Kg"}}
+      ],
+      "top_mcats": [{"mcat_name": "Millet Snacks", "product_count": 8}, {"mcat_name": "Millet Flour", "product_count": 3}],
+      "counts": {"pns_received_30d": 9, "pns_picked_30d": 8, "local_buylead_count": 14, "national_buylead_count": 760, "enquiries_received_30d": 12},
+      "competitors": ["Nutri Millets Pune: May 2022"],
+      "last_call": {"summary": "Interested in TrustSEAL, asked what documents are needed.", "start": "2026-10-03 13:15:00", "by": "bot"},
+      "last_meeting_date": "",
+      "trigger": {"activity_id": 2370, "activity": "Viewed the TrustSEAL page and its document checklist"},
+      "insights": {
+        "purchase_intent": ["She asked about TrustSEAL documents on 3 October and viewed the checklist today.", "- Clear next step: document verification meeting."],
+        "objection_or_blocker": ["No blocker recorded; wants clarity on documents and timeline.", "- Asked 'kitne din lagenge?'"],
+        "last_interaction": ["3 October bot call: positive, asked about documents.", "- 2 min 30 s."],
+        "market_opportunity": ["Millet snack demand from retail chains grew strongly.", "- ₹6.4 lakh of buy leads last month in Maharashtra."],
+        "competitor_landscape": ["One Pune competitor has TrustSEAL.", "- Nutri Millets Pune displays the badge."],
+        "engagement_history": ["Replies fast and picks almost all calls.", "- 8 of 9 PNS picked."],
+        "catalog_gaps": ["FSSAI number not shown on products.", "- 1 of 3 key products unpriced."]
+      },
+      "doubts": [],
+      "buyers": [
+        {"glid": "72000351", "name": "FreshKart Retail", "city": "Mumbai", "channel": "enquiry", "product": "Ragi Millet Cookies", "qty": "300 Kg", "last_at": "2026-10-06", "intent": "High"}
+      ],
+      "sts": [{"date": "2026-10-03", "by": "Bot", "note": "Interested in TrustSEAL. Wants document list."}],
+      "lms": [{"date": "2026-10-06 10:10", "from": "buyer", "text": "Monthly 300 kg ragi cookies for our stores, private label possible?"}],
+      "bot_calls": [{"date": "2026-10-03", "outcome": "General", "duration_s": 150, "summary": "Interested in TrustSEAL, asked documents."}]
+    },
+    {
+      "glid": "91000107", "contact_name": "Harish Patel", "company_name": "Patel Vitrified Tiles",
+      "business_nature": "Manufacturer", "legal_status": "Private Limited Company", "employees": "101 to 500 People", "year_established": "2006",
+      "city": "Morbi", "state": "Gujarat", "pincode": "363642", "locality": "Lalpar",
+      "address_profile": "Survey 112, 8-A National Highway, Lalpar, Morbi, Gujarat 363642",
+      "address_gst": "SURVEY NO 112 8A NATIONAL HIGHWAY LALPAR MORBI GUJARAT 363642",
+      "language": "gu-IN", "speaks": "Gujarati and Hindi", "archetype": "already_with_executive", "speaker": "amit",
+      "custtype": 8, "custtypeweight": 210, "custtype_name": "Maximiser", "data_type": "PIM", "tenure_days": 4100, "turnover_band": "₹100 – 500 crore",
+      "products": [
+        {"name": "Glazed Vitrified Tiles 600x1200", "price": "₹ 42 / Sq Ft", "unit": "Sq Ft", "isq": {"Finish": "Glossy"}},
+        {"name": "Porcelain Slab 800x1600", "price": "₹ 68 / Sq Ft", "unit": "Sq Ft", "isq": {"Thickness": "9 mm"}}
+      ],
+      "top_mcats": [{"mcat_name": "Vitrified Tiles", "product_count": 48}, {"mcat_name": "Porcelain Slab", "product_count": 12}],
+      "counts": {"pns_received_30d": 60, "pns_picked_30d": 51, "local_buylead_count": 22, "national_buylead_count": 5100, "enquiries_received_30d": 74},
+      "competitors": ["Sunrise Ceramica: Mar 2014", "Morbi Grande Tiles: Nov 2017"],
+      "last_call": {"summary": "Said his account manager Mr. Desai handles everything; do not pitch.", "start": "2026-09-29 17:01:00", "by": "bot"},
+      "last_meeting_date": "02-10-2026",
+      "trigger": {"activity_id": 2655, "activity": "Opened the annual renewal page"},
+      "insights": {
+        "purchase_intent": ["Renewal is being handled by his account manager.", "- Account manager met him on 2 October."],
+        "objection_or_blocker": ["Does not want another pitch; prefers his account manager.", "- 29 Sep: 'Desai ji handle karte hain'."],
+        "last_interaction": ["2 October meeting with account manager.", "- Renewal discussed, decision pending."],
+        "market_opportunity": ["Export enquiries for porcelain slabs are rising.", "- 19 export buy leads last month."],
+        "competitor_landscape": ["Morbi is crowded; 40+ paid tile sellers.", "- Most top sellers are Maximiser."],
+        "engagement_history": ["Very high volume; dedicated staff reply to enquiries.", "- 74 enquiries in 30 days."],
+        "catalog_gaps": ["Catalog complete.", "- All products priced with photos."]
+      },
+      "doubts": [],
+      "buyers": [
+        {"glid": "72000361", "name": "Gulf Building Supplies", "city": "Dubai", "channel": "enquiry", "product": "Porcelain Slab 800x1600", "qty": "4 Container", "last_at": "2026-10-05", "intent": "High"}
+      ],
+      "sts": [
+        {"date": "2026-10-02", "by": "Account manager (Desai)", "note": "Renewal meeting. Decision after Diwali."}
+      ],
+      "lms": [],
+      "bot_calls": [
+        {"date": "2026-09-29", "outcome": "Not Interested", "duration_s": 31, "summary": "Already in touch with account manager."}
+      ]
+    },
+    {
+      "glid": "91000108", "contact_name": "Sanjay Gupta", "company_name": "Gupta Lighting Solutions",
+      "business_nature": "Trader", "legal_status": "Individual - Proprietor", "employees": "Upto 10 People", "year_established": "2016",
+      "city": "Kanpur", "state": "Uttar Pradesh", "pincode": "208001", "locality": "Naughara",
+      "address_profile": "48/12 Naughara Market, Kanpur, Uttar Pradesh 208001",
+      "address_gst": "48/12 NAUGHARA MARKET KANPUR NAGAR UTTAR PRADESH 208001",
+      "language": "hi-IN", "speaks": "Hindi", "archetype": "uninterested", "speaker": "shubh",
+      "custtype": 70, "custtypeweight": 1500, "custtype_name": "Free Listing", "data_type": "PIM", "tenure_days": 980, "turnover_band": "Upto ₹40 lakh",
+      "products": [
+        {"name": "9W LED Bulb", "price": "₹ 48 / Piece", "unit": "Piece", "isq": {"Wattage": "9 W"}},
+        {"name": "LED Tube Light", "price": null, "unit": "Piece", "isq": {"Length": "4 ft"}}
+      ],
+      "top_mcats": [{"mcat_name": "LED Bulb", "product_count": 7}],
+      "counts": {"pns_received_30d": 3, "pns_picked_30d": 3, "local_buylead_count": 11, "national_buylead_count": 2300, "enquiries_received_30d": 2},
+      "competitors": ["Kanpur Electricals: Jan 2018"],
+      "last_call": {"summary": "Said business is slow, not interested in paid plans.", "start": "2026-09-18 12:00:00", "by": "bot"},
+      "last_meeting_date": "",
+      "trigger": {"activity_id": 2101, "activity": "Added a new LED product"},
+      "insights": {
+        "purchase_intent": ["Low intent: says business is slow.", "- Added one product, no package views."],
+        "objection_or_blocker": ["'Business slow hai' — budget and need both weak.", "- Repeated in two bot calls."],
+        "last_interaction": ["18 September bot call: not interested.", "- 40 s."],
+        "market_opportunity": ["Kanpur LED buy leads exist but are price-driven.", "- 11 local buy leads last month."],
+        "competitor_landscape": ["Local traders mostly free listings.", "- Little visible competition."],
+        "engagement_history": ["Few enquiries; replies to all.", "- 2 enquiries in 30 days."],
+        "catalog_gaps": ["Only 7 products; tube light unpriced.", "- No GST number shown."]
+      },
+      "doubts": [],
+      "buyers": [{"glid": "72000371", "name": "Ankit Electricals", "city": "Lucknow", "channel": "pns", "product": "9W LED Bulb", "qty": "200 Piece", "last_at": "2026-10-04", "intent": "Medium"}],
+      "sts": [{"date": "2026-09-18", "by": "Bot", "note": "Not interested; business slow."}],
+      "lms": [],
+      "bot_calls": [
+        {"date": "2026-08-30", "outcome": "Not Interested", "duration_s": 38, "summary": "Business slow."},
+        {"date": "2026-09-18", "outcome": "Not Interested", "duration_s": 40, "summary": "Not interested in paid plans."}
+      ]
+    },
+    {
+      "glid": "91000109", "contact_name": "Anita Das", "company_name": "Das Handloom House",
+      "business_nature": "Manufacturer and Retailer", "legal_status": "Individual - Proprietor", "employees": "11 to 25 People", "year_established": "2010",
+      "city": "Kolkata", "state": "West Bengal", "pincode": "700029", "locality": "Gariahat",
+      "address_profile": "22B Gariahat Road, Kolkata, West Bengal 700029",
+      "address_gst": "22B GARIAHAT ROAD KOLKATA WEST BENGAL 700029",
+      "language": "bn-IN", "speaks": "Bengali and English", "archetype": "curious", "speaker": "priya",
+      "custtype": 60, "custtypeweight": 1199, "custtype_name": "vFCP with PNS", "data_type": "PIM", "tenure_days": 2300, "turnover_band": "₹1 – 5 crore",
+      "products": [
+        {"name": "Tant Cotton Saree", "price": "₹ 1,450 / Piece", "unit": "Piece", "isq": {"Length": "6.3 m"}},
+        {"name": "Jamdani Saree", "price": null, "unit": "Piece", "isq": {"Fabric": "Muslin"}}
+      ],
+      "top_mcats": [{"mcat_name": "Handloom Saree", "product_count": 26}],
+      "counts": {"pns_received_30d": 15, "pns_picked_30d": 9, "local_buylead_count": 20, "national_buylead_count": 1900, "enquiries_received_30d": 21},
+      "competitors": ["Bengal Looms: Feb 2016", "Shantipur Weavers Co-op: Aug 2021"],
+      "last_call": {"summary": "Asked how festival-season buyers find her and whether export buyers are on IndiaMART.", "start": "2026-10-02 14:40:00", "by": "bot"},
+      "last_meeting_date": "",
+      "trigger": {"activity_id": 2380, "activity": "Enquiries jumped 3x this week; she opened the visibility packages"},
+      "insights": {
+        "purchase_intent": ["Enquiry spike before Durga Puja; exploring visibility packages.", "- 21 enquiries in 30 days vs 7 average."],
+        "objection_or_blocker": ["Wants to understand export buyers before paying.", "- 2 Oct: 'are there foreign buyers here?'"],
+        "last_interaction": ["2 October bot call: curious, many questions.", "- 3 min."],
+        "market_opportunity": ["Festival demand for handloom sarees peaks this month.", "- ₹22 lakh buy leads across eastern India."],
+        "competitor_landscape": ["Shantipur cooperative is a paid seller with export badge.", "- Displays export markets."],
+        "engagement_history": ["Replies to most enquiries; misses some PNS calls.", "- 9 of 15 PNS picked."],
+        "catalog_gaps": ["Jamdani range unpriced and without weaver story.", "- 11 of 26 products without price."]
+      },
+      "doubts": [],
+      "buyers": [{"glid": "72000381", "name": "Silk Route Boutique", "city": "Bengaluru", "channel": "enquiry", "product": "Jamdani Saree", "qty": "40 Piece", "last_at": "2026-10-07", "intent": "High"}],
+      "sts": [{"date": "2026-10-02", "by": "Bot", "note": "Asked about export buyers."}],
+      "lms": [{"date": "2026-10-07 19:20", "from": "buyer", "text": "Want 40 jamdani sarees in pastel shades for Puja. Wholesale rate?"}],
+      "bot_calls": [{"date": "2026-10-02", "outcome": "General", "duration_s": 180, "summary": "Curious about export buyers and visibility."}]
+    },
+    {
+      "glid": "91000110", "contact_name": "Vikram Singh Rathore", "company_name": "Rathore Marble Exports",
+      "business_nature": "Exporter and Manufacturer", "legal_status": "Partnership", "employees": "51 to 100 People", "year_established": "1998",
+      "city": "Kishangarh", "state": "Rajasthan", "pincode": "305801", "locality": "RIICO Marble Area",
+      "address_profile": "G-14 RIICO Marble Area, Kishangarh, Ajmer, Rajasthan 305801",
+      "address_gst": "G 14 RIICO MARBLE AREA KISHANGARH AJMER RAJASTHAN 305801",
+      "language": "hi-IN", "speaks": "Hindi with Marwari words", "archetype": "price_sensitive", "speaker": "amit",
+      "custtype": 30, "custtypeweight": 480, "custtype_name": "Star Supplier", "data_type": "PIM", "tenure_days": 3300, "turnover_band": "₹25 – 50 crore",
+      "products": [
+        {"name": "White Makrana Marble Slab", "price": "₹ 160 / Sq Ft", "unit": "Sq Ft", "isq": {"Thickness": "18 mm"}},
+        {"name": "Indian Green Marble", "price": "₹ 95 / Sq Ft", "unit": "Sq Ft", "isq": {"Finish": "Polished"}}
+      ],
+      "top_mcats": [{"mcat_name": "Marble Slab", "product_count": 30}],
+      "counts": {"pns_received_30d": 27, "pns_picked_30d": 22, "local_buylead_count": 8, "national_buylead_count": 2600, "enquiries_received_30d": 33},
+      "competitors": ["Kishangarh Stone Co: Jul 2012", "Ajmer Marble Mart: Dec 2019"],
+      "last_call": {"summary": "Compared annual vs monthly cost per lead; said competitors pay less.", "start": "2026-10-06 11:05:00", "by": "executive"},
+      "last_meeting_date": "14-09-2026",
+      "trigger": {"activity_id": 2369, "activity": "Viewed the export (global) package"},
+      "insights": {
+        "purchase_intent": ["Interested in export buyers; viewed the global package today.", "- 14 Sep meeting discussed export."],
+        "objection_or_blocker": ["Cost comparison with competitors is the blocker.", "- 6 Oct: 'doosre log kam mein le rahe hain'."],
+        "last_interaction": ["6 October executive call: price comparison, no decision.", "- 5 min."],
+        "market_opportunity": ["Gulf buyers asked for white marble in volume.", "- 12 export enquiries last month."],
+        "competitor_landscape": ["Two Kishangarh competitors on the global package.", "- Both list export markets."],
+        "engagement_history": ["Strong engagement; 33 enquiries in 30 days.", "- 22 of 27 PNS picked."],
+        "catalog_gaps": ["No export certifications listed.", "- No container-load pricing."]
+      },
+      "doubts": [{"doubt": "He says competitors pay less, but no price was ever quoted to him in the notes. Do not quote — confirm what he was told and by whom.", "category": ["objection_or_blocker"]}],
+      "buyers": [{"glid": "72000391", "name": "Al Noor Interiors", "city": "Muscat", "channel": "enquiry", "product": "White Makrana Marble Slab", "qty": "1 Container", "last_at": "2026-10-05", "intent": "High"}],
+      "sts": [
+        {"date": "2026-09-14", "by": "Field executive", "note": "Discussed global package. Wants per-lead cost."},
+        {"date": "2026-10-06", "by": "Tele executive", "note": "Says competitors pay less."}
+      ],
+      "lms": [{"date": "2026-10-05 08:30", "from": "buyer", "text": "Need Makrana white 18mm, 1 container, CIF Muscat."}],
+      "bot_calls": [{"date": "2026-10-01", "outcome": "Call Later", "duration_s": 60, "summary": "Asked for cost per lead comparison."}]
+    },
+    {
+      "glid": "91000111", "contact_name": "Deepa Menon", "company_name": "Menon Spice Traders",
+      "business_nature": "Exporter and Trader", "legal_status": "Private Limited Company", "employees": "26 to 50 People", "year_established": "2008",
+      "city": "Kochi", "state": "Kerala", "pincode": "682002", "locality": "Mattancherry",
+      "address_profile": "XI/402 Bazaar Road, Mattancherry, Kochi, Kerala 682002",
+      "address_gst": "XI/402 BAZAAR ROAD MATTANCHERRY ERNAKULAM KERALA 682002",
+      "language": "en-IN", "speaks": "English, brisk", "archetype": "rushed", "speaker": "priya",
+      "custtype": 60, "custtypeweight": 1100, "custtype_name": "FCP", "data_type": "PIM", "tenure_days": 1500, "turnover_band": "₹5 – 25 crore",
+      "products": [
+        {"name": "Green Cardamom 8mm", "price": "₹ 2,450 / Kg", "unit": "Kg", "isq": {"Size": "8 mm"}},
+        {"name": "Black Pepper Malabar", "price": "₹ 640 / Kg", "unit": "Kg", "isq": {"Grade": "MG1"}}
+      ],
+      "top_mcats": [{"mcat_name": "Cardamom", "product_count": 6}, {"mcat_name": "Black Pepper", "product_count": 4}],
+      "counts": {"pns_received_30d": 18, "pns_picked_30d": 10, "local_buylead_count": 6, "national_buylead_count": 1750, "enquiries_received_30d": 15},
+      "competitors": ["Kerala Spice Board Traders: May 2013"],
+      "last_call": {"summary": "Said she is at the auction and has one minute; asked for details on WhatsApp.", "start": "2026-10-07 10:45:00", "by": "bot"},
+      "last_meeting_date": "",
+      "trigger": {"activity_id": 2371, "activity": "Viewed the Leader package"},
+      "insights": {
+        "purchase_intent": ["Viewed the Leader package; prefers short, factual information.", "- Opened pricing tab twice."],
+        "objection_or_blocker": ["Time: mornings are auction hours.", "- Two calls cut short with 'one minute'."],
+        "last_interaction": ["7 October bot call: one minute, asked for WhatsApp.", "- 45 s."],
+        "market_opportunity": ["Cardamom export enquiries up before the season.", "- ₹31 lakh buy leads last month."],
+        "competitor_landscape": ["Few Kochi competitors on Leader.", "- Opportunity for top placement."],
+        "engagement_history": ["Misses morning PNS calls.", "- 10 of 18 PNS picked."],
+        "catalog_gaps": ["No grading certificates uploaded.", "- No moisture specs."]
+      },
+      "doubts": [],
+      "buyers": [{"glid": "72000401", "name": "Spice Route GmbH", "city": "Hamburg", "channel": "enquiry", "product": "Green Cardamom 8mm", "qty": "2 Tonne", "last_at": "2026-10-06", "intent": "High"}],
+      "sts": [{"date": "2026-10-07", "by": "Bot", "note": "At auction, one minute, wants WhatsApp."}],
+      "lms": [],
+      "bot_calls": [{"date": "2026-10-07", "outcome": "Call Later", "duration_s": 45, "summary": "At auction; call after 2 pm."}]
+    },
+    {
+      "glid": "91000112", "contact_name": "Gurpreet Kaur", "company_name": "Kaur Tractor Parts",
+      "business_nature": "Manufacturer", "legal_status": "Individual - Proprietor", "employees": "11 to 25 People", "year_established": "2013",
+      "city": "Jalandhar", "state": "Punjab", "pincode": "144004", "locality": "Industrial Area",
+      "address_profile": "E-61 Industrial Area, Jalandhar, Punjab 144004",
+      "address_gst": "E 61 INDUSTRIAL AREA JALANDHAR PUNJAB 144004",
+      "language": "pa-IN", "speaks": "Punjabi and Hindi", "archetype": "frustrated", "speaker": "ritu",
+      "custtype": 60, "custtypeweight": 1210, "custtype_name": "FCP", "data_type": "PIM", "tenure_days": 1200, "turnover_band": "₹1 – 5 crore",
+      "products": [
+        {"name": "Tractor Hydraulic Pump", "price": null, "unit": "Piece", "isq": {"Model": "Swaraj 735"}},
+        {"name": "Tractor Clutch Plate", "price": "₹ 1,150 / Piece", "unit": "Piece", "isq": {"Size": "11 inch"}}
+      ],
+      "top_mcats": [{"mcat_name": "Tractor Parts", "product_count": 19}],
+      "counts": {"pns_received_30d": 12, "pns_picked_30d": 4, "local_buylead_count": 10, "national_buylead_count": 1320, "enquiries_received_30d": 7},
+      "competitors": ["Punjab Agro Spares: Apr 2017"],
+      "last_call": {"summary": "Annoyed: says she gets calls from IndiaMART every day and none from buyers.", "start": "2026-10-03 16:20:00", "by": "bot"},
+      "last_meeting_date": "",
+      "trigger": {"activity_id": 2210, "activity": "Missed 8 PNS calls, then opened the PNS settings page"},
+      "insights": {
+        "purchase_intent": ["She checked PNS settings after missing buyer calls.", "- 8 missed PNS calls this month."],
+        "objection_or_blocker": ["Call fatigue from IndiaMART; frustration is high.", "- 3 Oct: 'roz call aate hain'."],
+        "last_interaction": ["3 October bot call: frustrated, short.", "- 30 s."],
+        "market_opportunity": ["Rabi season spare-parts demand is starting.", "- ₹7 lakh buy leads in Punjab and Haryana."],
+        "competitor_landscape": ["One Jalandhar competitor answers PNS within 5 minutes.", "- Higher response rating."],
+        "engagement_history": ["Misses most PNS calls (4 of 12 picked).", "- Enquiry replies slow."],
+        "catalog_gaps": ["Hydraulic pumps unpriced.", "- Model compatibility missing on 9 parts."]
+      },
+      "doubts": [],
+      "buyers": [{"glid": "72000411", "name": "Kisan Seva Kendra", "city": "Karnal", "channel": "pns", "product": "Tractor Hydraulic Pump", "qty": "10 Piece", "last_at": "2026-10-05", "intent": "High"}],
+      "sts": [{"date": "2026-10-03", "by": "Bot", "note": "Frustrated with frequent calls."}],
+      "lms": [],
+      "bot_calls": [{"date": "2026-10-03", "outcome": "Not Interested", "duration_s": 30, "summary": "Too many calls from IndiaMART."}]
+    },
+    {
+      "glid": "91000113", "contact_name": "Mohammed Arif", "company_name": "Arif Steel Fabricators",
+      "business_nature": "Manufacturer", "legal_status": "Individual - Proprietor", "employees": "26 to 50 People", "year_established": "2015",
+      "city": "Hyderabad", "state": "Telangana", "pincode": "500018", "locality": "Balanagar",
+      "address_profile": "Plot 9, IDA Balanagar, Hyderabad, Telangana 500037",
+      "address_gst": "PLOT NO 9 IDA BALANAGAR HYDERABAD TELANGANA 500037",
+      "language": "en-IN", "speaks": "starts in English, switches to Hindi/Dakhni when comfortable", "archetype": "language_switch", "speaker": "rahul",
+      "custtype": 60, "custtypeweight": 1199, "custtype_name": "vFCP with PNS", "data_type": "PIM", "tenure_days": 1900, "turnover_band": "₹1 – 5 crore",
+      "products": [
+        {"name": "Heavy Duty Storage Rack", "price": "₹ 7,800 / Unit", "unit": "Unit", "isq": {"Load": "500 Kg per shelf"}},
+        {"name": "Slotted Angle Rack", "price": "₹ 2,900 / Unit", "unit": "Unit", "isq": {"Shelves": "5"}}
+      ],
+      "top_mcats": [{"mcat_name": "Storage Rack", "product_count": 16}],
+      "counts": {"pns_received_30d": 16, "pns_picked_30d": 13, "local_buylead_count": 25, "national_buylead_count": 2050, "enquiries_received_30d": 19},
+      "competitors": ["Deccan Racks: Jan 2020"],
+      "last_call": {"summary": "Started in English, then said 'Hindi mein baat karo'; asked about warehouse buyers.", "start": "2026-09-27 12:30:00", "by": "bot"},
+      "last_meeting_date": "",
+      "trigger": {"activity_id": 2115, "activity": "Edited 6 rack products and added load ratings"},
+      "insights": {
+        "purchase_intent": ["Improving catalog; interested in warehouse buyers.", "- Edited 6 products today."],
+        "objection_or_blocker": ["No blocker; language comfort matters.", "- Switched to Hindi mid-call last time."],
+        "last_interaction": ["27 September bot call: switched language, asked about warehouse leads.", "- 2 min."],
+        "market_opportunity": ["Warehouse construction in Telangana drives rack demand.", "- ₹18 lakh buy leads last month."],
+        "competitor_landscape": ["Deccan Racks is the main paid competitor.", "- TrustSEAL holder."],
+        "engagement_history": ["Good responder: 13 of 16 PNS picked.", "- 19 enquiries, 17 replied."],
+        "catalog_gaps": ["Now has load ratings; no installation photos.", "- No brochure."]
+      },
+      "doubts": [],
+      "buyers": [{"glid": "72000421", "name": "QuickShip Logistics", "city": "Shamshabad", "channel": "buylead", "product": "Heavy Duty Storage Rack", "qty": "120 Unit", "last_at": "2026-10-06", "intent": "High"}],
+      "sts": [{"date": "2026-09-27", "by": "Bot", "note": "Prefers Hindi. Interested in warehouse buyers."}],
+      "lms": [{"date": "2026-10-06 15:10", "from": "buyer", "text": "120 heavy duty racks for new warehouse near airport. Visit possible?"}],
+      "bot_calls": [{"date": "2026-09-27", "outcome": "General", "duration_s": 120, "summary": "Switched to Hindi; asked about warehouse leads."}]
+    },
+    {
+      "glid": "91000114", "contact_name": "Sneha Agarwal", "company_name": "Agarwal Eco Paper Products",
+      "business_nature": "Manufacturer", "legal_status": "Partnership", "employees": "11 to 25 People", "year_established": "2019",
+      "city": "Indore", "state": "Madhya Pradesh", "pincode": "452015", "locality": "Sanwer Road",
+      "address_profile": "Plot 205, Sector E, Sanwer Road Industrial Area, Indore, Madhya Pradesh 452015",
+      "address_gst": "PLOT 205 SECTOR E SANWER ROAD IND AREA INDORE MADHYA PRADESH 452015",
+      "language": "hi-IN", "speaks": "Hinglish", "archetype": "interested", "speaker": "kavya",
+      "custtype": 60, "custtypeweight": 1350, "custtype_name": "FCP", "data_type": "PIM", "tenure_days": 820, "turnover_band": "₹40 lakh – 1.5 crore",
+      "products": [
+        {"name": "Paper Cup 150 ml", "price": "₹ 0.42 / Piece", "unit": "Piece", "isq": {"GSM": "170"}},
+        {"name": "Paper Plate 10 inch", "price": "₹ 1.10 / Piece", "unit": "Piece", "isq": {"Type": "Silver laminated"}}
+      ],
+      "top_mcats": [{"mcat_name": "Paper Cup", "product_count": 9}, {"mcat_name": "Paper Plate", "product_count": 5}],
+      "counts": {"pns_received_30d": 11, "pns_picked_30d": 10, "local_buylead_count": 16, "national_buylead_count": 3900, "enquiries_received_30d": 14},
+      "competitors": ["Malwa Paper Cups: Jun 2021"],
+      "last_call": {"summary": "Asked what the monthly plan gives and wanted to see sample leads.", "start": "2026-10-04 15:50:00", "by": "bot"},
+      "last_meeting_date": "",
+      "trigger": {"activity_id": 2368, "activity": "Viewed the buy-lead package page"},
+      "insights": {
+        "purchase_intent": ["Asked to see sample leads; viewed the buy-lead package today.", "- 4 Oct: 'sample leads dikhao'."],
+        "objection_or_blocker": ["Wants proof of lead quality before paying.", "- No price objection recorded."],
+        "last_interaction": ["4 October bot call: interested, wants samples.", "- 2 min 20 s."],
+        "market_opportunity": ["Paper cup demand from caterers is high in central India.", "- ₹9 lakh buy leads last month in MP."],
+        "competitor_landscape": ["One Indore competitor on a paid plan.", "- Malwa Paper Cups."],
+        "engagement_history": ["Picks almost every call.", "- 10 of 11 PNS picked."],
+        "catalog_gaps": ["No bulk-price slabs.", "- MOQ missing on plates."]
+      },
+      "doubts": [],
+      "buyers": [{"glid": "72000431", "name": "Annapurna Caterers", "city": "Bhopal", "channel": "enquiry", "product": "Paper Cup 150 ml", "qty": "50000 Piece", "last_at": "2026-10-06", "intent": "High"}],
+      "sts": [{"date": "2026-10-04", "by": "Bot", "note": "Wants sample leads."}],
+      "lms": [{"date": "2026-10-06 12:45", "from": "buyer", "text": "50,000 cups 150 ml every month for catering. Rate?"}],
+      "bot_calls": [{"date": "2026-10-04", "outcome": "General", "duration_s": 140, "summary": "Interested; asked for sample leads."}]
+    }
+  ]
+}

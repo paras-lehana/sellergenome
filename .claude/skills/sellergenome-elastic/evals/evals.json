@@ -1,0 +1,27 @@
+{
+  "skill_name": "sellergenome-elastic",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "How many persona-eval cases are stored per evaluation run and what's the average score of each? Use Elastic.",
+      "expected_output": "Uses es.py agg.",
+      "files": [],
+      "expectations": [
+        "Runs es.py (docker exec into sellergenome-v4) agg on sellergenome-v5-persona-evals by eval_id with score",
+        "Does not print credentials"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I need to add an integer field 'switch_count' to personas in ES. Steps?",
+      "expected_output": "Safe mapping change.",
+      "files": [],
+      "expectations": [
+        "Add to MAPPINGS in elastic.py and the writer in the same release",
+        "Restart so ensure() PUTs the mapping",
+        "Never change an existing field type",
+        "Verify with mapping/search readback"
+      ]
+    }
+  ]
+}

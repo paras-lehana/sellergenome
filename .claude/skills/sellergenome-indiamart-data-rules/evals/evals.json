@@ -1,0 +1,38 @@
+{
+  "skill_name": "sellergenome-indiamart-data-rules",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "The enquiry parser counts 12 buyers but several enquiries are from the same company. How should distinct buyers be counted, and what about 'First Copy' enquiries?",
+      "expected_output": "Guide rules for enquiries.",
+      "files": [],
+      "expectations": [
+        "Distinct buyer = trimmed buyerName + buyerMemberSince",
+        "First Copy enquiries are skipped and never mentioned",
+        "Mentions verification checks or quantity as quality/seriousness"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Can the persona say the seller 'ignored 5 buyer calls' and mention that a competitor named Royal Teak is cheaper?",
+      "expected_output": "Never-mention answer.",
+      "files": [],
+      "expectations": [
+        "Says no claim that the seller ignored buyers/missed calls unless data shows it",
+        "Says competitor names are never mentioned",
+        "Mentions PNS records are AI-extracted / don't judge responsiveness"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "How do I know if an executive's call row means the call was answered?",
+      "expected_output": "Answered only with evidence.",
+      "files": [],
+      "expectations": [
+        "Says call_answered_date exists even when nobody answered",
+        "Says check note/summary/transcript",
+        "Mentions meetings count only with meet_sucessful_date"
+      ]
+    }
+  ]
+}

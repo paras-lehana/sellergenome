@@ -1,0 +1,17 @@
+{
+  "skill_name": "sellergenome-voice-plugin",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Another developer built a LiveKit bot. What exactly should it call to get the seller's persona and show up on our floor?",
+      "expected_output": "Contract steps.",
+      "files": [],
+      "expectations": [
+        "POST /api/v5/voice/sessions",
+        "GET …/context with prompt_sections",
+        "POST …/events (transcript, outcome, ended)",
+        "X-Voice-Plugin-Key header"
+      ]
+    }
+  ]
+}

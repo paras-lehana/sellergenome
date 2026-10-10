@@ -1,0 +1,31 @@
+/* Role-based palette: change this file to reskin the studio. Ratios recorded in docs/DESIGN.md. */
+:root {
+  color-scheme: light;
+  --paper: #f5f3ed;
+  --surface: #ffffff;
+  --ink: #172c36;
+  --muted: #52626a;
+  --accent: #a94129;
+  --accent-hover: #86331f;
+  --accent-soft: #f7e8de;
+  --navy: #102630;
+  --inverse: #f3f4ed;
+  --nav-muted: #b8c5c7;
+  --line: #d9dfdb;
+  --line-strong: #83938f;
+  --soft: #ecefe9;
+  --success: #286548;
+  --success-soft: #e6f0e8;
+  --warning: #805b18;
+  --warning-soft: #f7efd8;
+  --danger: #a33138;
+  --danger-soft: #fae9e9;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 16px;
+  --shadow: 0 15px 50px #10263020;
+  --ease: cubic-bezier(.2,.7,.3,1);
+  --sidebar-width: 244px;
+}

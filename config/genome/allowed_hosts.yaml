@@ -1,0 +1,23 @@
+# Hosts an API endpoint may point to when edited in Admin → APIs (decision D15).
+# Editing this file is a code review, not a browser action. Patterns are exact hosts or "*.suffix".
+# The deployment can extend the list with GENOME_ALLOWED_HOSTS="host1,*.suffix2".
+hosts:
+  - company.imutils.com
+  - lms.imutils.com
+  - audio.imutils.com
+  - "*.imutils.com"
+  - prod-global-context.imbi.prod
+  - "*.imbi.prod"
+  - redash.intermesh.net
+  - merp.intermesh.net
+  - weberp.intermesh.net
+  - "*.intermesh.net"
+  - "*.indiamart.com"
+  - enq2.intermesh.net
+  # Pass-through gateway tunnels (Admin → APIs → Gateway). The tunnel URL changes; the suffix does not.
+  - "*.ngrok-free.app"
+  - "*.ngrok-free.dev"
+  - "*.ngrok.app"
+  - "*.ngrok.io"
+  - api.sarvam.ai
+  - llm.lehana.in

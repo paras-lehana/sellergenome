@@ -1,0 +1,27 @@
+{
+  "skill_name": "sellergenome-ui-command-center",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Add a small 'confidence' badge to the persona pane header. Any rules I must follow?",
+      "expected_output": "Design-system rules.",
+      "files": [],
+      "expectations": [
+        "Colours only via tokens.css roles",
+        "Badge not by colour alone (word/glyph)",
+        "Test at 390 and 1440 / phone layer",
+        "Bump app.version for frontend change"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Why does the call page show one pane at a time on my laptop window ~1100px wide?",
+      "expected_output": "Breakpoint explanation.",
+      "files": [],
+      "expectations": [
+        "≤1180 px shows pane tabs one pane at a time",
+        "JS mirrors it with matchMedia(min-width: 1181px)"
+      ]
+    }
+  ]
+}

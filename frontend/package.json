@@ -1,0 +1,6 @@
+{
+  "name": "vani-persona-studio-ui",
+  "private": true,
+  "type": "module",
+  "description": "Dependency-free browser modules. This file lets Node syntax-check ES module files without a bundler."
+}

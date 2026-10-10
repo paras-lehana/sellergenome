@@ -1,0 +1,3 @@
+# Deploy in the selected Voice Agents workspace, independently of the portal.
+sarvam-conv-ai-sdk==1.1.1
+httpx==0.28.1

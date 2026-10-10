@@ -1,0 +1,29 @@
+{
+  "skill_name": "sellergenome-onboarding",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I'm new on SellerGenome. Where do I make a backend change, how does it get live, and which skills should I load for changing the persona prompt and checking it on the live site?",
+      "expected_output": "Orientation answer with the v5 worktree, read-only production worktree, release path and the right skills.",
+      "files": [],
+      "expectations": [
+        "Says to develop in .worktrees/v5 and never edit .worktrees/production",
+        "Names sellergenome-persona-generator for the prompt",
+        "Names sellergenome-live-qa (or release-deploy) for verifying live",
+        "Mentions bumping the version in both settings files or the release skill"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "quick: what are the hard rules I must not break when touching seller data in this project?",
+      "expected_output": "The non-negotiables list.",
+      "files": [],
+      "expectations": [
+        "Mentions the 77 approved GLIDs for live upstream",
+        "Says no phone numbers/emails/contact names to an LLM",
+        "Says never delete volumes or run docker compose down -v",
+        "Says to label simulations and mocks"
+      ]
+    }
+  ]
+}

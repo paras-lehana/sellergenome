@@ -1,0 +1,17 @@
+{
+  "skill_name": "sellergenome-live-qa",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Check that the Shaikh Pharma Pack brief looks right on phones in Safari and Chrome after today's deploy.",
+      "expected_output": "Runs qa_call.py at 390 on webkit and chromium.",
+      "files": [],
+      "expectations": [
+        "Uses qa_call.py with syn-91000105 at 390x844 on webkit and chromium",
+        "Waits for healthy first or mentions it",
+        "Opens/looks at the screenshots",
+        "Reports overflow/never-mention/console errors"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+# Public native Elastic access; data services stay in their existing private networks.
+name: sellergenome-elastic-edge
+services:
+  access:
+    image: sellergenome:3.1.0
+    container_name: sellergenome-elastic-access
+    init: true
+    restart: unless-stopped
+    read_only: true
+    user: "1000:1000"
+    env_file:
+      - /opt/secrets/env_files/sellergenome-elastic-public.env
+      - /opt/secrets/env_files/seller-persona-v3-qa.env
+    volumes:
+      - /opt/sellergenome/.worktrees/v3:/app:ro
+    command: ["uvicorn", "backend.elastic_access:app", "--host", "0.0.0.0", "--port", "8000", "--no-access-log"]
+    tmpfs: ["/tmp:size=32m,mode=1777"]
+    expose: ["8000"]
+    networks: [persona_search]
+    labels:
+      - traefik.enable=false
+      - lehana.tier=production
+      - lehana.priority=medium
+      - lehana.description=Private PM-to-native-Kibana session handoff; no public route
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=5)"]
+      interval: 600s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    mem_limit: 128m
+    cpus: 0.5
+    logging:
+      driver: json-file
+      options: {max-size: 10m, max-file: "3"}
+  gateway:
+    # Existing official image pinned to its measured digest; no application build.
+    image: nginx@sha256:645eda1c2477aaa9b879f73909b9222c6f19798dd45be6706268d82a661c6e6d
+    container_name: sellergenome-elastic-gateway
+    init: true
+    restart: unless-stopped
+    user: "101:101"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    volumes:
+      - /opt/sellergenome/.worktrees/v3/deploy/elastic/nginx.conf:/etc/nginx/nginx.conf:ro
+      # Hash + scoped upstream header only; never run nginx -T or commit this folder.
+      - /opt/secrets/sellergenome-elastic-gateway:/run/elastic-access:ro
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+      - /var/cache/nginx:size=32m,mode=1777
+    expose: ["8080"]
+    networks:
+      root_default:
+        # Verified free in the rig's actual172.19 subnet before this deployment.
+        ipv4_address: 172.19.0.42
+      persona_search:
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=root_default
+      - 'traefik.http.routers.sellergenome-elastic-vm.rule=HostRegexp(`^((rig|vps)-)?elastic\.(lehana\.in|aidhunik\.com)$$`)'
+      - traefik.http.routers.sellergenome-elastic-vm.entrypoints=web
+      - traefik.http.routers.sellergenome-elastic-vm.priority=140
+      - traefik.http.routers.sellergenome-elastic-vm.service=sellergenome-elastic-edge
+      - 'traefik.http.routers.sellergenome-kibana-vm.rule=HostRegexp(`^((rig|vps)-)?kibana\.(lehana\.in|aidhunik\.com)$$`)'
+      - traefik.http.routers.sellergenome-kibana-vm.entrypoints=web
+      - traefik.http.routers.sellergenome-kibana-vm.priority=140
+      - traefik.http.routers.sellergenome-kibana-vm.service=sellergenome-elastic-edge
+      - traefik.http.services.sellergenome-elastic-edge.loadbalancer.server.port=8080
+      - lehana.tier=production
+      - lehana.priority=medium
+      - lehana.description=Native authenticated SellerGenome Elasticsearch and Kibana; preserve private data
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/health"]
+      interval: 600s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    mem_limit: 128m
+    cpus: 0.5
+    logging:
+      driver: json-file
+      options: {max-size: 10m, max-file: "3"}
+networks:
+  root_default: {external: true}
+  persona_search:
+    external: true
+    name: seller-persona-private

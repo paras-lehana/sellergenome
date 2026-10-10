@@ -1,0 +1,63 @@
+# Private V3 preview. Final public routing is a separate owner decision.
+name: seller-persona-v3
+services:
+  app:
+    image: seller-persona:3.0.0
+    build:
+      context: ${PERSONA_SOURCE_DIR:-/opt/sellergenome/.worktrees/v3}
+      dockerfile: deploy/Dockerfile
+    container_name: seller-persona-v3
+    init: true
+    restart: unless-stopped
+    read_only: true
+    env_file:
+      - ${PERSONA_ENV_FILE:-/opt/secrets/env_files/seller-persona-v3.env}
+    environment:
+      PUBLIC_BASE_PATH: ${PERSONA_BASE_PATH:-}
+      DATA_DIR: /srv/data
+      DATASET_DIR: /source-dataset
+      PRIVATE_CONFIG_DIR: /srv/config
+      APPROVED_GLIDS_PATH: /srv/approved/approved_glids.json
+      SESSION_COOKIE_NAME: persona_v3_access
+      OWNER_COOKIE_NAME: persona_v3_owner
+      PREVIEW_ORIGIN: http://127.0.0.1:18080
+      ELASTICSEARCH_INDEX_PREFIX: seller-persona-v3
+      SERVER_HOST: lehana-rig-v3-preview
+      PREVIEW_PAUSE_SCHEDULES: "true"
+    volumes:
+      - ${PERSONA_SOURCE_DIR:-/opt/sellergenome/.worktrees/v3}:/app:ro
+      - /opt/sellergenome/dataset:/source-dataset:ro
+      - /opt/sellergenome/private/v3/data:/srv/data
+      - /opt/sellergenome/private/v3/config:/srv/config
+      # The protected manifest is separately read-only, even to full PM access.
+      - /opt/sellergenome/private/v3/approved:/srv/approved:ro
+    ports:
+      - "127.0.0.1:18080:8000"
+    networks:
+      - root_default
+      - persona_search
+    tmpfs:
+      - /tmp:size=128m,mode=1777
+    labels:
+      - traefik.enable=false
+      - lehana.tier=preview
+      - lehana.description=Seller Persona isolated V3 PM workshop preview
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=8)"]
+      interval: 600s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    mem_limit: 1500m
+    cpus: 2
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+networks:
+  root_default:
+    external: true
+  persona_search:
+    external: true
+    name: seller-persona-private

@@ -1,0 +1,4 @@
+# Optional offline transcription environment only; NOT installed by the portal.
+# Pin verified against the maintainer's PyPI release metadata on 2026-10-07.
+# CPU execution needs no CUDA; GPU compatibility must be verified separately.
+faster-whisper==1.2.1

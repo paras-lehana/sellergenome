@@ -1,0 +1,1497 @@
+{
+  "version": "atlas-1",
+  "generated_at": "2026-10-08T14:27:41.885972+00:00",
+  "scope": "Provided historical CSV snapshots; no live upstream requests or paid model extraction.",
+  "privacy": "Aggregate-only. Source identifiers, free text and URLs are excluded.",
+  "method": "Full scan, verified SHA256 inputs; nearest-rank quantiles; lexical mentions are weak, not negation-validated.",
+  "file_count": 16,
+  "total_rows": 908856,
+  "source_bytes": 348723578,
+  "families": [
+    {
+      "family": "bot_calls",
+      "count": 269455
+    },
+    {
+      "family": "call_turns",
+      "count": 139555
+    },
+    {
+      "family": "evaluator_outputs",
+      "count": 278332
+    },
+    {
+      "family": "executive_calls",
+      "count": 67151
+    },
+    {
+      "family": "recording_sample",
+      "count": 5000
+    },
+    {
+      "family": "seller_files",
+      "count": 149363
+    }
+  ],
+  "sources": [
+    {
+      "name": "ps07_seller_files_part1.csv",
+      "family": "seller_files",
+      "rows": 74682,
+      "column_count": 58,
+      "sha256": "6a4822d89c488d8a6bd38de769e03986578f4479088decb31bb1ec9a5d6309f0",
+      "columns": [
+        "fk_glusr_usr_id",
+        "seller_city",
+        "seller_district",
+        "seller_state",
+        "seller_pincode",
+        "seller_locality",
+        "business_type",
+        "annual_turnover",
+        "nature_of_business",
+        "nature_of_business_secondary",
+        "gst_registration_year",
+        "top_category_1",
+        "top_category_2",
+        "top_category_3",
+        "top_parent_category",
+        "top_category_group",
+        "num_categories",
+        "eng_activity_30d",
+        "eng_answered_calls_90d",
+        "eng_call_attempts_90d",
+        "eng_call_attempts_1yr",
+        "eng_pickup_ratio_90d",
+        "eng_pickup_ratio_1yr",
+        "eng_long_calls_90d",
+        "eng_short_calls_90d",
+        "eng_callback_90d",
+        "eng_callback_1yr",
+        "eng_meetings_1yr",
+        "eng_hot_meetings_1yr",
+        "eng_enq_received_90d",
+        "eng_enq_received_1yr",
+        "eng_enq_replies_90d",
+        "eng_enq_replies_1yr",
+        "eng_pns_received_90d",
+        "eng_pns_received_1yr",
+        "eng_pns_answered_90d",
+        "eng_pns_answered_1yr",
+        "eng_ni_count_1yr",
+        "eng_np_count_1yr",
+        "eng_product_count",
+        "eng_products_modified_90d",
+        "eng_products_modified_1yr",
+        "eng_cqs",
+        "bot_attempts",
+        "bot_answered",
+        "calls_meeting_fixed",
+        "calls_not_interested",
+        "calls_general",
+        "calls_call_later",
+        "bot_answer_rate",
+        "avg_answered_call_sec",
+        "past_objections",
+        "past_questions_asked",
+        "asked_if_talking_to_bot",
+        "showed_frustration",
+        "past_dispositions_detailed",
+        "already_in_touch_with_executive",
+        "do_not_call_requested"
+      ],
+      "null_counts": {
+        "top_parent_category": 15714,
+        "eng_activity_30d": 59731,
+        "eng_callback_90d": 56726,
+        "eng_callback_1yr": 56726,
+        "eng_meetings_1yr": 72990,
+        "eng_hot_meetings_1yr": 72990,
+        "eng_enq_received_90d": 52948,
+        "eng_enq_received_1yr": 52948,
+        "eng_enq_replies_90d": 46463,
+        "eng_enq_replies_1yr": 46463,
+        "eng_pns_received_90d": 55030,
+        "eng_pns_received_1yr": 55030,
+        "eng_pns_answered_90d": 55030,
+        "eng_pns_answered_1yr": 55030,
+        "eng_ni_count_1yr": 71939,
+        "eng_np_count_1yr": 71939,
+        "past_objections": 70769,
+        "past_questions_asked": 72173,
+        "asked_if_talking_to_bot": 48305,
+        "showed_frustration": 48305,
+        "past_dispositions_detailed": 51882,
+        "already_in_touch_with_executive": 48305,
+        "do_not_call_requested": 48305,
+        "seller_locality": 44442,
+        "eng_answered_calls_90d": 29243,
+        "eng_call_attempts_90d": 29243,
+        "eng_call_attempts_1yr": 29243,
+        "eng_pickup_ratio_90d": 30386,
+        "eng_pickup_ratio_1yr": 29243,
+        "eng_long_calls_90d": 29243,
+        "eng_short_calls_90d": 29243,
+        "eng_product_count": 26610,
+        "eng_products_modified_90d": 26610,
+        "eng_products_modified_1yr": 26610,
+        "eng_cqs": 29493,
+        "business_type": 1374,
+        "annual_turnover": 5514,
+        "nature_of_business": 6999,
+        "nature_of_business_secondary": 1459,
+        "gst_registration_year": 1374,
+        "avg_answered_call_sec": 9153,
+        "top_category_3": 8613,
+        "top_category_1": 2682,
+        "top_category_2": 4577,
+        "top_category_group": 2780,
+        "num_categories": 2682,
+        "seller_pincode": 43,
+        "seller_district": 73
+      }
+    },
+    {
+      "name": "ps07_seller_files_part2.csv",
+      "family": "seller_files",
+      "rows": 74681,
+      "column_count": 58,
+      "sha256": "ec7b436c86a5b5e0f8cf35be7e4c6aec522b2fcfeda7cc8bb1fdded5592cee27",
+      "columns": [
+        "fk_glusr_usr_id",
+        "seller_city",
+        "seller_district",
+        "seller_state",
+        "seller_pincode",
+        "seller_locality",
+        "business_type",
+        "annual_turnover",
+        "nature_of_business",
+        "nature_of_business_secondary",
+        "gst_registration_year",
+        "top_category_1",
+        "top_category_2",
+        "top_category_3",
+        "top_parent_category",
+        "top_category_group",
+        "num_categories",
+        "eng_activity_30d",
+        "eng_answered_calls_90d",
+        "eng_call_attempts_90d",
+        "eng_call_attempts_1yr",
+        "eng_pickup_ratio_90d",
+        "eng_pickup_ratio_1yr",
+        "eng_long_calls_90d",
+        "eng_short_calls_90d",
+        "eng_callback_90d",
+        "eng_callback_1yr",
+        "eng_meetings_1yr",
+        "eng_hot_meetings_1yr",
+        "eng_enq_received_90d",
+        "eng_enq_received_1yr",
+        "eng_enq_replies_90d",
+        "eng_enq_replies_1yr",
+        "eng_pns_received_90d",
+        "eng_pns_received_1yr",
+        "eng_pns_answered_90d",
+        "eng_pns_answered_1yr",
+        "eng_ni_count_1yr",
+        "eng_np_count_1yr",
+        "eng_product_count",
+        "eng_products_modified_90d",
+        "eng_products_modified_1yr",
+        "eng_cqs",
+        "bot_attempts",
+        "bot_answered",
+        "calls_meeting_fixed",
+        "calls_not_interested",
+        "calls_general",
+        "calls_call_later",
+        "bot_answer_rate",
+        "avg_answered_call_sec",
+        "past_objections",
+        "past_questions_asked",
+        "asked_if_talking_to_bot",
+        "showed_frustration",
+        "past_dispositions_detailed",
+        "already_in_touch_with_executive",
+        "do_not_call_requested"
+      ],
+      "null_counts": {
+        "seller_locality": 49658,
+        "eng_activity_30d": 74581,
+        "eng_answered_calls_90d": 24392,
+        "eng_call_attempts_90d": 24392,
+        "eng_call_attempts_1yr": 24392,
+        "eng_pickup_ratio_90d": 26151,
+        "eng_pickup_ratio_1yr": 24392,
+        "eng_long_calls_90d": 24392,
+        "eng_short_calls_90d": 24392,
+        "eng_callback_90d": 58923,
+        "eng_callback_1yr": 58923,
+        "eng_meetings_1yr": 71466,
+        "eng_hot_meetings_1yr": 71466,
+        "eng_enq_received_90d": 51336,
+        "eng_enq_received_1yr": 51336,
+        "eng_enq_replies_90d": 46178,
+        "eng_enq_replies_1yr": 46178,
+        "eng_pns_received_90d": 55587,
+        "eng_pns_received_1yr": 55587,
+        "eng_pns_answered_90d": 55587,
+        "eng_pns_answered_1yr": 55587,
+        "eng_ni_count_1yr": 68275,
+        "eng_np_count_1yr": 68275,
+        "eng_product_count": 18784,
+        "eng_products_modified_90d": 18784,
+        "eng_products_modified_1yr": 18784,
+        "eng_cqs": 25583,
+        "avg_answered_call_sec": 10081,
+        "past_objections": 74615,
+        "past_questions_asked": 74443,
+        "asked_if_talking_to_bot": 21096,
+        "showed_frustration": 21096,
+        "past_dispositions_detailed": 21292,
+        "already_in_touch_with_executive": 21096,
+        "do_not_call_requested": 21096,
+        "nature_of_business": 8760,
+        "top_category_3": 8718,
+        "top_parent_category": 15130,
+        "annual_turnover": 10491,
+        "business_type": 1034,
+        "nature_of_business_secondary": 1107,
+        "gst_registration_year": 1034,
+        "top_category_1": 2011,
+        "top_category_2": 4094,
+        "top_category_group": 2117,
+        "num_categories": 2011,
+        "seller_district": 92,
+        "seller_pincode": 19,
+        "seller_city": 1,
+        "seller_state": 1
+      }
+    },
+    {
+      "name": "ps07_bot_calls_2026-04_to_06.csv",
+      "family": "bot_calls",
+      "rows": 67934,
+      "column_count": 13,
+      "sha256": "e5f05bc8600e121ab1abae7c44a9ef6205696839e7e67d2dcad0230a851c1bc3",
+      "columns": [
+        "attempt_id",
+        "fk_glusr_usr_id",
+        "redis_bucket",
+        "lead_bot_version",
+        "call_attempt_count",
+        "call_start_time",
+        "lead_call_duration",
+        "lead_call_summary",
+        "call_recording_url",
+        "disposition_label",
+        "meeting_fixed",
+        "has_turn_transcript",
+        "has_evaluator_output"
+      ],
+      "null_counts": {
+        "call_recording_url": 2783,
+        "lead_call_summary": 395
+      }
+    },
+    {
+      "name": "ps07_bot_calls_2026-07.csv",
+      "family": "bot_calls",
+      "rows": 58124,
+      "column_count": 13,
+      "sha256": "a3edca7d1e29b3c66e7f727540f20b3f7fc1c3b84211e6c3bc1c3f5feeb29b9b",
+      "columns": [
+        "attempt_id",
+        "fk_glusr_usr_id",
+        "redis_bucket",
+        "lead_bot_version",
+        "call_attempt_count",
+        "call_start_time",
+        "lead_call_duration",
+        "lead_call_summary",
+        "call_recording_url",
+        "disposition_label",
+        "meeting_fixed",
+        "has_turn_transcript",
+        "has_evaluator_output"
+      ],
+      "null_counts": {
+        "call_recording_url": 8576,
+        "lead_call_summary": 2820
+      }
+    },
+    {
+      "name": "ps07_bot_calls_2026-08.csv",
+      "family": "bot_calls",
+      "rows": 73950,
+      "column_count": 13,
+      "sha256": "c71c038c200d29286339f18fe9316e12e8b8c1b8b278f9921888df39bd8f3a3d",
+      "columns": [
+        "attempt_id",
+        "fk_glusr_usr_id",
+        "redis_bucket",
+        "lead_bot_version",
+        "call_attempt_count",
+        "call_start_time",
+        "lead_call_duration",
+        "lead_call_summary",
+        "call_recording_url",
+        "disposition_label",
+        "meeting_fixed",
+        "has_turn_transcript",
+        "has_evaluator_output"
+      ],
+      "null_counts": {
+        "lead_call_summary": 3842,
+        "call_recording_url": 10600
+      }
+    },
+    {
+      "name": "ps07_bot_calls_2026-09.csv",
+      "family": "bot_calls",
+      "rows": 69447,
+      "column_count": 13,
+      "sha256": "9bc89252493d357aa9746d24cb5ea9b89afcccdb9199ee6a019740189f677186",
+      "columns": [
+        "attempt_id",
+        "fk_glusr_usr_id",
+        "redis_bucket",
+        "lead_bot_version",
+        "call_attempt_count",
+        "call_start_time",
+        "lead_call_duration",
+        "lead_call_summary",
+        "call_recording_url",
+        "disposition_label",
+        "meeting_fixed",
+        "has_turn_transcript",
+        "has_evaluator_output"
+      ],
+      "null_counts": {
+        "call_recording_url": 9530,
+        "lead_call_summary": 3662
+      }
+    },
+    {
+      "name": "ps07_evaluator_outputs_2026-04_to_06.csv",
+      "family": "evaluator_outputs",
+      "rows": 42325,
+      "column_count": 4,
+      "sha256": "af922868f1a83bcafe8efcdf26c9428dd6a105f2b80e2f0dcf035910ee8b1483",
+      "columns": [
+        "attempt_id",
+        "fk_glusr_usr_id",
+        "eval_agent",
+        "agent_output"
+      ],
+      "null_counts": {}
+    },
+    {
+      "name": "ps07_evaluator_outputs_2026-07_part1.csv",
+      "family": "evaluator_outputs",
+      "rows": 33278,
+      "column_count": 4,
+      "sha256": "b2d256a3b7601a1ce01f11a5724d09b52ea84b6144eb2fd2320ff272f06073d6",
+      "columns": [
+        "attempt_id",
+        "fk_glusr_usr_id",
+        "eval_agent",
+        "agent_output"
+      ],
+      "null_counts": {}
+    },
+    {
+      "name": "ps07_evaluator_outputs_2026-07_part2.csv",
+      "family": "evaluator_outputs",
+      "rows": 33277,
+      "column_count": 4,
+      "sha256": "281f4cb1621f91705b86b6fe78e1305058973dafda012818c197610152a1b341",
+      "columns": [
+        "attempt_id",
+        "fk_glusr_usr_id",
+        "eval_agent",
+        "agent_output"
+      ],
+      "null_counts": {}
+    },
+    {
+      "name": "ps07_evaluator_outputs_2026-08_part1.csv",
+      "family": "evaluator_outputs",
+      "rows": 38690,
+      "column_count": 4,
+      "sha256": "6ae97db6583e3e9a16bc23702a4c57a012cad764651b886e37ea3dc7b97f43c4",
+      "columns": [
+        "attempt_id",
+        "fk_glusr_usr_id",
+        "eval_agent",
+        "agent_output"
+      ],
+      "null_counts": {}
+    },
+    {
+      "name": "ps07_evaluator_outputs_2026-08_part2.csv",
+      "family": "evaluator_outputs",
+      "rows": 38690,
+      "column_count": 4,
+      "sha256": "f158ca18b4b2e7ac13a4b1d91e928752d2a381334951d41bd3383a518e8a098d",
+      "columns": [
+        "attempt_id",
+        "fk_glusr_usr_id",
+        "eval_agent",
+        "agent_output"
+      ],
+      "null_counts": {}
+    },
+    {
+      "name": "ps07_evaluator_outputs_2026-08_part3.csv",
+      "family": "evaluator_outputs",
+      "rows": 38688,
+      "column_count": 4,
+      "sha256": "14c63929f968258b891d1645e5161d6176585569430bf2febba19c61d5fb4c99",
+      "columns": [
+        "attempt_id",
+        "fk_glusr_usr_id",
+        "eval_agent",
+        "agent_output"
+      ],
+      "null_counts": {}
+    },
+    {
+      "name": "ps07_evaluator_outputs_2026-09.csv",
+      "family": "evaluator_outputs",
+      "rows": 53384,
+      "column_count": 4,
+      "sha256": "8cc8a65e0706713a23367a2784b6f109b9589eb1a4d8afe7d7f6198713500811",
+      "columns": [
+        "attempt_id",
+        "fk_glusr_usr_id",
+        "eval_agent",
+        "agent_output"
+      ],
+      "null_counts": {}
+    },
+    {
+      "name": "ps07_call_turns.csv",
+      "family": "call_turns",
+      "rows": 139555,
+      "column_count": 7,
+      "sha256": "fb403bde3e5f3176f61ab13140b023c96ac1a45c8c51408258e501431fbe147f",
+      "columns": [
+        "attempt_id",
+        "fk_glusr_usr_id",
+        "turn_no",
+        "speaker",
+        "start_sec",
+        "end_sec",
+        "text"
+      ],
+      "null_counts": {
+        "text": 6
+      }
+    },
+    {
+      "name": "ps07_recording_sample_5000.csv",
+      "family": "recording_sample",
+      "rows": 5000,
+      "column_count": 13,
+      "sha256": "21d8395fdc650221e946639d7b5b906bf4edc9dcab900de50ab5e76cce25ff5f",
+      "columns": [
+        "attempt_id",
+        "fk_glusr_usr_id",
+        "redis_bucket",
+        "lead_bot_version",
+        "call_attempt_count",
+        "call_start_time",
+        "lead_call_duration",
+        "lead_call_summary",
+        "call_recording_url",
+        "disposition_label",
+        "meeting_fixed",
+        "has_turn_transcript",
+        "has_evaluator_output"
+      ],
+      "null_counts": {
+        "lead_call_summary": 6
+      }
+    },
+    {
+      "name": "ps07_executive_calls.csv",
+      "family": "executive_calls",
+      "rows": 67151,
+      "column_count": 9,
+      "sha256": "f6b74db6655b2bcaef30e87ceabfffc3812a21b890e285c871e376389f4092bb",
+      "columns": [
+        "click_to_call_id",
+        "fk_glusr_usr_id",
+        "fk_employeeid",
+        "module",
+        "status",
+        "call_start_time",
+        "call_duration",
+        "call_duration_customer",
+        "ring_duration"
+      ],
+      "null_counts": {
+        "call_duration_customer": 3720,
+        "status": 151,
+        "ring_duration": 695
+      }
+    }
+  ],
+  "call_window": [
+    "2026-04-01 09:00:18",
+    "2026-09-30 20:59:42"
+  ],
+  "outcomes": [
+    {
+      "label": "Call Later / Busy",
+      "count": 43672
+    },
+    {
+      "label": "General (talked)",
+      "count": 78365
+    },
+    {
+      "label": "Meeting Fixed",
+      "count": 31054
+    },
+    {
+      "label": "Not Interested",
+      "count": 116364
+    }
+  ],
+  "monthly": [
+    {
+      "month": "2026-04",
+      "calls": 9800,
+      "outcomes": {
+        "Call Later / Busy": 1481,
+        "Not Interested": 5053,
+        "General (talked)": 1821,
+        "Meeting Fixed": 1445
+      }
+    },
+    {
+      "month": "2026-05",
+      "calls": 23328,
+      "outcomes": {
+        "Not Interested": 13268,
+        "General (talked)": 3254,
+        "Call Later / Busy": 3644,
+        "Meeting Fixed": 3162
+      }
+    },
+    {
+      "month": "2026-06",
+      "calls": 34806,
+      "outcomes": {
+        "Call Later / Busy": 6489,
+        "Not Interested": 18291,
+        "Meeting Fixed": 5104,
+        "General (talked)": 4922
+      }
+    },
+    {
+      "month": "2026-07",
+      "calls": 58124,
+      "outcomes": {
+        "Call Later / Busy": 9926,
+        "Meeting Fixed": 6765,
+        "Not Interested": 28546,
+        "General (talked)": 12887
+      }
+    },
+    {
+      "month": "2026-08",
+      "calls": 73950,
+      "outcomes": {
+        "Not Interested": 37915,
+        "General (talked)": 17403,
+        "Meeting Fixed": 7159,
+        "Call Later / Busy": 11473
+      }
+    },
+    {
+      "month": "2026-09",
+      "calls": 69447,
+      "outcomes": {
+        "Not Interested": 13291,
+        "Call Later / Busy": 10659,
+        "General (talked)": 38078,
+        "Meeting Fixed": 7419
+      }
+    }
+  ],
+  "versions": [
+    {
+      "version": "main_vani",
+      "calls": 208605,
+      "outcomes": {
+        "Call Later / Busy": 35975,
+        "Not Interested": 101052,
+        "Meeting Fixed": 24204,
+        "General (talked)": 47374
+      },
+      "months": {
+        "2026-04": 9097,
+        "2026-05": 22679,
+        "2026-06": 22517,
+        "2026-07": 32807,
+        "2026-08": 62380,
+        "2026-09": 59125
+      }
+    },
+    {
+      "version": "arrowhead",
+      "calls": 30676,
+      "outcomes": {
+        "General (talked)": 25532,
+        "Meeting Fixed": 3305,
+        "Call Later / Busy": 1661,
+        "Not Interested": 178
+      },
+      "months": {
+        "2026-04": 703,
+        "2026-05": 649,
+        "2026-06": 1421,
+        "2026-07": 7849,
+        "2026-08": 10564,
+        "2026-09": 9490
+      }
+    },
+    {
+      "version": "last_met_d",
+      "calls": 23046,
+      "outcomes": {
+        "Not Interested": 12271,
+        "General (talked)": 3403,
+        "Call Later / Busy": 4815,
+        "Meeting Fixed": 2557
+      },
+      "months": {
+        "2026-06": 10249,
+        "2026-07": 12797
+      }
+    },
+    {
+      "version": "main",
+      "calls": 5573,
+      "outcomes": {
+        "Not Interested": 2792,
+        "Call Later / Busy": 1023,
+        "General (talked)": 976,
+        "Meeting Fixed": 782
+      },
+      "months": {
+        "2026-06": 619,
+        "2026-07": 3948,
+        "2026-08": 1006
+      }
+    },
+    {
+      "version": "last_met_a",
+      "calls": 723,
+      "outcomes": {
+        "General (talked)": 582,
+        "Call Later / Busy": 55,
+        "Meeting Fixed": 86
+      },
+      "months": {
+        "2026-07": 723
+      }
+    },
+    {
+      "version": "personalis",
+      "calls": 452,
+      "outcomes": {
+        "Call Later / Busy": 70,
+        "Not Interested": 25,
+        "General (talked)": 293,
+        "Meeting Fixed": 64
+      },
+      "months": {
+        "2026-09": 452
+      }
+    },
+    {
+      "version": "base_vani",
+      "calls": 289,
+      "outcomes": {
+        "Call Later / Busy": 54,
+        "General (talked)": 144,
+        "Meeting Fixed": 53,
+        "Not Interested": 38
+      },
+      "months": {
+        "2026-09": 289
+      }
+    },
+    {
+      "version": "summary_va",
+      "calls": 91,
+      "outcomes": {
+        "Meeting Fixed": 3,
+        "General (talked)": 61,
+        "Call Later / Busy": 19,
+        "Not Interested": 8
+      },
+      "months": {
+        "2026-09": 91
+      }
+    }
+  ],
+  "summary": {
+    "populated": 258736,
+    "missing": 10719,
+    "p50_characters": 204,
+    "p95_characters": 412,
+    "maximum_characters": 1113
+  },
+  "duration": {
+    "valid_calls": 269455,
+    "median_seconds": 22.0,
+    "p95_seconds": 107.0,
+    "buckets": [
+      {
+        "label": "180s+",
+        "count": 3013
+      },
+      {
+        "label": "30–89s",
+        "count": 87550
+      },
+      {
+        "label": "90–179s",
+        "count": 19161
+      },
+      {
+        "label": "Under 30s",
+        "count": 159731
+      }
+    ]
+  },
+  "meeting_conflicts": {
+    "count": 41,
+    "by_version": {
+      "main_vani": 5,
+      "last_met_d": 1,
+      "arrowhead": 35
+    },
+    "without_summary": 1
+  },
+  "cues": [
+    {
+      "trait": "callback_requested",
+      "mentions": 38611,
+      "outcomes": {
+        "Call Later / Busy": 24461,
+        "General (talked)": 5245,
+        "Meeting Fixed": 2290,
+        "Not Interested": 6615
+      },
+      "actors": {
+        "bot": 14008,
+        "seller": 2866,
+        "unknown": 20783,
+        "executive": 687,
+        "buyer": 267
+      },
+      "pattern": "\\b(call back|callback|call later|reschedul\\w*|busy|unavailable)\\b"
+    },
+    {
+      "trait": "contact_suppression",
+      "mentions": 252,
+      "outcomes": {
+        "Not Interested": 186,
+        "General (talked)": 53,
+        "Call Later / Busy": 12,
+        "Meeting Fixed": 1
+      },
+      "actors": {
+        "bot": 216,
+        "unknown": 31,
+        "seller": 5
+      },
+      "pattern": "\\b(do not call|don't call|stop calling|remove (?:my|the) number)\\b"
+    },
+    {
+      "trait": "executive_continuity",
+      "mentions": 1259,
+      "outcomes": {
+        "Meeting Fixed": 64,
+        "General (talked)": 856,
+        "Not Interested": 189,
+        "Call Later / Busy": 150
+      },
+      "actors": {
+        "unknown": 867,
+        "bot": 200,
+        "executive": 133,
+        "seller": 57,
+        "buyer": 2
+      },
+      "pattern": "\\b(already (?:in (?:touch|contact)|met|spoke)|existing executive)\\b"
+    },
+    {
+      "trait": "explanation_depth",
+      "mentions": 12641,
+      "outcomes": {
+        "Call Later / Busy": 2686,
+        "Not Interested": 4359,
+        "General (talked)": 2874,
+        "Meeting Fixed": 2722
+      },
+      "actors": {
+        "executive": 1552,
+        "bot": 6888,
+        "unknown": 3675,
+        "seller": 499,
+        "buyer": 27
+      },
+      "pattern": "\\b(explain|clarif\\w*|did not understand|confus\\w*)\\b"
+    },
+    {
+      "trait": "language_preference",
+      "mentions": 128,
+      "outcomes": {
+        "General (talked)": 68,
+        "Not Interested": 29,
+        "Call Later / Busy": 23,
+        "Meeting Fixed": 8
+      },
+      "actors": {
+        "bot": 84,
+        "unknown": 33,
+        "executive": 1,
+        "seller": 10
+      },
+      "pattern": "\\b(?:prefer(?:s|red)?|speak|continue in|switch to)\\s+(?:in\\s+)?(?:Hindi|English|Tamil)\\b"
+    },
+    {
+      "trait": "price_concern",
+      "mentions": 1936,
+      "outcomes": {
+        "General (talked)": 651,
+        "Meeting Fixed": 458,
+        "Call Later / Busy": 379,
+        "Not Interested": 448
+      },
+      "actors": {
+        "unknown": 1140,
+        "bot": 359,
+        "seller": 299,
+        "executive": 122,
+        "buyer": 16
+      },
+      "pattern": "\\b(pric(?:e|ing)|cost|budget|payment)\\b"
+    },
+    {
+      "trait": "unresolved_service_issue",
+      "mentions": 153,
+      "outcomes": {
+        "Meeting Fixed": 19,
+        "Not Interested": 65,
+        "General (talked)": 47,
+        "Call Later / Busy": 22
+      },
+      "actors": {
+        "unknown": 84,
+        "bot": 39,
+        "seller": 22,
+        "executive": 6,
+        "buyer": 2
+      },
+      "pattern": "\\b(refund|complaint|unresolved|service issue)\\b"
+    }
+  ],
+  "duplicates": {
+    "evaluator_outputs": {
+      "extra_rows": 3087,
+      "exact_extras": 683,
+      "distinct_content_extras": 2404,
+      "conflicting_keys": 2289
+    },
+    "call_turns": {
+      "extra_rows": 6852,
+      "exact_extras": 10,
+      "distinct_content_extras": 6842,
+      "conflicting_keys": 6040
+    }
+  },
+  "recording_exact_subset": 5000,
+  "relationships": {
+    "seller_orphans": {
+      "seller_files": 0,
+      "bot_calls": 0,
+      "evaluator_outputs": 0,
+      "call_turns": 0,
+      "recording_sample": 0,
+      "executive_calls": 0
+    },
+    "attempt_ids_absent_from_answered_bot_calls": {
+      "evaluator_outputs": 1569,
+      "call_turns": 434,
+      "recording_sample": 0
+    },
+    "recording_calls_with_actual_turns": 2494,
+    "recording_calls_with_actual_evaluations": 4018
+  },
+  "unique_counts": {
+    "seller_files:sellers": 149363,
+    "bot_calls:sellers": 130129,
+    "bot_calls:calls": 269455,
+    "evaluator_outputs:sellers": 89163,
+    "evaluator_outputs:calls": 170282,
+    "call_turns:sellers": 11652,
+    "call_turns:calls": 12788,
+    "recording_sample:sellers": 4511,
+    "recording_sample:calls": 5000,
+    "executive_calls:sellers": 6933
+  },
+  "null_counts": {
+    "seller_files": {
+      "top_parent_category": 30844,
+      "eng_activity_30d": 134312,
+      "eng_callback_90d": 115649,
+      "eng_callback_1yr": 115649,
+      "eng_meetings_1yr": 144456,
+      "eng_hot_meetings_1yr": 144456,
+      "eng_enq_received_90d": 104284,
+      "eng_enq_received_1yr": 104284,
+      "eng_enq_replies_90d": 92641,
+      "eng_enq_replies_1yr": 92641,
+      "eng_pns_received_90d": 110617,
+      "eng_pns_received_1yr": 110617,
+      "eng_pns_answered_90d": 110617,
+      "eng_pns_answered_1yr": 110617,
+      "eng_ni_count_1yr": 140214,
+      "eng_np_count_1yr": 140214,
+      "past_objections": 145384,
+      "past_questions_asked": 146616,
+      "asked_if_talking_to_bot": 69401,
+      "showed_frustration": 69401,
+      "past_dispositions_detailed": 73174,
+      "already_in_touch_with_executive": 69401,
+      "do_not_call_requested": 69401,
+      "seller_locality": 94100,
+      "eng_answered_calls_90d": 53635,
+      "eng_call_attempts_90d": 53635,
+      "eng_call_attempts_1yr": 53635,
+      "eng_pickup_ratio_90d": 56537,
+      "eng_pickup_ratio_1yr": 53635,
+      "eng_long_calls_90d": 53635,
+      "eng_short_calls_90d": 53635,
+      "eng_product_count": 45394,
+      "eng_products_modified_90d": 45394,
+      "eng_products_modified_1yr": 45394,
+      "eng_cqs": 55076,
+      "business_type": 2408,
+      "annual_turnover": 16005,
+      "nature_of_business": 15759,
+      "nature_of_business_secondary": 2566,
+      "gst_registration_year": 2408,
+      "avg_answered_call_sec": 19234,
+      "top_category_3": 17331,
+      "top_category_1": 4693,
+      "top_category_2": 8671,
+      "top_category_group": 4897,
+      "num_categories": 4693,
+      "seller_pincode": 62,
+      "seller_district": 165,
+      "seller_city": 1,
+      "seller_state": 1
+    },
+    "bot_calls": {
+      "call_recording_url": 31489,
+      "lead_call_summary": 10719
+    },
+    "call_turns": {
+      "text": 6
+    },
+    "recording_sample": {
+      "lead_call_summary": 6
+    },
+    "executive_calls": {
+      "call_duration_customer": 3720,
+      "status": 151,
+      "ring_duration": 695
+    }
+  },
+  "seller_flags": [
+    {
+      "field": "do_not_call_requested",
+      "positive": 1178,
+      "known": 79962,
+      "unknown": 69401
+    },
+    {
+      "field": "showed_frustration",
+      "positive": 139,
+      "known": 79962,
+      "unknown": 69401
+    },
+    {
+      "field": "asked_if_talking_to_bot",
+      "positive": 125,
+      "known": 79962,
+      "unknown": 69401
+    },
+    {
+      "field": "already_in_touch_with_executive",
+      "positive": 4205,
+      "known": 79962,
+      "unknown": 69401
+    }
+  ],
+  "recordings": {
+    "outcomes": {
+      "Meeting Fixed": 1162,
+      "Not Interested": 1113,
+      "Call Later / Busy": 1185,
+      "General (talked)": 1540
+    },
+    "versions": {
+      "summary_va": 91,
+      "personalis": 452,
+      "base_vani": 289,
+      "main": 1388,
+      "last_met_d": 1388,
+      "main_vani": 1392
+    },
+    "months": {
+      "2026-09": 846,
+      "2026-08": 1301,
+      "2026-07": 2846,
+      "2026-06": 7
+    },
+    "durations": {
+      "90_to_179s": 727,
+      "30_to_89s": 2411,
+      "under_30s": 1820,
+      "180s_plus": 42
+    },
+    "cohorts": {
+      "no_specific_signal": 4356,
+      "contact_suppressed": 135,
+      "existing_executive": 439,
+      "scheduling_objection": 55,
+      "prior_frustration": 15
+    }
+  },
+  "historical_cohorts": {
+    "no_specific_signal": {
+      "Call Later / Busy": 38863,
+      "Not Interested": 106924,
+      "General (talked)": 69929,
+      "Meeting Fixed": 29446
+    },
+    "existing_executive": {
+      "Call Later / Busy": 2678,
+      "Not Interested": 5026,
+      "General (talked)": 5732,
+      "Meeting Fixed": 1223
+    },
+    "scheduling_objection": {
+      "Call Later / Busy": 1309,
+      "Not Interested": 1380,
+      "General (talked)": 530,
+      "Meeting Fixed": 241
+    },
+    "contact_suppressed": {
+      "Meeting Fixed": 115,
+      "General (talked)": 2015,
+      "Not Interested": 2868,
+      "Call Later / Busy": 721
+    },
+    "prior_frustration": {
+      "Not Interested": 166,
+      "General (talked)": 159,
+      "Call Later / Busy": 101,
+      "Meeting Fixed": 29
+    }
+  },
+  "seller_cohorts": {
+    "no_specific_signal": 142822,
+    "existing_executive": 4083,
+    "scheduling_objection": 1142,
+    "contact_suppressed": 1178,
+    "prior_frustration": 138
+  },
+  "quality": {
+    "evaluator_valid_json": 278332,
+    "invalid_turn_time_order": 100,
+    "unknown_turn_speakers": 470
+  },
+  "numeric_summaries": {
+    "seller_files.num_categories": {
+      "count": 144670,
+      "min": 1.0,
+      "max": 1897.0,
+      "mean": 12.0832
+    },
+    "seller_files.eng_answered_calls_90d": {
+      "count": 95728,
+      "min": 0.0,
+      "max": 38.0,
+      "mean": 0.7557
+    },
+    "seller_files.eng_call_attempts_90d": {
+      "count": 95728,
+      "min": 0.0,
+      "max": 100.0,
+      "mean": 5.9667
+    },
+    "seller_files.eng_call_attempts_1yr": {
+      "count": 95728,
+      "min": 1.0,
+      "max": 341.0,
+      "mean": 16.5752
+    },
+    "seller_files.eng_pickup_ratio_90d": {
+      "count": 92826,
+      "min": 0.0,
+      "max": 100.0,
+      "mean": 13.7206
+    },
+    "seller_files.eng_pickup_ratio_1yr": {
+      "count": 95728,
+      "min": 0.0,
+      "max": 100.0,
+      "mean": 9.3897
+    },
+    "seller_files.eng_long_calls_90d": {
+      "count": 95728,
+      "min": 0.0,
+      "max": 25.0,
+      "mean": 0.127
+    },
+    "seller_files.eng_short_calls_90d": {
+      "count": 95728,
+      "min": 0.0,
+      "max": 38.0,
+      "mean": 0.5339
+    },
+    "seller_files.eng_product_count": {
+      "count": 103969,
+      "min": 1.0,
+      "max": 14329.0,
+      "mean": 21.7573
+    },
+    "seller_files.eng_products_modified_90d": {
+      "count": 103969,
+      "min": 0.0,
+      "max": 1563.0,
+      "mean": 4.6737
+    },
+    "seller_files.eng_products_modified_1yr": {
+      "count": 103969,
+      "min": 0.0,
+      "max": 4061.0,
+      "mean": 10.8015
+    },
+    "seller_files.eng_cqs": {
+      "count": 94287,
+      "min": 0.0,
+      "max": 100.0,
+      "mean": 20.9239
+    },
+    "seller_files.bot_attempts": {
+      "count": 149363,
+      "min": 1.0,
+      "max": 87.0,
+      "mean": 3.5534
+    },
+    "seller_files.bot_answered": {
+      "count": 149363,
+      "min": 0.0,
+      "max": 35.0,
+      "mean": 1.804
+    },
+    "seller_files.calls_meeting_fixed": {
+      "count": 149363,
+      "min": 0.0,
+      "max": 7.0,
+      "mean": 0.2079
+    },
+    "seller_files.calls_not_interested": {
+      "count": 149363,
+      "min": 0.0,
+      "max": 31.0,
+      "mean": 0.7791
+    },
+    "seller_files.calls_general": {
+      "count": 149363,
+      "min": 0.0,
+      "max": 20.0,
+      "mean": 0.5247
+    },
+    "seller_files.calls_call_later": {
+      "count": 149363,
+      "min": 0.0,
+      "max": 15.0,
+      "mean": 0.2924
+    },
+    "seller_files.bot_answer_rate": {
+      "count": 149363,
+      "min": 0.0,
+      "max": 1.0,
+      "mean": 0.6543
+    },
+    "seller_files.avg_answered_call_sec": {
+      "count": 130129,
+      "min": 0.0,
+      "max": 1012.0,
+      "mean": 40.5987
+    },
+    "seller_files.eng_callback_90d": {
+      "count": 33714,
+      "min": 0.0,
+      "max": 697.0,
+      "mean": 3.2593
+    },
+    "seller_files.eng_callback_1yr": {
+      "count": 33714,
+      "min": 1.0,
+      "max": 1886.0,
+      "mean": 6.0434
+    },
+    "seller_files.eng_enq_received_90d": {
+      "count": 45079,
+      "min": 0.0,
+      "max": 1135.0,
+      "mean": 4.3419
+    },
+    "seller_files.eng_enq_received_1yr": {
+      "count": 45079,
+      "min": 1.0,
+      "max": 9237.0,
+      "mean": 16.6648
+    },
+    "seller_files.eng_enq_replies_90d": {
+      "count": 56722,
+      "min": 0.0,
+      "max": 5576.0,
+      "mean": 5.3188
+    },
+    "seller_files.eng_enq_replies_1yr": {
+      "count": 56722,
+      "min": 1.0,
+      "max": 12635.0,
+      "mean": 14.8994
+    },
+    "seller_files.eng_pns_received_90d": {
+      "count": 38746,
+      "min": 0.0,
+      "max": 1209.0,
+      "mean": 2.9809
+    },
+    "seller_files.eng_pns_received_1yr": {
+      "count": 38746,
+      "min": 1.0,
+      "max": 2860.0,
+      "mean": 11.6471
+    },
+    "seller_files.eng_pns_answered_90d": {
+      "count": 38746,
+      "min": 0.0,
+      "max": 1130.0,
+      "mean": 1.7839
+    },
+    "seller_files.eng_pns_answered_1yr": {
+      "count": 38746,
+      "min": 0.0,
+      "max": 2239.0,
+      "mean": 6.6875
+    },
+    "seller_files.eng_activity_30d": {
+      "count": 15051,
+      "min": 1.0,
+      "max": 4990.0,
+      "mean": 148.9839
+    },
+    "seller_files.eng_ni_count_1yr": {
+      "count": 9149,
+      "min": 0.0,
+      "max": 20.0,
+      "mean": 2.3417
+    },
+    "seller_files.eng_np_count_1yr": {
+      "count": 9149,
+      "min": 0.0,
+      "max": 6.0,
+      "mean": 0.1513
+    },
+    "seller_files.eng_meetings_1yr": {
+      "count": 4907,
+      "min": 1.0,
+      "max": 23.0,
+      "mean": 1.8476
+    },
+    "seller_files.eng_hot_meetings_1yr": {
+      "count": 4907,
+      "min": 0.0,
+      "max": 23.0,
+      "mean": 1.7524
+    },
+    "bot_calls.call_attempt_count": {
+      "count": 269455,
+      "min": 1.0,
+      "max": 37.0,
+      "mean": 2.3071
+    },
+    "bot_calls.lead_call_duration": {
+      "count": 269455,
+      "min": 0.0,
+      "max": 1805.0,
+      "mean": 36.0018
+    },
+    "call_turns.turn_no": {
+      "count": 139555,
+      "min": 1.0,
+      "max": 148.0,
+      "mean": 8.2974
+    },
+    "call_turns.start_sec": {
+      "count": 139555,
+      "min": 0.0,
+      "max": 1742.0,
+      "mean": 58.4426
+    },
+    "call_turns.end_sec": {
+      "count": 139555,
+      "min": 0.001,
+      "max": 1743.0,
+      "mean": 65.0809
+    },
+    "recording_sample.call_attempt_count": {
+      "count": 5000,
+      "min": 1.0,
+      "max": 21.0,
+      "mean": 1.985
+    },
+    "recording_sample.lead_call_duration": {
+      "count": 5000,
+      "min": 0.0,
+      "max": 301.0,
+      "mean": 51.263
+    },
+    "executive_calls.call_duration": {
+      "count": 67151,
+      "min": 0.0,
+      "max": 5421.0,
+      "mean": 146.1106
+    },
+    "executive_calls.call_duration_customer": {
+      "count": 63431,
+      "min": 0.0,
+      "max": 4200.0,
+      "mean": 131.726
+    },
+    "executive_calls.ring_duration": {
+      "count": 66456,
+      "min": 1.0,
+      "max": 110.0,
+      "mean": 19.6767
+    }
+  },
+  "seller_call_totals": {
+    "attempts": 530748,
+    "answered": 269455,
+    "weighted_answer_rate": 0.5076891481456359,
+    "denominator": "Sum of bot_attempts across seller snapshots; not a rate computed from answered-call CSV alone."
+  },
+  "evaluator_counts": {
+    "incorrect_mf": 19617,
+    "topics": 7179,
+    "execdrop": 18768,
+    "seller_questions": 24694,
+    "se_contact": 17716,
+    "objections": 5233,
+    "ivr": 4983,
+    "location_confirmation": 15640,
+    "latency_repetition": 13681,
+    "disposition": 150821
+  },
+  "source_definitions": {
+    "outcomes": {
+      "files": [
+        "ps07_bot_calls_2026-04_to_06.csv",
+        "ps07_bot_calls_2026-07.csv",
+        "ps07_bot_calls_2026-08.csv",
+        "ps07_bot_calls_2026-09.csv"
+      ],
+      "columns": [
+        "disposition_label",
+        "call_start_time",
+        "lead_bot_version"
+      ],
+      "denominator": 269455,
+      "limitation": "Answered-call selection; model/time/selection differences prevent causal ranking."
+    },
+    "summaries": {
+      "files": [
+        "ps07_bot_calls_2026-04_to_06.csv",
+        "ps07_bot_calls_2026-07.csv",
+        "ps07_bot_calls_2026-08.csv",
+        "ps07_bot_calls_2026-09.csv"
+      ],
+      "columns": [
+        "lead_call_summary",
+        "meeting_fixed",
+        "disposition_label"
+      ],
+      "denominator": 269455,
+      "limitation": "Machine summaries, mixed actors and unverified lexical cues; not verbatim seller intent."
+    },
+    "seller_fields": {
+      "files": [
+        "ps07_seller_files_part1.csv",
+        "ps07_seller_files_part2.csv"
+      ],
+      "columns": [
+        "do_not_call_requested",
+        "showed_frustration",
+        "asked_if_talking_to_bot",
+        "already_in_touch_with_executive",
+        "eng_activity_30d",
+        "past_objections",
+        "past_questions_asked"
+      ],
+      "denominator": 149363,
+      "limitation": "April–September aggregates leak later behavior into an earlier-call evaluation. Null is unknown, not false."
+    },
+    "recordings": {
+      "files": [
+        "ps07_recording_sample_5000.csv"
+      ],
+      "columns": [
+        "attempt_id",
+        "lead_bot_version",
+        "disposition_label"
+      ],
+      "denominator": 5000,
+      "limitation": "Exact subset of answered calls; selected sample, not an unbiased population estimate."
+    },
+    "duplicates": {
+      "files": [
+        "ps07_evaluator_outputs_2026-04_to_06.csv",
+        "ps07_evaluator_outputs_2026-07_part1.csv",
+        "ps07_evaluator_outputs_2026-07_part2.csv",
+        "ps07_evaluator_outputs_2026-08_part1.csv",
+        "ps07_evaluator_outputs_2026-08_part2.csv",
+        "ps07_evaluator_outputs_2026-08_part3.csv",
+        "ps07_evaluator_outputs_2026-09.csv",
+        "ps07_call_turns.csv"
+      ],
+      "columns": [
+        "attempt_id",
+        "turn_no",
+        "eval_agent"
+      ],
+      "denominator": 417887,
+      "limitation": "Same business key with different content is a conflict, not an independent observation."
+    }
+  }
+}

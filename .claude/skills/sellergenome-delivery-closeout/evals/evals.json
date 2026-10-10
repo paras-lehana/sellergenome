@@ -1,0 +1,17 @@
+{
+  "skill_name": "sellergenome-delivery-closeout",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Wrap up today's session properly.",
+      "expected_output": "Closeout steps.",
+      "files": [],
+      "expectations": [
+        "Task folder docs/tasks/DATE-SLUG with owner inputs + ONE document",
+        "Updates docs/prompts.md and docs/tasks.md",
+        "Final reply with A–F and a G text block last",
+        "Commit and push after logs"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "skill_name": "sellergenome-vani-bot",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "During a call the seller said 'Hindi mein boliye' twice but the bot kept speaking English for 8 seconds. Expected?",
+      "expected_output": "Explicit switch bypasses cooldown.",
+      "files": [],
+      "expectations": [
+        "Says explicit language requests bypass cooldown and apply immediately",
+        "Mentions the switch log / held switches",
+        "Suggests checking signals detection or cue list"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "The bot keeps replying with the same generic line on every turn. What's going on?",
+      "expected_output": "Fallback line cause.",
+      "files": [],
+      "expectations": [
+        "Says the LLM call failed and the canned fallback line is used",
+        "Mentions gateway 30 req/min or budget",
+        "Suggests /api/v5/status or logs"
+      ]
+    }
+  ]
+}

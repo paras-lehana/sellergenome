@@ -1,0 +1,2349 @@
+{
+  "package": "sarvam-mcp",
+  "version": "0.2.12",
+  "discovered_at": "2026-10-09",
+  "tools": [
+    {
+      "name": "sarvam_tools_set_api_key",
+      "description": "Set or update your Sarvam API key. Call this if you get an\nauthentication error or to configure your key for the first time.\n\nIf called without a key, returns instructions on where to get one.\nIf called with a key, saves it globally so you never need to set it again.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "api_key": {
+            "default": "",
+            "description": "Your Sarvam API key (starts with sk_). Leave empty to get instructions on where to find it.",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_tools_upgrade",
+      "description": "Check for updates and upgrade sarvam-mcp to the latest version.\n\nCall this when the user asks to update, upgrade, or check for newer\nversions of the sarvam MCP server.\n\nSet ``confirm_upgrade=True`` to actually perform the upgrade.\nAfter upgrading, restart the MCP server for changes to take effect.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "confirm_upgrade": {
+            "default": false,
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_tools_stt_transcribe",
+      "description": "Runtime tool \u2014 calls Sarvam API now. For code-writing help, use sarvam_code_* tools.\n\nTranscribe an audio file in any of 23 Indian languages using Saaras v4.\n\nSaaras v4 (like v3) supports multiple output modes via the `mode` parameter:\n  \u2022 `transcribe` (default) \u2014 standard transcription in the original language\n  \u2022 `translate` \u2014 speech from any Indic language directly to English text\n  \u2022 `verbatim` \u2014 exact word-for-word, no normalization, filler words preserved\n  \u2022 `translit` \u2014 romanization to Latin/Roman script\n  \u2022 `codemix` \u2014 English words in English, Indic words in native script\n\nThe default `language_code='unknown'` auto-detects, but specifying the language (e.g. `hi-IN`, `ta-IN`) gives better accuracy.\nSpeech-to-English uses this tool with `mode='translate'`.\nFor very long files (>30s), prefer `sarvam_stt_batch_submit`.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "audio_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Local path to the audio file."
+          },
+          "audio_base64": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Base64-encoded audio data (for remote MCP)."
+          },
+          "audio_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "URL to fetch the audio file from."
+          },
+          "filename": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Filename with extension, e.g. 'recording.wav'. Required for base64/URL inputs."
+          },
+          "language_code": {
+            "default": "unknown",
+            "description": "BCP-47 code, e.g. 'hi-IN'. Use 'unknown' to auto-detect.",
+            "enum": [
+              "en-IN",
+              "hi-IN",
+              "bn-IN",
+              "ta-IN",
+              "te-IN",
+              "gu-IN",
+              "kn-IN",
+              "ml-IN",
+              "mr-IN",
+              "pa-IN",
+              "od-IN",
+              "as-IN",
+              "ur-IN",
+              "ne-IN",
+              "kok-IN",
+              "ks-IN",
+              "sd-IN",
+              "sa-IN",
+              "sat-IN",
+              "mni-IN",
+              "brx-IN",
+              "mai-IN",
+              "doi-IN",
+              "auto",
+              "unknown"
+            ],
+            "type": "string"
+          },
+          "mode": {
+            "default": "transcribe",
+            "description": "Output mode (Saaras v3/v4 only). 'transcribe' (default) | 'translate' (\u2192 English) | 'verbatim' | 'translit' (\u2192 Roman) | 'codemix'.",
+            "enum": [
+              "transcribe",
+              "translate",
+              "verbatim",
+              "translit",
+              "codemix"
+            ],
+            "type": "string"
+          },
+          "with_timestamps": {
+            "default": false,
+            "description": "Include word-level timestamps in the response.",
+            "type": "boolean"
+          },
+          "model": {
+            "default": "saaras:v4",
+            "description": "Saaras v4 (recommended, latest STT model for Indic audio). Falls back to saaras:v3 if needed.",
+            "enum": [
+              "saaras:v4",
+              "saaras:v3"
+            ],
+            "type": "string"
+          },
+          "input_audio_codec": {
+            "anyOf": [
+              {
+                "enum": [
+                  "pcm_s16le",
+                  "pcm_l16",
+                  "pcm_raw"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Required only for PCM files. One of 'pcm_s16le', 'pcm_l16', 'pcm_raw'. PCM files are supported only at 16kHz sample rate."
+          },
+          "keyterms": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "saaras:v4 only. Up to 50 domain-specific terms (max 64 chars each) to bias recognition toward \u2014 names, jargon, brand terms. Ignored by saaras:v3."
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_tools_stt_batch_submit",
+      "description": "Runtime tool \u2014 calls Sarvam API now. For code-writing help, use sarvam_code_* tools.\n\nTranscribe a long audio file (>30 s) using the batch job pipeline. Runs the full flow automatically: create job \u2192 upload audio to Azure Blob \u2192 start processing \u2192 poll until complete \u2192 return transcript.\n\nSupports diarization, timestamps, all Saaras v4/v3 output modes, v4-only keyterms, and an optional webhook callback instead of polling.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "audio_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Local path to the audio file."
+          },
+          "audio_base64": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Base64-encoded audio data (for remote MCP)."
+          },
+          "audio_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "URL to fetch the audio file from."
+          },
+          "filename": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Filename with extension (for base64/URL)."
+          },
+          "language_code": {
+            "default": "unknown",
+            "description": "BCP-47 code, e.g. 'hi-IN'. Use 'unknown' to auto-detect.",
+            "enum": [
+              "en-IN",
+              "hi-IN",
+              "bn-IN",
+              "ta-IN",
+              "te-IN",
+              "gu-IN",
+              "kn-IN",
+              "ml-IN",
+              "mr-IN",
+              "pa-IN",
+              "od-IN",
+              "as-IN",
+              "ur-IN",
+              "ne-IN",
+              "kok-IN",
+              "ks-IN",
+              "sd-IN",
+              "sa-IN",
+              "sat-IN",
+              "mni-IN",
+              "brx-IN",
+              "mai-IN",
+              "doi-IN",
+              "auto",
+              "unknown"
+            ],
+            "type": "string"
+          },
+          "mode": {
+            "default": "transcribe",
+            "description": "Output mode. 'transcribe' (default) | 'translate' (\u2192 English) | 'verbatim' | 'translit' (\u2192 Roman) | 'codemix'.",
+            "enum": [
+              "transcribe",
+              "translate",
+              "verbatim",
+              "translit",
+              "codemix"
+            ],
+            "type": "string"
+          },
+          "with_timestamps": {
+            "default": false,
+            "description": "Include word-level timestamps.",
+            "type": "boolean"
+          },
+          "with_diarization": {
+            "default": false,
+            "description": "Return per-speaker turns.",
+            "type": "boolean"
+          },
+          "num_speakers": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Hint for diarization: expected number of speakers."
+          },
+          "model": {
+            "default": "saaras:v4",
+            "enum": [
+              "saaras:v4",
+              "saaras:v3"
+            ],
+            "type": "string"
+          },
+          "input_audio_codec": {
+            "anyOf": [
+              {
+                "enum": [
+                  "pcm_s16le",
+                  "pcm_l16",
+                  "pcm_raw"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Required only for PCM files. One of 'pcm_s16le', 'pcm_l16', 'pcm_raw'. PCM files are supported only at 16kHz sample rate."
+          },
+          "keyterms": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "saaras:v4 only. Up to 50 domain-specific terms (max 64 chars each) to bias recognition toward. Ignored by saaras:v3."
+          },
+          "callback_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Optional webhook URL to notify on job completion, instead of polling. Requires callback_auth_token too."
+          },
+          "callback_auth_token": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Bearer token Sarvam will send with the callback_url webhook call."
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_tools_stt_batch_status",
+      "description": "Runtime tool \u2014 calls Sarvam API now.\n\nPoll the status of a batch transcription job. Returns the transcript once `job_state == 'Completed'`.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "job_id": {
+            "description": "The job_id returned by sarvam_stt_batch_submit.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "job_id"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_tools_stt_batch_download",
+      "description": "Runtime tool \u2014 calls Sarvam API now.\n\nGet fresh presigned download URLs for specific output files of a completed batch STT job. Use this if the URLs from sarvam_tools_stt_batch_status have expired. Requires the exact output filenames (e.g. '0.json') \u2014 get these from a prior sarvam_tools_stt_batch_status call's `output_files`.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "job_id": {
+            "description": "The job_id returned by sarvam_tools_stt_batch_submit.",
+            "type": "string"
+          },
+          "files": {
+            "description": "Exact output filenames to fetch fresh URLs for, e.g. ['0.json']. Get these from sarvam_tools_stt_batch_status's `output_files`.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "job_id",
+          "files"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_tools_stt_realtime",
+      "description": "Runtime tool \u2014 calls Sarvam API now. For code-writing help, use sarvam_code_* tools.\n\nTranscribe a mono 16-bit WAV (8000 or 16000 Hz) over GET /speech-to-text-realtime/ws. Use this when you need the realtime protocol (partials, VAD). Compressed audio and long recordings belong on sarvam_tools_stt_transcribe or sarvam_tools_stt_batch_submit.\n\nDefault model is saaras:v3-realtime. saaras:v4 adds keyterms. `language_code='unknown'` is sent as `auto`.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "audio_path": {
+            "description": "Absolute path to a mono 16-bit PCM WAV at 8 kHz or 16 kHz.",
+            "type": "string"
+          },
+          "language_code": {
+            "default": "unknown",
+            "enum": [
+              "en-IN",
+              "hi-IN",
+              "bn-IN",
+              "ta-IN",
+              "te-IN",
+              "gu-IN",
+              "kn-IN",
+              "ml-IN",
+              "mr-IN",
+              "pa-IN",
+              "od-IN",
+              "as-IN",
+              "ur-IN",
+              "ne-IN",
+              "kok-IN",
+              "ks-IN",
+              "sd-IN",
+              "sa-IN",
+              "sat-IN",
+              "mni-IN",
+              "brx-IN",
+              "mai-IN",
+              "doi-IN",
+              "auto",
+              "unknown"
+            ],
+            "type": "string"
+          },
+          "model": {
+            "default": "saaras:v3-realtime",
+            "enum": [
+              "saaras:v3-realtime",
+              "saaras:v4"
+            ],
+            "type": "string"
+          },
+          "mode": {
+            "default": "transcribe",
+            "enum": [
+              "transcribe",
+              "translate",
+              "verbatim",
+              "translit",
+              "codemix"
+            ],
+            "type": "string"
+          },
+          "stream_type": {
+            "default": "simulated",
+            "description": "'simulated' returns finals only. 'fast' or 'balanced' also emit partials.",
+            "enum": [
+              "fast",
+              "balanced",
+              "simulated"
+            ],
+            "type": "string"
+          },
+          "keyterms": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Saaras v4 only. Up to 50 terms."
+          }
+        },
+        "required": [
+          "audio_path"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_tools_tts_speak",
+      "description": "Runtime tool \u2014 calls Sarvam API now. For code-writing help, use sarvam_code_* tools.\n\nGenerate speech from text with bulbul:v3 (default) or bulbul:v4-flash. 11 Indic languages.\n\nSpeakers are model-specific:\n  \u2022 bulbul:v3 \u2014 short names, default `shubh`. `priya` / `neha` / `pooja` (warm female), `aditya` / `rahul` / `kabir` (professional male), `shreya` / `kavya` / `ritu` (calm female), `vijay` / `gokul` / `anand` (mature male), `tanya` / `suhani` (young female).\n  \u2022 bulbul:v4-flash \u2014 persona IDs `<voice>_<lang>_<style>`, default `shubh_enhi_ads`, e.g. `simran_en_customer`, `aparna_hi_customer`, `ritu_hi_customer`. 222 voice IDs (Assamese voices are not included \u2014 contact Sarvam for access); use sarvam_code_speakers('bulbul:v4-flash') for the full list. Native-script text works best (romanised Indic degrades quality).\n\nThe audio file is written under SARVAM_MCP_BASE_PATH (default ~/Desktop).",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "text": {
+            "description": "The text to synthesize. Max 2500 characters.",
+            "type": "string"
+          },
+          "target_language_code": {
+            "description": "Output language. TTS supports 11 Indic languages.",
+            "enum": [
+              "en-IN",
+              "hi-IN",
+              "bn-IN",
+              "ta-IN",
+              "te-IN",
+              "gu-IN",
+              "kn-IN",
+              "ml-IN",
+              "mr-IN",
+              "pa-IN",
+              "od-IN"
+            ],
+            "type": "string"
+          },
+          "speaker": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Voice. Defaults to `shubh` (bulbul:v3) or `shubh_enhi_ads` (bulbul:v4-flash). Must match the model \u2014 see sarvam_code_speakers."
+          },
+          "speech_sample_rate": {
+            "default": 24000,
+            "description": "PCM sample rate of the output WAV.",
+            "enum": [
+              8000,
+              16000,
+              22050,
+              24000,
+              32000,
+              44100,
+              48000
+            ],
+            "type": "integer"
+          },
+          "pace": {
+            "default": 1.0,
+            "maximum": 2.0,
+            "minimum": 0.5,
+            "type": "number"
+          },
+          "pitch": {
+            "anyOf": [
+              {
+                "maximum": 0.5,
+                "minimum": -0.5,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Pitch shift, -0.5 to 0.5. Omit for the voice's natural pitch."
+          },
+          "loudness": {
+            "anyOf": [
+              {
+                "maximum": 2.5,
+                "minimum": 0.1,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Output gain, 0.1 to 2.5. Omit for default loudness."
+          },
+          "enable_preprocessing": {
+            "default": true,
+            "description": "Normalize numbers/dates/code-mixed segments before synthesis.",
+            "type": "boolean"
+          },
+          "model": {
+            "default": "bulbul:v3",
+            "description": "`bulbul:v3` (default) or `bulbul:v4-flash` (low-latency, persona speakers like `simran_en_customer`).",
+            "enum": [
+              "bulbul:v3",
+              "bulbul:v4-flash"
+            ],
+            "type": "string"
+          },
+          "dict_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "ID of a pronunciation dictionary (from sarvam_tools_pronunciation_create) to apply during synthesis, for custom word pronunciations."
+          }
+        },
+        "required": [
+          "text",
+          "target_language_code"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_tools_tts_stream",
+      "description": "Runtime tool \u2014 calls Sarvam API now. For code-writing help, use sarvam_code_* tools.\n\nStreaming variant of sarvam_tts_speak using the TTS WebSocket. Opens a connection, sends the text once, and collects the streamed audio chunks into a single WAV file (there's no reliable server-side 'done' signal, so completion is detected via a short idle timeout \u2014 expect a few extra seconds of latency vs. sarvam_tts_speak for that reason). Falls back to the REST endpoint if the WebSocket is unavailable.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "text": {
+            "description": "Text to synthesize.",
+            "type": "string"
+          },
+          "target_language_code": {
+            "enum": [
+              "en-IN",
+              "hi-IN",
+              "bn-IN",
+              "ta-IN",
+              "te-IN",
+              "gu-IN",
+              "kn-IN",
+              "ml-IN",
+              "mr-IN",
+              "pa-IN",
+              "od-IN"
+            ],
+            "type": "string"
+          },
+          "speaker": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Voice; defaults per model (`shubh` / `shubh_enhi_ads`). Must match the model."
+          },
+          "pace": {
+            "default": 1.0,
+            "maximum": 2.0,
+            "minimum": 0.5,
+            "type": "number"
+          },
+          "pitch": {
+            "anyOf": [
+              {
+                "maximum": 0.5,
+                "minimum": -0.5,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "loudness": {
+            "anyOf": [
+              {
+                "maximum": 2.5,
+                "minimum": 0.1,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "model": {
+            "default": "bulbul:v3",
+            "enum": [
+              "bulbul:v3",
+              "bulbul:v4-flash"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "text",
+          "target_language_code"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_tools_translate",
+      "description": "Runtime tool \u2014 calls Sarvam API now. For code-writing help, use sarvam_code_* tools.\n\nTranslate text between English and Indian languages.\n\nTwo backing models:\n- `mayura:v1` \u2014 11 languages, supports formal / colloquial / code-mixed modes, script + numeral controls. Best for short, stylized translations.\n- `sarvam-translate:v1` \u2014 all 22 scheduled languages + English, formal only. Best when you need broad coverage.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "input": {
+            "description": "Text to translate. Max length depends on model: 1000 chars for mayura:v1, 2000 chars for sarvam-translate:v1.",
+            "type": "string"
+          },
+          "source_language_code": {
+            "description": "Source BCP-47 code, or 'auto' to auto-detect.",
+            "enum": [
+              "en-IN",
+              "hi-IN",
+              "bn-IN",
+              "ta-IN",
+              "te-IN",
+              "gu-IN",
+              "kn-IN",
+              "ml-IN",
+              "mr-IN",
+              "pa-IN",
+              "od-IN",
+              "as-IN",
+              "ur-IN",
+              "ne-IN",
+              "kok-IN",
+              "ks-IN",
+              "sd-IN",
+              "sa-IN",
+              "sat-IN",
+              "mni-IN",
+              "brx-IN",
+              "mai-IN",
+              "doi-IN",
+              "auto",
+              "unknown"
+            ],
+            "type": "string"
+          },
+          "target_language_code": {
+            "description": "Target BCP-47 code.",
+            "enum": [
+              "en-IN",
+              "hi-IN",
+              "bn-IN",
+              "ta-IN",
+              "te-IN",
+              "gu-IN",
+              "kn-IN",
+              "ml-IN",
+              "mr-IN",
+              "pa-IN",
+              "od-IN",
+              "as-IN",
+              "ur-IN",
+              "ne-IN",
+              "kok-IN",
+              "ks-IN",
+              "sd-IN",
+              "sa-IN",
+              "sat-IN",
+              "mni-IN",
+              "brx-IN",
+              "mai-IN",
+              "doi-IN",
+              "auto",
+              "unknown"
+            ],
+            "type": "string"
+          },
+          "model": {
+            "default": "mayura:v1",
+            "description": "Pick `sarvam-translate:v1` for the 22-language set.",
+            "enum": [
+              "mayura:v1",
+              "sarvam-translate:v1"
+            ],
+            "type": "string"
+          },
+          "mode": {
+            "default": "formal",
+            "description": "Mayura only. Ignored by sarvam-translate:v1.",
+            "enum": [
+              "formal",
+              "modern-colloquial",
+              "classic-colloquial",
+              "code-mixed"
+            ],
+            "type": "string"
+          },
+          "output_script": {
+            "anyOf": [
+              {
+                "enum": [
+                  "roman",
+                  "fully-native",
+                  "spoken-form-in-native"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Mayura only. None = native script."
+          },
+          "numerals_format": {
+            "default": "international",
+            "enum": [
+              "international",
+              "native"
+            ],
+            "type": "string"
+          },
+          "speaker_gender": {
+            "anyOf": [
+              {
+                "enum": [
+                  "Male",
+                  "Female"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Helps disambiguate gendered languages (e.g. Hindi)."
+          }
+        },
+        "required": [
+          "input",
+          "source_language_code",
+          "target_language_code"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_tools_transliterate",
+      "description": "Runtime tool \u2014 calls Sarvam API now. For code-writing help, use sarvam_code_* tools.\n\nConvert text between scripts without translating meaning. Examples: Devanagari \u2192 Roman ('\u0928\u092e\u0938\u094d\u0924\u0947' \u2192 'namaste'), Tamil script \u2192 Latin, etc. Use `spoken_form=True` to expand digits and abbreviations into spoken form.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "input": {
+            "description": "Text to transliterate.",
+            "type": "string"
+          },
+          "source_language_code": {
+            "description": "Source language code (e.g. 'hi-IN'), or 'auto' to auto-detect.",
+            "enum": [
+              "en-IN",
+              "hi-IN",
+              "bn-IN",
+              "ta-IN",
+              "te-IN",
+              "gu-IN",
+              "kn-IN",
+              "ml-IN",
+              "mr-IN",
+              "pa-IN",
+              "od-IN",
+              "as-IN",
+              "ur-IN",
+              "ne-IN",
+              "kok-IN",
+              "ks-IN",
+              "sd-IN",
+              "sa-IN",
+              "sat-IN",
+              "mni-IN",
+              "brx-IN",
+              "mai-IN",
+              "doi-IN",
+              "auto",
+              "unknown"
+            ],
+            "type": "string"
+          },
+          "target_language_code": {
+            "description": "Target language code (script of the output).",
+            "enum": [
+              "en-IN",
+              "hi-IN",
+              "bn-IN",
+              "ta-IN",
+              "te-IN",
+              "gu-IN",
+              "kn-IN",
+              "ml-IN",
+              "mr-IN",
+              "pa-IN",
+              "od-IN",
+              "as-IN",
+              "ur-IN",
+              "ne-IN",
+              "kok-IN",
+              "ks-IN",
+              "sd-IN",
+              "sa-IN",
+              "sat-IN",
+              "mni-IN",
+              "brx-IN",
+              "mai-IN",
+              "doi-IN",
+              "auto",
+              "unknown"
+            ],
+            "type": "string"
+          },
+          "numerals_format": {
+            "default": "international",
+            "enum": [
+              "international",
+              "native"
+            ],
+            "type": "string"
+          },
+          "spoken_form": {
+            "default": false,
+            "description": "Expand numbers/abbreviations into spoken form.",
+            "type": "boolean"
+          },
+          "spoken_form_numerals_language": {
+            "anyOf": [
+              {
+                "enum": [
+                  "en-IN",
+                  "hi-IN",
+                  "bn-IN",
+                  "ta-IN",
+                  "te-IN",
+                  "gu-IN",
+                  "kn-IN",
+                  "ml-IN",
+                  "mr-IN",
+                  "pa-IN",
+                  "od-IN",
+                  "as-IN",
+                  "ur-IN",
+                  "ne-IN",
+                  "kok-IN",
+                  "ks-IN",
+                  "sd-IN",
+                  "sa-IN",
+                  "sat-IN",
+                  "mni-IN",
+                  "brx-IN",
+                  "mai-IN",
+                  "doi-IN",
+                  "auto",
+                  "unknown"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Language to use when speaking out numbers (only with spoken_form=True)."
+          }
+        },
+        "required": [
+          "input",
+          "source_language_code",
+          "target_language_code"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_tools_identify_language",
+      "description": "Runtime tool \u2014 calls Sarvam API now. For code-writing help, use sarvam_code_* tools.\n\nDetect the language and script of input text. Returns BCP-47 language code (e.g. 'hi-IN') and script code (e.g. 'Devanagari'). Useful as a pre-step before TTS or translate to pick the right language args automatically.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "input": {
+            "description": "Text whose language to identify. Max 1000 characters.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "input"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_tools_text_analytics",
+      "description": "Runtime tool \u2014 calls Sarvam API now. For code-writing help, use sarvam_code_* tools.\n\nPERMANENTLY REMOVED: Sarvam retired the old analytics/parse API family (this `/text-analytics` endpoint included) \u2014 confirmed via a direct API call outside this tool (404, first observed 2026-08-13) and via Sarvam's own SDK release notes, which describe the removal as deliberate, not an outage. Calling this tool raises immediately instead of making a doomed network round trip. There is no direct 1:1 replacement for typed-question text analysis; for document/text extraction, check whether 'SarvamParse' (a new lightweight beta endpoint) fits your use case \u2014 see docs.sarvam.ai for current availability and request shape.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "text": {
+            "description": "Text to analyze.",
+            "type": "string"
+          },
+          "questions": {
+            "description": "List of question objects: [{'id': 'q1', 'text': 'When was X founded?', 'type': 'short answer'}, ...]. Required fields: id (str), text (str), type (one of 'boolean'|'enum'|'short answer'|'long answer'|'number'). For 'enum' questions, also include 'options': ['a', 'b', ...].",
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "text",
+          "questions"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_tools_llm_complete",
+      "description": "Runtime tool \u2014 calls Sarvam API now. For code-writing help, use sarvam_code_* tools.\n\nGenerate chat completions with Sarvam's Indic-tuned LLM.\n\nTwo models on this endpoint:\n- `sarvam-105b` (default) \u2014 128K context, best for complex reasoning, coding, long-context analysis, agentic tool use.\n- `sarvam-105b-conversations` \u2014 32K context, post-trained for real-time dialogue and voice agents; more natural/colloquial Indic replies. Same price as sarvam-105b. Prefer this one for low-latency conversational loops (e.g. behind sarvam_tools_voice).\n\nSupports 23 Indic languages with native, romanized, and code-mixed styles. OpenAI-compatible message format, including function calling (`tools`/`tool_choice`) and structured output (`response_format`).",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "messages": {
+            "description": "OpenAI-style messages: [{'role': 'system'|'user'|'assistant', 'content': '...'}, ...]",
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "model": {
+            "default": "sarvam-105b",
+            "description": "`sarvam-105b` (flagship, 128K ctx) or `sarvam-105b-conversations` (32K ctx, tuned for voice/chat-agent workloads).",
+            "enum": [
+              "sarvam-105b",
+              "sarvam-105b-conversations"
+            ],
+            "type": "string"
+          },
+          "temperature": {
+            "default": 0.7,
+            "maximum": 2.0,
+            "minimum": 0.0,
+            "type": "number"
+          },
+          "top_p": {
+            "default": 1.0,
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "type": "number"
+          },
+          "max_tokens": {
+            "anyOf": [
+              {
+                "minimum": 1,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "reasoning_effort": {
+            "anyOf": [
+              {
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "sarvam-105b reasons by default even if you don't ask for it, consuming a variable, often large chunk of max_tokens on hidden reasoning before any visible content is produced. 'low' reduces that overhead but does NOT eliminate it \u2014 a small max_tokens (e.g. 20-100) can still come back empty. If you set max_tokens, give it real headroom (300+); omitting max_tokens entirely is the safest way to always get visible content. Omit this field to use the API's own default effort."
+          },
+          "stream": {
+            "default": false,
+            "description": "Streaming via MCP isn't useful for chat \u2014 keep False unless testing.",
+            "type": "boolean"
+          },
+          "stop": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Up to 4 stop sequences."
+          },
+          "frequency_penalty": {
+            "anyOf": [
+              {
+                "maximum": 2.0,
+                "minimum": -2.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "presence_penalty": {
+            "anyOf": [
+              {
+                "maximum": 2.0,
+                "minimum": -2.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "seed": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Beta: best-effort deterministic sampling."
+          },
+          "n": {
+            "anyOf": [
+              {
+                "minimum": 1,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Number of completions to generate."
+          },
+          "tools": {
+            "description": "OpenAI-style function-calling tool definitions.",
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "tool_choice": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "'auto' | 'none' | 'required' | {'type': 'function', 'function': {'name': ...}}."
+          },
+          "response_format": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Structured output: {'type': 'json_object'} or {'type': 'json_schema', 'json_schema': {...}}."
+          }
+        },
+        "required": [
+          "messages"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_tools_vision_digitise",
+      "description": "Runtime tool \u2014 calls Sarvam API now. For code-writing help, use sarvam_code_* tools.\n\nDigitise a document with Sarvam Vision (POST /doc-ai/v1/job/digitise). Full-document OCR that keeps layout, reading order, and tables. Output is markdown (`md`), HTML, or JSON.\n\nUploads the file, polls until a terminal status, and returns the download URL. Max 10 pages. Use `language` (not language_code). Pass `md`, not `markdown`.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "document_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Local path to a PDF, PNG, JPEG, or ZIP. Max 10 pages."
+          },
+          "document_base64": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Base64-encoded document (for remote MCP)."
+          },
+          "document_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "URL to fetch the document from."
+          },
+          "filename": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Filename with extension. Required for base64 or URL inputs."
+          },
+          "output_format": {
+            "default": "md",
+            "description": "'md', 'html', or 'json'. Do not pass 'markdown'.",
+            "enum": [
+              "md",
+              "html",
+              "json"
+            ],
+            "type": "string"
+          },
+          "language": {
+            "default": "en-IN",
+            "description": "BCP-47 language of the document, e.g. 'hi-IN'. Field name is language.",
+            "type": "string"
+          },
+          "document_content": {
+            "default": "printed",
+            "description": "'printed', 'handwritten', or 'mixed'.",
+            "enum": [
+              "printed",
+              "handwritten",
+              "mixed"
+            ],
+            "type": "string"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_tools_vision_extract",
+      "description": "Runtime tool \u2014 calls Sarvam API now. For code-writing help, use sarvam_code_* tools.\n\nSchema extraction with Sarvam Vision (POST /doc-ai/v1/job/extract). Pass a JSON schema (root type object, every field needs type and description) or a saved `config_id`. Returns structured fields from GET /doc-ai/v1/job/{job_id}/results.\n\nFor full-document OCR to markdown or HTML, use sarvam_tools_vision_digitise.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "document_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Local path to a PDF, PNG, JPEG, or ZIP. Max 10 pages."
+          },
+          "document_base64": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Base64-encoded document (for remote MCP)."
+          },
+          "document_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "URL to fetch the document from."
+          },
+          "filename": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Filename with extension. Required for base64 or URL inputs."
+          },
+          "schema": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "JSON schema object. Root must be type=object with properties. Each field needs type and a non-empty description. Provide this or config_id."
+          },
+          "config_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Saved extraction config. Provide this or schema."
+          },
+          "language": {
+            "default": "en-IN",
+            "description": "BCP-47 document language.",
+            "type": "string"
+          },
+          "output_format": {
+            "default": "json",
+            "enum": [
+              "json",
+              "csv",
+              "xlsx"
+            ],
+            "type": "string"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_tools_vision_job_status",
+      "description": "Runtime tool \u2014 calls Sarvam API now.\n\nPoll a Document AI job at GET /doc-ai/v1/job/{job_id}/status. Works for both digitise and extract. Terminal statuses: completed, partially_completed, failed, rejected.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "job_id": {
+            "description": "Job id from vision_digitise or vision_extract.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "job_id"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_tools_pronunciation_list",
+      "description": "Runtime tool \u2014 calls Sarvam API now.\n\nList all pronunciation dictionary IDs owned by the authenticated user. Returns dictionary_count and a list of dictionary IDs.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {},
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_tools_pronunciation_get",
+      "description": "Runtime tool \u2014 calls Sarvam API now.\n\nRetrieve a specific pronunciation dictionary by its ID. Returns the dictionary entries (word \u2192 pronunciation mappings).",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "dictionary_id": {
+            "description": "The pronunciation dictionary ID.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "dictionary_id"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_tools_pronunciation_create",
+      "description": "Runtime tool \u2014 calls Sarvam API now.\n\nCreate a new pronunciation dictionary with word \u2192 pronunciation mappings. These dictionaries can be referenced in TTS calls to control how specific words are spoken.\n\nMax 100 words per dictionary, 10 dictionaries per user.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "entries": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Word-to-pronunciation mappings: {'Sarvam': 'Saarvam', 'CEO': 'see ee oh'}.",
+            "type": "object"
+          },
+          "language_code": {
+            "default": "hi-IN",
+            "description": "BCP-47 language code for these entries, e.g. 'hi-IN', 'en-IN', 'ta-IN'.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "entries"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_tools_pronunciation_delete",
+      "description": "Runtime tool \u2014 calls Sarvam API now.\n\nDelete a pronunciation dictionary by its ID.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "dictionary_id": {
+            "description": "The pronunciation dictionary ID to delete.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "dictionary_id"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_tools_document_translate",
+      "description": "Runtime tool \u2014 calls Sarvam API now. For code-writing help, use sarvam_code_* tools.\n\nTranslate a whole document (PDF, Word, Excel, PowerPoint, HTML) via POST /translate/document/jobs. Layout is preserved. Up to 12 target languages.\n\nCreates the job, uploads the file to the signed URL, and starts it. Poll with sarvam_tools_document_translate_status. This is not sarvam_tools_translate (plain text) or sarvam_tools_localize (string tables).",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "document_path": {
+            "description": "Absolute path to the source document.",
+            "type": "string"
+          },
+          "source_language_code": {
+            "description": "BCP-47 source language, e.g. en-IN.",
+            "type": "string"
+          },
+          "target_language_codes": {
+            "description": "1 to 12 BCP-47 target language codes.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "genre": {
+            "anyOf": [
+              {
+                "enum": [
+                  "NON_FICTION",
+                  "ADULT_FICTION",
+                  "CHILDREN_FICTION",
+                  "RELIGIOUS",
+                  "LEGAL",
+                  "ACADEMIC"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "job_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "use_native_numerals": {
+            "default": false,
+            "type": "boolean"
+          },
+          "style_guidelines": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Tone or terminology notes, up to about 4000 characters."
+          }
+        },
+        "required": [
+          "document_path",
+          "source_language_code",
+          "target_language_codes"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_tools_document_translate_status",
+      "description": "Runtime tool \u2014 calls Sarvam API now.\n\nPoll GET /translate/document/jobs/{job_id}/live-status. job_state is Accepted, Running, Completed, PartiallyCompleted, or Failed.\n\nSet export=true once a target language is Completed to enqueue POST .../export and return signed download URLs.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "job_id": {
+            "description": "Job id from sarvam_tools_document_translate.",
+            "type": "string"
+          },
+          "export": {
+            "default": false,
+            "description": "When true, export every language whose state is Completed and return download URLs.",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "job_id"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_tools_dubbing_submit",
+      "description": "Runtime tool \u2014 calls Sarvam API now. For code-writing help, use sarvam_code_* tools.\n\nStart an official dubbing job (POST /dubbing/jobs) for a video or audio file. Creates the job, uploads the media, and starts processing. Voice cloning is on by default. Up to 12 target languages.\n\nPoll with sarvam_tools_dubbing_status. For a short clip that should come back as a single WAV, use sarvam_tools_dub instead.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "media_path": {
+            "description": "Absolute path to the source video or audio.",
+            "type": "string"
+          },
+          "src_lang": {
+            "description": "Source BCP-47 code, e.g. en-IN.",
+            "type": "string"
+          },
+          "target_langs": {
+            "description": "One or more target BCP-47 codes.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "export_options": {
+            "anyOf": [
+              {
+                "items": {
+                  "enum": [
+                    "video",
+                    "audio",
+                    "mp3",
+                    "srt"
+                  ],
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Formats to export: video, audio, mp3, srt."
+          },
+          "voice_cloning": {
+            "default": true,
+            "type": "boolean"
+          },
+          "voice_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Preset voice when voice_cloning is false."
+          },
+          "pace_preset": {
+            "default": "normal",
+            "enum": [
+              "slow",
+              "moderate",
+              "normal",
+              "fast"
+            ],
+            "type": "string"
+          },
+          "num_speakers": {
+            "default": 1,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "register": {
+            "default": "auto",
+            "enum": [
+              "formal",
+              "common-indic",
+              "classic-colloquial",
+              "modern-colloquial",
+              "academic",
+              "auto"
+            ],
+            "type": "string"
+          },
+          "job_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "disable_watermark": {
+            "default": false,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "media_path",
+          "src_lang",
+          "target_langs"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_tools_dubbing_status",
+      "description": "Runtime tool \u2014 calls Sarvam API now.\n\nPoll a dubbing job. live-status reports pipeline progress. export-status returns signed download URLs per language and format (video, audio, mp3, srt). URLs last about 24 hours.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "job_id": {
+            "description": "Job id from sarvam_tools_dubbing_submit.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "job_id"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_code_api_reference",
+      "description": "Build-time tool \u2014 helps write code that uses Sarvam. For runtime actions, use sarvam_tools_* instead.\n\nReturn the authoritative request/response shape for a Sarvam API endpoint \u2014 parameters, defaults, content type, auth header, common gotchas. Faster + more accurate than free-text doc search when the agent already knows which endpoint to use.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "endpoint": {
+            "description": "The Sarvam API path, e.g. '/text-to-speech'.",
+            "enum": [
+              "/speech-to-text",
+              "/speech-to-text/job/v1",
+              "/speech-to-text-realtime/ws",
+              "/text-to-speech",
+              "/translate",
+              "/transliterate",
+              "/text-lid",
+              "/text-analytics",
+              "/v1/chat/completions",
+              "/doc-ai/v1/job/digitise",
+              "/doc-ai/v1/job/extract",
+              "/translate/document/jobs",
+              "/dubbing/jobs",
+              "/text-to-speech/pronunciation-dictionary",
+              "/text-to-speech/ws"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "endpoint"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_code_languages",
+      "description": "Build-time tool \u2014 helps write code that uses Sarvam. For runtime actions, use sarvam_tools_* instead.\n\nList supported BCP-47 language codes for a given Sarvam API. Critical because coverage varies by API: STT supports 23 langs, TTS supports 11, etc. Returns code + display name + script.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "api": {
+            "description": "Which Sarvam API. STT covers 23; TTS covers 11.",
+            "enum": [
+              "stt",
+              "tts",
+              "translate",
+              "transliterate",
+              "lid",
+              "llm",
+              "vision"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "api"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_code_speakers",
+      "description": "Build-time tool \u2014 helps write code that uses Sarvam. For runtime actions, use sarvam_tools_* instead.\n\nList TTS speakers compatible with a given model tag. Speaker IDs are model-specific: bulbul:v3 has 37 short-name voices; bulbul:v4-flash has 222 persona IDs (`<voice>_<lang>_<style>`; Assamese voices are not included \u2014 contact Sarvam for access). Returns each speaker with a brief tone hint where available.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "model": {
+            "default": "bulbul:v3",
+            "enum": [
+              "bulbul:v3",
+              "bulbul:v4-flash"
+            ],
+            "type": "string"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_code_pricing",
+      "description": "Build-time tool \u2014 helps write code that uses Sarvam. For runtime actions, use sarvam_tools_* instead.\n\nCurrent pricing structure for a Sarvam model (or all models if omitted). Returns billing unit + rate tier. NOTE: this is a high-level structure; exact per-unit rates depend on your plan \u2014 always confirm at https://dashboard.sarvam.ai before quoting.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "model": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Specific model id, e.g. 'bulbul:v3' or 'bulbul:v4-flash'. Omit to list all."
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_code_snippet",
+      "description": "Build-time tool \u2014 helps write code that uses Sarvam. For runtime actions, use sarvam_tools_* instead.\n\nReturn a tested, copy-paste-ready code snippet for calling a Sarvam API. The agent should use this as the starting point when adding Sarvam to an existing codebase. Snippets are verified live against api.sarvam.ai with current model versions; they assume `SARVAM_API_KEY` is set in the env.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "api": {
+            "description": "Which Sarvam API.",
+            "enum": [
+              "stt",
+              "tts",
+              "translate",
+              "llm"
+            ],
+            "type": "string"
+          },
+          "language": {
+            "default": "python",
+            "description": "Programming language for the snippet.",
+            "enum": [
+              "python",
+              "javascript",
+              "typescript",
+              "curl"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "api"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_code_recommend_model",
+      "description": "Build-time tool \u2014 helps write code that uses Sarvam. For runtime actions, use sarvam_tools_* instead.\n\nGiven a plain-English description of what the dev wants to build, recommend the right Sarvam model + language code + any other key params. Useful as the first step when starting a new Sarvam-using app. Uses heuristics (no LLM call), so it's fast and works without an API key.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "task_description": {
+            "description": "What the dev wants to build, e.g. 'transcribe Hindi voicemails'.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "task_description"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_code_validate_request",
+      "description": "Build-time tool \u2014 helps write code that uses Sarvam. For runtime actions, use sarvam_tools_* instead.\n\nValidate a draft Sarvam API request body against the canonical schema BEFORE the dev sends it. Catches: invalid model names, speaker/model mismatches, deprecated values, unsupported language codes, missing required fields. Returns a list of issues with fix suggestions.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "endpoint": {
+            "description": "The Sarvam endpoint.",
+            "enum": [
+              "/text-to-speech",
+              "/speech-to-text",
+              "/translate",
+              "/transliterate",
+              "/text-lid",
+              "/text-analytics",
+              "/v1/chat/completions"
+            ],
+            "type": "string"
+          },
+          "body": {
+            "additionalProperties": true,
+            "description": "The draft request body the agent is about to send.",
+            "type": "object"
+          }
+        },
+        "required": [
+          "endpoint",
+          "body"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_tools_voice",
+      "description": "Runtime tool \u2014 calls Sarvam API now. For code-writing help, use sarvam_code_* tools.\n\nEnd-to-end voice agent loop: transcribe an Indic audio file, send the transcript to the Indic-tuned LLM for a reply, then synthesize the reply to audio.\n\nReturns: transcript, reply text, output audio file path. Default reply language follows the detected input language; set `reply_language` to force a specific output.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "audio_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Local path to the input audio file."
+          },
+          "audio_base64": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Base64-encoded audio data."
+          },
+          "audio_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "URL to fetch the audio file from."
+          },
+          "filename": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Filename with extension (for base64/URL)."
+          },
+          "system_prompt": {
+            "default": "You are a concise, helpful assistant fluent in Indic languages. Reply in the user's input language unless asked otherwise.",
+            "description": "System message guiding the LLM reply.",
+            "type": "string"
+          },
+          "input_language": {
+            "default": "unknown",
+            "description": "STT hint. 'unknown' enables language auto-detect.",
+            "enum": [
+              "en-IN",
+              "hi-IN",
+              "bn-IN",
+              "ta-IN",
+              "te-IN",
+              "gu-IN",
+              "kn-IN",
+              "ml-IN",
+              "mr-IN",
+              "pa-IN",
+              "od-IN",
+              "as-IN",
+              "ur-IN",
+              "ne-IN",
+              "kok-IN",
+              "ks-IN",
+              "sd-IN",
+              "sa-IN",
+              "sat-IN",
+              "mni-IN",
+              "brx-IN",
+              "mai-IN",
+              "doi-IN",
+              "auto",
+              "unknown"
+            ],
+            "type": "string"
+          },
+          "reply_language": {
+            "anyOf": [
+              {
+                "enum": [
+                  "en-IN",
+                  "hi-IN",
+                  "bn-IN",
+                  "ta-IN",
+                  "te-IN",
+                  "gu-IN",
+                  "kn-IN",
+                  "ml-IN",
+                  "mr-IN",
+                  "pa-IN",
+                  "od-IN"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Force the TTS output language. Defaults to the detected input language (or hi-IN if detection fails)."
+          },
+          "speaker": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "TTS voice. Defaults to the model's default (`shubh` for bulbul:v3, `shubh_enhi_ads` for bulbul:v4-flash). Speaker IDs are model-specific \u2014 see sarvam_code_speakers."
+          },
+          "tts_model": {
+            "default": "bulbul:v3",
+            "description": "`bulbul:v3` (default) or `bulbul:v4-flash` (persona speakers).",
+            "enum": [
+              "bulbul:v3",
+              "bulbul:v4-flash"
+            ],
+            "type": "string"
+          },
+          "llm_model": {
+            "default": "sarvam-105b-conversations",
+            "description": "`sarvam-105b-conversations` (default, 32K ctx) \u2014 post-trained for real-time dialogue/voice agents, which is what this workflow is. Switch to `sarvam-105b` (128K ctx) only if a reply needs deep reasoning, coding, or a long context window.",
+            "enum": [
+              "sarvam-105b",
+              "sarvam-105b-conversations"
+            ],
+            "type": "string"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_tools_dub",
+      "description": "Runtime tool \u2014 calls Sarvam API now. For code-writing help, use sarvam_code_* tools.\n\nDub a short Indic audio clip into another Indic language. Pipeline: STT \u2192 Mayura or Sarvam-Translate \u2192 TTS. Returns the original transcript, translated transcript, and a path to the newly-dubbed WAV file. For video or long media, use sarvam_tools_dubbing_submit.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "target_language_code": {
+            "description": "Output language for the dubbed audio.",
+            "enum": [
+              "en-IN",
+              "hi-IN",
+              "bn-IN",
+              "ta-IN",
+              "te-IN",
+              "gu-IN",
+              "kn-IN",
+              "ml-IN",
+              "mr-IN",
+              "pa-IN",
+              "od-IN"
+            ],
+            "type": "string"
+          },
+          "audio_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Local path to the source audio file."
+          },
+          "audio_base64": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Base64-encoded audio data."
+          },
+          "audio_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "URL to fetch the audio file from."
+          },
+          "filename": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Filename with extension (for base64/URL)."
+          },
+          "source_language_code": {
+            "default": "unknown",
+            "description": "STT language hint. 'unknown' enables auto-detect.",
+            "enum": [
+              "en-IN",
+              "hi-IN",
+              "bn-IN",
+              "ta-IN",
+              "te-IN",
+              "gu-IN",
+              "kn-IN",
+              "ml-IN",
+              "mr-IN",
+              "pa-IN",
+              "od-IN",
+              "as-IN",
+              "ur-IN",
+              "ne-IN",
+              "kok-IN",
+              "ks-IN",
+              "sd-IN",
+              "sa-IN",
+              "sat-IN",
+              "mni-IN",
+              "brx-IN",
+              "mai-IN",
+              "doi-IN",
+              "auto",
+              "unknown"
+            ],
+            "type": "string"
+          },
+          "speaker": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "TTS voice. Defaults to the model's default (`shubh` for bulbul:v3, `shubh_enhi_ads` for bulbul:v4-flash). Speaker IDs are model-specific \u2014 see sarvam_code_speakers."
+          },
+          "tts_model": {
+            "default": "bulbul:v3",
+            "description": "`bulbul:v3` (default) or `bulbul:v4-flash` (persona speakers).",
+            "enum": [
+              "bulbul:v3",
+              "bulbul:v4-flash"
+            ],
+            "type": "string"
+          },
+          "translate_model": {
+            "default": "mayura:v1",
+            "description": "`mayura:v1` (11 langs, modes) or `sarvam-translate:v1` (22 langs).",
+            "type": "string"
+          },
+          "translate_mode": {
+            "default": "formal",
+            "type": "string"
+          }
+        },
+        "required": [
+          "target_language_code"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_tools_localize",
+      "description": "Runtime tool \u2014 calls Sarvam API now. For code-writing help, use sarvam_code_* tools.\n\nTranslate a JSON or `key=value` string-table file into another language. Walks all string values (nested JSON supported), runs each through Sarvam-Translate, and writes a sibling file with the language code as suffix (e.g. `messages.en.json` \u2192 `messages.hi.json`).\n\nFor repos with many files, call this tool once per locale file. Skips non-string leaves (numbers, booleans, etc.) untouched.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "source_path": {
+            "description": "Absolute path to a JSON file or `key=value` text file.",
+            "type": "string"
+          },
+          "target_language_code": {
+            "description": "Language to translate strings into.",
+            "enum": [
+              "en-IN",
+              "hi-IN",
+              "bn-IN",
+              "ta-IN",
+              "te-IN",
+              "gu-IN",
+              "kn-IN",
+              "ml-IN",
+              "mr-IN",
+              "pa-IN",
+              "od-IN",
+              "as-IN",
+              "ur-IN",
+              "ne-IN",
+              "kok-IN",
+              "ks-IN",
+              "sd-IN",
+              "sa-IN",
+              "sat-IN",
+              "mni-IN",
+              "brx-IN",
+              "mai-IN",
+              "doi-IN",
+              "auto",
+              "unknown"
+            ],
+            "type": "string"
+          },
+          "source_language_code": {
+            "default": "en-IN",
+            "description": "Language of the source strings.",
+            "enum": [
+              "en-IN",
+              "hi-IN",
+              "bn-IN",
+              "ta-IN",
+              "te-IN",
+              "gu-IN",
+              "kn-IN",
+              "ml-IN",
+              "mr-IN",
+              "pa-IN",
+              "od-IN",
+              "as-IN",
+              "ur-IN",
+              "ne-IN",
+              "kok-IN",
+              "ks-IN",
+              "sd-IN",
+              "sa-IN",
+              "sat-IN",
+              "mni-IN",
+              "brx-IN",
+              "mai-IN",
+              "doi-IN",
+              "auto",
+              "unknown"
+            ],
+            "type": "string"
+          },
+          "output_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Where to write the localized file. Defaults to the source path with the target language code injected before the extension."
+          },
+          "model": {
+            "default": "sarvam-translate:v1",
+            "description": "`sarvam-translate:v1` (22 langs) or `mayura:v1`.",
+            "type": "string"
+          },
+          "max_strings": {
+            "default": 500,
+            "description": "Hard cap on values translated per call.",
+            "maximum": 2000,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "source_path",
+          "target_language_code"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "sarvam_tools_recall",
+      "description": "Runtime tool \u2014 calls Sarvam API now. For code-writing help, use sarvam_code_* tools.\n\nAnswer a natural-language question grounded in a set of files. Audio files are transcribed; text/markdown files are read directly. Everything is concatenated (capped at 24000 chars) and passed to the LLM with a grounded-QA system prompt. Useful for quickly querying meeting recordings, Indic-language notes, or mixed-format research folders.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "question": {
+            "description": "The question to answer.",
+            "type": "string"
+          },
+          "paths": {
+            "description": "Absolute paths to files (audio or text) and/or directories. Directories are walked recursively.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "stt_language": {
+            "default": "unknown",
+            "description": "STT hint applied to every audio file.",
+            "enum": [
+              "en-IN",
+              "hi-IN",
+              "bn-IN",
+              "ta-IN",
+              "te-IN",
+              "gu-IN",
+              "kn-IN",
+              "ml-IN",
+              "mr-IN",
+              "pa-IN",
+              "od-IN",
+              "as-IN",
+              "ur-IN",
+              "ne-IN",
+              "kok-IN",
+              "ks-IN",
+              "sd-IN",
+              "sa-IN",
+              "sat-IN",
+              "mni-IN",
+              "brx-IN",
+              "mai-IN",
+              "doi-IN",
+              "auto",
+              "unknown"
+            ],
+            "type": "string"
+          },
+          "max_files": {
+            "default": 20,
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "llm_model": {
+            "default": "sarvam-105b",
+            "description": "`sarvam-105b` (default, 128K ctx) \u2014 best for summarizing a large corpus. `sarvam-105b-conversations` (32K ctx) is tuned for voice/chat-agent replies instead, not grounded summarization.",
+            "enum": [
+              "sarvam-105b",
+              "sarvam-105b-conversations"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "question",
+          "paths"
+        ],
+        "type": "object"
+      }
+    }
+  ]
+}
